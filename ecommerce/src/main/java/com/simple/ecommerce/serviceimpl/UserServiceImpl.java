@@ -19,10 +19,10 @@ public class UserServiceImpl implements UserService{
     private SocialConnect socialConnect;
 
     @Override
-    public String login() {
+    public String login(String type) {
         String url = "";
         try {
-            url = socialConnect.socialConnect("naver");
+            url = socialConnect.socialConnect(type);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public String socialCallback(Map<String, Object> params) {
         String token = socialConnect.socialGetToken("naver", "authorization_code", params.get("state").toString(), params.get("code").toString());
+        log.info("\n\n{}\n", token);
         return token;
     }
     
