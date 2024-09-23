@@ -68,7 +68,18 @@
     		<artifactId>guava</artifactId>
     		<version>31.1-jre</version>
   		</dependency>
-	</dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>4.27.1</version>
+		</dependency>
+ 	</dependencies>
 
 	<build>
 		<plugins>

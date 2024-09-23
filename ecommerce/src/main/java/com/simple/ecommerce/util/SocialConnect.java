@@ -1,4 +1,4 @@
-package com.simple.ecommerce.commons;
+package com.simple.ecommerce.util;
 
 import com.liferay.portal.kernel.security.SecureRandom;
 
@@ -43,8 +43,6 @@ public class SocialConnect {
             url.append("&response_type=code");
             url.append("&redirect_url="+URLEncoder.encode(REDIRECT_URL, "UTF-8"));
             url.append("&state="+URLEncoder.encode(state, "UTF-8"));
-    
-            log.info("\n\n{}", url);
         }
         return url.toString();
     }

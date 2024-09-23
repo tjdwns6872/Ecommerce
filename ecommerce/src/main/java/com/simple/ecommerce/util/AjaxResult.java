@@ -1,4 +1,4 @@
-package com.simple.ecommerce.commons;
+package com.simple.ecommerce.util;
 
 import java.util.HashMap;
 import java.util.List;

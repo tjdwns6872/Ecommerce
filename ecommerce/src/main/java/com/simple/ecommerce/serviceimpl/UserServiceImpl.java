@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simple.ecommerce.commons.SocialConnect;
 import com.simple.ecommerce.service.UserService;
+import com.simple.ecommerce.util.SocialConnect;
 
 import lombok.extern.slf4j.Slf4j;
 

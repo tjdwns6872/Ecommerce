@@ -1,4 +1,4 @@
-package com.simple.ecommerce.commons;
+package com.simple.ecommerce.util;
 
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;

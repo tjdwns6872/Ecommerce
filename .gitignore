@@ -1,3 +1,10 @@
 /.vscode
 ecommerce/src/main/resources/application.properties
 ecommerce/pom.xml
+ecommerce/src/main/java/com/simple/ecommerce/controller/explanation.text
+ecommerce/src/main/java/com/simple/ecommerce/config/explanation.text
+ecommerce/src/main/java/com/simple/ecommerce/dto/explanation.text
+ecommerce/src/main/java/com/simple/ecommerce/exception/explanation.text
+ecommerce/src/main/java/com/simple/ecommerce/mapper/explanation.text
+ecommerce/src/main/java/com/simple/ecommerce/service/explanation.text
+ecommerce/src/main/java/com/simple/ecommerce/util/explanation.text
