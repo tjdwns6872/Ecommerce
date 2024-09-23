@@ -1,6 +1,7 @@
 package com.simple.ecommerce.util;
 
 import com.liferay.portal.kernel.security.SecureRandom;
+import com.simple.ecommerce.dto.SocialConnectDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +35,7 @@ public class NaverConnect extends SocialConnect{
     private String CLIENT_SECRET;
 
     @Override
-    public String socialConnect(String type) throws UnsupportedEncodingException {
+    public String socialConnect() throws UnsupportedEncodingException {
         
         StringBuffer url = new StringBuffer();
         SecureRandom random = new SecureRandom();
@@ -50,45 +51,44 @@ public class NaverConnect extends SocialConnect{
     }
 
     @Override
-    public String socialGetToken(String socialType, String grant_type, String state, String code) {
-        log.info("\n\nstate=[{}]\n\ncode=[{}]", state, code);
+    public String socialGetToken(SocialConnectDto socialConnectDto) {
+        log.info("\n\nstate=[{}]\n\ncode=[{}]", socialConnectDto.getState(), socialConnectDto.getCode());
 
         StringBuffer uriComponents = new StringBuffer();
         
-        if(socialType.equals("naver")){
-            uriComponents.append(NAVER_AUTH_URL+"token?");
-            uriComponents.append("grant_type="+grant_type);
-            uriComponents.append("&client_id="+CLIENT_ID);
-            uriComponents.append("&client_secret="+CLIENT_SECRET);
-            uriComponents.append("&code="+code);
-            uriComponents.append("&state="+state);
-    
-            try {
-                URL url = new URL(uriComponents.toString());
-                HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                con.setRequestMethod("GET");
+        uriComponents.append(NAVER_AUTH_URL+"token?");
+        uriComponents.append("grant_type="+socialConnectDto.getGrantType());
+        uriComponents.append("&client_id="+CLIENT_ID);
+        uriComponents.append("&client_secret="+CLIENT_SECRET);
+        uriComponents.append("&code="+socialConnectDto.getCode());
+        uriComponents.append("&state="+socialConnectDto.getState());
 
-                int responseCode = con.getResponseCode();
-                BufferedReader br;
+        try {
+            URL url = new URL(uriComponents.toString());
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
 
-                if(responseCode==200) { // 정상 호출
-                    br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                } else {  // 에러 발생
-                    br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-                }
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
 
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-                while ((inputLine = br.readLine()) != null) {
-                    response.append(inputLine);
-                }
-
-                br.close();
-                return response.toString();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             }
+
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            br.close();
+            return response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return null;
     }
     

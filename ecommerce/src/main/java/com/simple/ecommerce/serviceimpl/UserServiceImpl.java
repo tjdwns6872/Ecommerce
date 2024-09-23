@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.simple.ecommerce.dto.SocialConnectDto;
 import com.simple.ecommerce.service.UserService;
 import com.simple.ecommerce.util.NaverConnect;
 
@@ -19,11 +20,11 @@ public class UserServiceImpl implements UserService{
     private NaverConnect naverConnect;
 
     @Override
-    public String login(String type) {
+    public String login(String platform) {
         String url = "";
         try {
-            if(type.equals("naver")){
-                url = naverConnect.socialConnect(type);
+            if(platform.equals("naver")){
+                url = naverConnect.socialConnect();
             }else{
                 url = null;
             }
@@ -35,11 +36,19 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String socialCallback(Map<String, Object> params) {
+    public String socialCallback(SocialConnectDto socialConnectDto) {
         String token = "";
-        token = naverConnect.socialGetToken("naver", "authorization_code", params.get("state").toString(), params.get("code").toString());
-        log.info("\n\n{}\n", token);
+        socialConnectDto.setGrantType("authorization_code");
+        token = naverConnect.socialGetToken(socialConnectDto);
+        String userData = socialToken(token);
+
         return token;
+    }
+
+    @Override
+    public String socialToken(String token) {
+        log.info("\n\ntoken==>{}\n\n", token);
+        return new String();
     }
     
 }

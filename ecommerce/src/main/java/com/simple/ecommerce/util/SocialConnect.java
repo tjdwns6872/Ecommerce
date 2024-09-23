@@ -6,11 +6,14 @@ import java.io.UnsupportedEncodingException;
 
 import org.springframework.stereotype.Component;
 
+import com.simple.ecommerce.dto.SocialConnectDto;
+
+
 @Slf4j
 @Component
 public abstract class SocialConnect {
     
-    public abstract String socialConnect(String type) throws UnsupportedEncodingException;
+    public abstract String socialConnect() throws UnsupportedEncodingException;
 
-    public abstract String socialGetToken(String socialType, String grant_type, String state, String code);
+    public abstract String socialGetToken(SocialConnectDto socialConnectDto);
 }

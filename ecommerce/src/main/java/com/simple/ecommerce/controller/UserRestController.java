@@ -3,6 +3,7 @@ package com.simple.ecommerce.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.simple.ecommerce.dto.SocialConnectDto;
 import com.simple.ecommerce.service.UserService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,16 +37,16 @@ public class UserRestController {
         return entity;
     }
 
-    @PostMapping("/login")
-    public String login(HttpServletResponse response) throws IOException {
-        String url = userService.login("naver");
+    @PostMapping("/login/{platform}")
+    public String login(HttpServletResponse response, @PathVariable("platform") String platform) throws IOException {
+        String url = userService.login(platform);
         response.sendRedirect(url);
         return null;
     }
 
-    @GetMapping("/naver/callback")
-    public String getMethodName(@RequestParam Map<String, Object> params) {
-        String url = userService.socialCallback(params);
+    @GetMapping("/{platform}/callback")
+    public String platformCallback(SocialConnectDto socialConnectDto, @PathVariable("platform") String platform) {
+        String url = userService.socialCallback(socialConnectDto);
         System.out.println(url);
         return new String();
     }
