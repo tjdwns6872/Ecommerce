@@ -1,10 +1,12 @@
-package com.simple.ecommerce.controller;
+package com.simple.ecommerce.controller.user;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.simple.ecommerce.dto.SocialConnectDto;
-import com.simple.ecommerce.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.simple.ecommerce.dto.social.SocialConnectDto;
+import com.simple.ecommerce.service.user.UserService;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -45,7 +47,7 @@ public class UserRestController {
     }
 
     @GetMapping("/{platform}/callback")
-    public String platformCallback(SocialConnectDto socialConnectDto, @PathVariable("platform") String platform) {
+    public String platformCallback(SocialConnectDto socialConnectDto, @PathVariable("platform") String platform) throws JsonMappingException, JsonProcessingException {
         String url = userService.socialCallback(socialConnectDto);
         System.out.println(url);
         return new String();

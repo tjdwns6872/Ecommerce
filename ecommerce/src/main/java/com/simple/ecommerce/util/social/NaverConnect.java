@@ -1,7 +1,8 @@
-package com.simple.ecommerce.util;
+package com.simple.ecommerce.util.social;
 
 import com.liferay.portal.kernel.security.SecureRandom;
-import com.simple.ecommerce.dto.SocialConnectDto;
+import com.simple.ecommerce.dto.social.SocialConnectDto;
+import com.simple.ecommerce.dto.social.SocialTokenDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,6 +67,9 @@ public class NaverConnect extends SocialConnect{
         try {
             URL url = new URL(uriComponents.toString());
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
+            SocialTokenDto dto = new SocialTokenDto();
+
             con.setRequestMethod("GET");
 
             int responseCode = con.getResponseCode();
@@ -91,5 +95,40 @@ public class NaverConnect extends SocialConnect{
 
         return null;
     }
+
+    @Override
+    public String socialUserByToken(SocialTokenDto socialTokenDto) {
+        try {
+            String accessToken = socialTokenDto.getAccessToken();
+            String tokenType = socialTokenDto.getTokenType();
+
+            URL url = new URL("https://openapi.naver.com/v1/nid/me");
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Authorization", tokenType + " " + accessToken);
+
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            br.close();
+            return response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     
 }

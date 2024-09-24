@@ -1,4 +1,4 @@
-package com.simple.ecommerce.dto;
+package com.simple.ecommerce.dto.social;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
