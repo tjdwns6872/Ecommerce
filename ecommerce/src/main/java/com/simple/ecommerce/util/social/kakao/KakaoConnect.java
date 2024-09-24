@@ -1,8 +1,9 @@
-package com.simple.ecommerce.util.social;
+package com.simple.ecommerce.util.social.kakao;
 
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.util.social.SocialConnect;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,32 +22,26 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class NaverConnect extends SocialConnect{
+public class KakaoConnect extends SocialConnect{
     
-    @Value("${naver.api.client.id}")
+    @Value("${kakao.api.client.id}")
     private String CLIENT_ID;
 
-    @Value("${naver.api.url}")
-    private String NAVER_AUTH_URL;
+    @Value("${kakao.api.url}")
+    private String KAKAO_AUTH_URL;
 
-    @Value("${naver.api.callback.url}")
+    @Value("${kakao.api.callback.url}")
     private String REDIRECT_URL;
-
-    @Value("${naver.api.client.secret}")
-    private String CLIENT_SECRET;
 
     @Override
     public String socialConnect() throws UnsupportedEncodingException {
         
         StringBuffer url = new StringBuffer();
-        SecureRandom random = new SecureRandom();
-        String state = new BigInteger(130, random).toString(32);
-
-        url.append(NAVER_AUTH_URL+"authorize?");
+        log.info(REDIRECT_URL);
+        url.append(KAKAO_AUTH_URL+"authorize?");
         url.append("client_id="+CLIENT_ID);
         url.append("&response_type=code");
         url.append("&redirect_url="+URLEncoder.encode(REDIRECT_URL, "UTF-8"));
-        url.append("&state="+URLEncoder.encode(state, "UTF-8"));
 
         return url.toString();
     }
@@ -57,10 +52,9 @@ public class NaverConnect extends SocialConnect{
 
         StringBuffer uriComponents = new StringBuffer();
         
-        uriComponents.append(NAVER_AUTH_URL+"token?");
+        uriComponents.append(KAKAO_AUTH_URL+"token?");
         uriComponents.append("grant_type="+socialConnectDto.getGrantType());
         uriComponents.append("&client_id="+CLIENT_ID);
-        uriComponents.append("&client_secret="+CLIENT_SECRET);
         uriComponents.append("&code="+socialConnectDto.getCode());
         uriComponents.append("&state="+socialConnectDto.getState());
 
