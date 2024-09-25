@@ -48,7 +48,7 @@ public class UserRestController {
 
     @GetMapping("/{platform}/callback")
     public String platformCallback(SocialConnectDto socialConnectDto, @PathVariable("platform") String platform) throws JsonMappingException, JsonProcessingException {
-        String url = userService.socialCallback(socialConnectDto);
+        String url = userService.socialCallback(socialConnectDto, platform);
         System.out.println(url);
         return new String();
     }

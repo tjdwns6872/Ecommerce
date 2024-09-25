@@ -3,6 +3,7 @@ package com.simple.ecommerce.util.social.kakao;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.util.social.AbstractSocialConnect;
 import com.simple.ecommerce.util.social.SocialConnect;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class KakaoConnect extends SocialConnect{
+public class KakaoConnect extends AbstractSocialConnect{
     
     @Value("${kakao.api.client.id}")
     private String CLIENT_ID;
@@ -41,22 +42,20 @@ public class KakaoConnect extends SocialConnect{
         url.append(KAKAO_AUTH_URL+"authorize?");
         url.append("client_id="+CLIENT_ID);
         url.append("&response_type=code");
-        url.append("&redirect_url="+URLEncoder.encode(REDIRECT_URL, "UTF-8"));
+        url.append("&redirect_uri="+URLEncoder.encode(REDIRECT_URL, "UTF-8"));
 
         return url.toString();
     }
 
     @Override
     public String socialGetToken(SocialConnectDto socialConnectDto) {
-        log.info("\n\nstate=[{}]\n\ncode=[{}]", socialConnectDto.getState(), socialConnectDto.getCode());
-
         StringBuffer uriComponents = new StringBuffer();
         
         uriComponents.append(KAKAO_AUTH_URL+"token?");
         uriComponents.append("grant_type="+socialConnectDto.getGrantType());
         uriComponents.append("&client_id="+CLIENT_ID);
+        uriComponents.append("&redirect_uri");
         uriComponents.append("&code="+socialConnectDto.getCode());
-        uriComponents.append("&state="+socialConnectDto.getState());
 
         try {
             URL url = new URL(uriComponents.toString());

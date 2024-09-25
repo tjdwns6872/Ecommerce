@@ -13,9 +13,7 @@ import com.simple.ecommerce.dto.social.SocialTokenDto;
 public interface UserService {
    String login(String type);
 
-   // String login(String type);
-
-   String socialCallback(SocialConnectDto socialConnectDto) throws JsonMappingException, JsonProcessingException;
+   String socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonMappingException, JsonProcessingException;
 
    String socialToken(SocialTokenDto token);
 }

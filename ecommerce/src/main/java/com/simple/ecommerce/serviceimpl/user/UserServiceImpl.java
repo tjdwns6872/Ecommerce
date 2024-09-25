@@ -9,10 +9,13 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simple.ecommerce.component.social.SocialConnectFactory;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
 import com.simple.ecommerce.service.user.UserService;
-import com.simple.ecommerce.util.social.NaverConnect;
+import com.simple.ecommerce.util.social.SocialConnect;
+import com.simple.ecommerce.util.social.kakao.KakaoConnect;
+import com.simple.ecommerce.util.social.naver.NaverConnect;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,34 +26,37 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private NaverConnect naverConnect;
 
+    @Autowired
+    private KakaoConnect kakaoConnect;
+
+    @Autowired
+    private SocialConnectFactory socialConnectFactory;
+
     @Override
     public String login(String platform) {
-        String url = "";
         try {
-            if(platform.equals("naver")){
-                url = naverConnect.socialConnect();
-            }else{
-                url = null;
-            }
+            SocialConnect socialConnect = socialConnectFactory.getSocialConnect(platform);
+            return socialConnect.socialConnect();
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            log.error("{}", e);
+            log.error("Error during social login", e);
+            // throw new SocialLoginException("Error during social login", e);
         }
-        return url;
+        return new String();
     }
 
     @Override
-    public String socialCallback(SocialConnectDto socialConnectDto) throws JsonMappingException, JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        socialConnectDto.setGrantType("authorization_code");
-        String tokenStr = naverConnect.socialGetToken(socialConnectDto);
-        log.info("\n\n{}\n\n", tokenStr);
-        SocialTokenDto token = mapper.readValue(tokenStr, SocialTokenDto.class);
-        
-        String userData = socialToken(token);
-
+    public String socialCallback(SocialConnectDto socialConnectDto, String platform) {
+        try {
+            socialConnectDto.setGrantType("authorization_code");
+            ObjectMapper mapper = new ObjectMapper();
+            SocialConnect socialConnect = socialConnectFactory.getSocialConnect(platform);
+            String tokenStr = socialConnect.socialGetToken(socialConnectDto);
+            SocialTokenDto token = mapper.readValue(tokenStr, SocialTokenDto.class);
+            return socialConnect.socialUserByToken(token);
+        } catch (JsonProcessingException e) {
+            log.error("Error processing social callback", e);
+            // throw new SocialLoginException("Error processing social callback", e);
+        }
         return new String();
     }
 

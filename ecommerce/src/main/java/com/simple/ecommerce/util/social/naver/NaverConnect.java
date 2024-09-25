@@ -3,6 +3,7 @@ package com.simple.ecommerce.util.social.naver;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.util.social.AbstractSocialConnect;
 import com.simple.ecommerce.util.social.SocialConnect;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class NaverConnect extends SocialConnect{
+public class NaverConnect extends AbstractSocialConnect{
     
     @Value("${naver.api.client.id}")
     private String CLIENT_ID;
