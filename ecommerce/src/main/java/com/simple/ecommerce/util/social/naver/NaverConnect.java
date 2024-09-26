@@ -70,8 +70,6 @@ public class NaverConnect extends AbstractSocialConnect{
             URL url = new URL(uriComponents.toString());
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
 
-            SocialTokenDto dto = new SocialTokenDto();
-
             con.setRequestMethod("GET");
 
             int responseCode = con.getResponseCode();
