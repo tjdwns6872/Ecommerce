@@ -4,7 +4,7 @@
 
 **기능 명세서 → (작성 중)**
 
-- (https://www.notion.so/10b0ab630964802ca7c7dd1a4b5b7a90?pvs=21)
+- (https://perfect-angora-dd5.notion.site/10b0ab630964802ca7c7dd1a4b5b7a90?v=8f270b54093f4a05837ca60a7d37740e&pvs=4)
 
 **개발 환경**
 
