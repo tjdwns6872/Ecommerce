@@ -1,5 +1,6 @@
 package com.simple.ecommerce.util.social.kakao;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
@@ -54,72 +55,18 @@ public class KakaoConnect extends AbstractSocialConnect{
         uriComponents.append(KAKAO_AUTH_URL+"token?");
         uriComponents.append("grant_type="+socialConnectDto.getGrantType());
         uriComponents.append("&client_id="+CLIENT_ID);
-        uriComponents.append("&redirect_uri");
-        uriComponents.append("&code="+socialConnectDto.getCode());
-
         try {
-            URL url = new URL(uriComponents.toString());
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-
-            SocialTokenDto dto = new SocialTokenDto();
-
-            con.setRequestMethod("GET");
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            br.close();
-            return response.toString();
-        } catch (Exception e) {
+            uriComponents.append("&redirect_uri="+URLEncoder.encode(REDIRECT_URL, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        uriComponents.append("&code="+socialConnectDto.getCode());
 
-        return null;
+        return uriComponents.toString();
     }
 
     @Override
     public String socialUserByToken(SocialTokenDto socialTokenDto) {
-        try {
-            String accessToken = socialTokenDto.getAccessToken();
-            String tokenType = socialTokenDto.getTokenType();
-
-            URL url = new URL("https://openapi.naver.com/v1/nid/me");
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", tokenType + " " + accessToken);
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            br.close();
-            return response.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
