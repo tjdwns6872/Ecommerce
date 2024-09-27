@@ -15,7 +15,7 @@
 - 프레임워크
     - Spring Boot, React Native(App, Web 개발을 위해 선정), Mybatis
 - DB
-    - 아직 고민중(Oracle or MySql)
+    - MySql
 - IDE
     - Visual Studio Code
 - API, Library
