@@ -17,6 +17,7 @@ import com.simple.ecommerce.util.social.SocialConnect;
 import com.simple.ecommerce.util.social.kakao.KakaoConnect;
 import com.simple.ecommerce.util.social.naver.NaverConnect;
 
+import jakarta.el.ELException;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -41,23 +42,22 @@ public class UserServiceImpl implements UserService{
             log.error("Error during social login", e);
             // throw new SocialLoginException("Error during social login", e);
         }
-        return new String();
+        return null;
     }
 
     @Override
     public String socialCallback(SocialConnectDto socialConnectDto, String platform) {
+        String tokenStr = null;
         try {
             socialConnectDto.setGrantType("authorization_code");
             ObjectMapper mapper = new ObjectMapper();
             SocialConnect socialConnect = socialConnectFactory.getSocialConnect(platform);
-            String tokenStr = socialConnect.socialGetToken(socialConnectDto);
+            tokenStr = socialConnect.socialGetToken(socialConnectDto);
             SocialTokenDto token = mapper.readValue(tokenStr, SocialTokenDto.class);
-            return socialConnect.socialUserByToken(token);
-        } catch (JsonProcessingException e) {
-            log.error("Error processing social callback", e);
-            // throw new SocialLoginException("Error processing social callback", e);
+        } catch(Exception e){
+            e.printStackTrace();
         }
-        return new String();
+        return tokenStr;
     }
 
     @Override

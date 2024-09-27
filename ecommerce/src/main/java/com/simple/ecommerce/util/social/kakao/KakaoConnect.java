@@ -61,8 +61,34 @@ public class KakaoConnect extends AbstractSocialConnect{
             e.printStackTrace();
         }
         uriComponents.append("&code="+socialConnectDto.getCode());
+        try {
+            URL url = new URL(uriComponents.toString());
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
 
-        return uriComponents.toString();
+            con.setRequestMethod("POST");
+
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            br.close();
+            return response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
