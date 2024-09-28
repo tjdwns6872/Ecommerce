@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public String login(Map<String, Object> params) {
+        return null;
+    }
+
+    @Override
     public String socialCallback(SocialConnectDto socialConnectDto, String platform) {
         String tokenStr = null;
         try {

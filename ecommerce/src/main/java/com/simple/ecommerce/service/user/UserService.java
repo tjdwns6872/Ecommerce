@@ -11,7 +11,9 @@ import com.simple.ecommerce.dto.social.SocialTokenDto;
 
 @Service
 public interface UserService {
-   String login(String type);
+   String login(String platform);
+
+   String login(Map<String, Object> params); //USER DTO 변경예정
 
    String socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonMappingException, JsonProcessingException;
 
