@@ -53,7 +53,8 @@ public class UserServiceImpl implements UserService{
             ObjectMapper mapper = new ObjectMapper();
             SocialConnect socialConnect = socialConnectFactory.getSocialConnect(platform);
             tokenStr = socialConnect.socialGetToken(socialConnectDto);
-            SocialTokenDto token = mapper.readValue(tokenStr, SocialTokenDto.class);
+            SocialTokenDto socialTokenDto = mapper.readValue(tokenStr, SocialTokenDto.class);
+            log.info("\nsocialTokenDto=>{}\n", socialTokenDto.toString());
         } catch(Exception e){
             e.printStackTrace();
         }
