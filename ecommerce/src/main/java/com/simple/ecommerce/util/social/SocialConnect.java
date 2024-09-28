@@ -9,7 +9,9 @@ public interface SocialConnect {
     
     public abstract String socialConnect() throws UnsupportedEncodingException;
 
-    public abstract String socialGetToken(SocialConnectDto socialConnectDto);
+    public abstract String socialGetTokenUrl(SocialConnectDto socialConnectDto);
 
     public abstract String socialUserByToken(SocialTokenDto socialTokenDto );
+
+    public String socialGetToken(String uriComponents);
 }

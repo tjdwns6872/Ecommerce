@@ -48,7 +48,7 @@ public class KakaoConnect extends AbstractSocialConnect{
     }
 
     @Override
-    public String socialGetToken(SocialConnectDto socialConnectDto) {
+    public String socialGetTokenUrl(SocialConnectDto socialConnectDto) {
         StringBuffer uriComponents = new StringBuffer();
         
         uriComponents.append(KAKAO_AUTH_URL+"token?");
@@ -61,34 +61,7 @@ public class KakaoConnect extends AbstractSocialConnect{
             e.printStackTrace();
         }
 
-        try {
-            URL url = new URL(uriComponents.toString());
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-
-            con.setRequestMethod("POST");
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            br.close();
-            return response.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return uriComponents.toString();
     }
 
     @Override

@@ -54,7 +54,7 @@ public class NaverConnect extends AbstractSocialConnect{
     }
 
     @Override
-    public String socialGetToken(SocialConnectDto socialConnectDto) {
+    public String socialGetTokenUrl(SocialConnectDto socialConnectDto) {
         log.info("\n\nstate=[{}]\n\ncode=[{}]", socialConnectDto.getState(), socialConnectDto.getCode());
 
         StringBuffer uriComponents = new StringBuffer();
@@ -66,34 +66,7 @@ public class NaverConnect extends AbstractSocialConnect{
         uriComponents.append("&code="+socialConnectDto.getCode());
         uriComponents.append("&state="+socialConnectDto.getState());
 
-        try {
-            URL url = new URL(uriComponents.toString());
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            br.close();
-            return response.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return uriComponents.toString();
     }
 
     @Override
