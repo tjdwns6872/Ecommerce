@@ -2,9 +2,13 @@
 
 - 무신사 클론 코딩 프로젝트로써 제품을 파는 커머스 서비스를 무신사에서 사용하는 기술스택을 최대한 맞춰서 개발해보고 운영해보기 위한 프로젝트 입니다.
 
-**기능 명세서 → (작성 중)**
+**기능 명세서**
 
-- (https://perfect-angora-dd5.notion.site/10b0ab630964802ca7c7dd1a4b5b7a90?v=8f270b54093f4a05837ca60a7d37740e&pvs=4)
+- [기능명세서](https://perfect-angora-dd5.notion.site/10b0ab630964802ca7c7dd1a4b5b7a90?v=8f270b54093f4a05837ca60a7d37740e&pvs=4)
+
+**ER-Diagram**
+
+- [ER-Diagram](https://www.erdcloud.com/d/tWmM7hzXCEuK23qc5)
 
 **개발 환경**
 
