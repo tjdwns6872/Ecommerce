@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class AbstractSocialConnect implements SocialConnect {
+    
     // 공통 로직 구현
     public abstract String socialConnect() throws UnsupportedEncodingException;
 
@@ -57,14 +58,13 @@ public abstract class AbstractSocialConnect implements SocialConnect {
         return null;
     }
 
-    public String socialGetUserData(SocialTokenDto socialTokenDto){
+    public String socialGetUserData(SocialTokenDto socialTokenDto, String uriComponents){
 
         String accessToken = socialTokenDto.getAccessToken();
         String tokenType = socialTokenDto.getTokenType();
-        String uriComponents = socialTokenDto.getDataGetUrl();
         
         try {
-            URL url = new URL("https://kapi.kakao.com/v2/user/me");
+            URL url = new URL(uriComponents);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Authorization", tokenType + " " + accessToken);

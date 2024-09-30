@@ -48,8 +48,7 @@ public class UserServiceImpl implements UserService{
             String url = socialConnect.socialGetTokenUrl(socialConnectDto);
             SocialTokenDto socialTokenDto = socialConnect.socialGetToken(url);
             String userUrl = socialConnect.socialGetUrl();
-            socialTokenDto.setDataGetUrl(userUrl);
-            String data = socialConnect.socialGetUserData(socialTokenDto);
+            String data = socialConnect.socialGetUserData(socialTokenDto, userUrl);
 
             log.info("\n\ndata===>{}\n", data.toString());
         } catch(Exception e){

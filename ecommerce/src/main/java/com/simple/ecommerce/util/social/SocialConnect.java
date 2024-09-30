@@ -13,7 +13,7 @@ public interface SocialConnect {
 
     public SocialTokenDto socialGetToken(String uriComponents);
 
-    public String socialGetUserData(SocialTokenDto socialTokenDto);
+    public String socialGetUserData(SocialTokenDto socialTokenDto, String uriComponents);
 
     public String socialGetUrl();
 
