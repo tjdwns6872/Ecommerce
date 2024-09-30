@@ -18,4 +18,6 @@ public interface UserService {
    String socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonMappingException, JsonProcessingException;
 
    String socialToken(SocialTokenDto token);
+
+   String socialTokenRefresh();
 }

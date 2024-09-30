@@ -35,6 +35,9 @@ public class KakaoConnect extends AbstractSocialConnect{
     @Value("${kakao.api.callback.url}")
     private String REDIRECT_URL;
 
+    @Value("${kakao.api.user.data.url}")
+    private String USER_DATA_URL;
+
     @Override
     public String socialConnect() throws UnsupportedEncodingException {
         
@@ -65,9 +68,8 @@ public class KakaoConnect extends AbstractSocialConnect{
     }
 
     @Override
-    public String socialUserByToken(SocialTokenDto socialTokenDto) {
-        return null;
+    public String socialGetUrl() {
+        return USER_DATA_URL;
     }
 
-    
 }

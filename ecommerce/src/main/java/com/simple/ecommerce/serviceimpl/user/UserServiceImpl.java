@@ -23,6 +23,11 @@ public class UserServiceImpl implements UserService{
     private SocialConnectFactory socialConnectFactory;
 
     @Override
+    public String login(Map<String, Object> params) {
+        return null;
+    }
+    
+    @Override
     public String login(String platform) {
         try {
             SocialConnect socialConnect = socialConnectFactory.getSocialConnect(platform);
@@ -34,31 +39,37 @@ public class UserServiceImpl implements UserService{
         return null;
     }
 
-    @Override
-    public String login(Map<String, Object> params) {
-        return null;
-    }
 
     @Override
     public String socialCallback(SocialConnectDto socialConnectDto, String platform) {
-        String tokenStr = null;
         try {
             socialConnectDto.setGrantType("authorization_code");
-            ObjectMapper mapper = new ObjectMapper();
             SocialConnect socialConnect = socialConnectFactory.getSocialConnect(platform);
             String url = socialConnect.socialGetTokenUrl(socialConnectDto);
-            tokenStr = socialConnect.socialGetToken(url);
-            SocialTokenDto socialTokenDto = mapper.readValue(tokenStr, SocialTokenDto.class);
-            log.info("\nsocialTokenDto=>{}\n", socialTokenDto.toString());
+            SocialTokenDto socialTokenDto = socialConnect.socialGetToken(url);
+            String userUrl = socialConnect.socialGetUrl();
+            socialTokenDto.setDataGetUrl(userUrl);
+            String data = socialConnect.socialGetUserData(socialTokenDto);
+
+            log.info("\n\ndata===>{}\n", data.toString());
         } catch(Exception e){
             e.printStackTrace();
         }
-        return tokenStr;
+        return null;
     }
 
     @Override
     public String socialToken(SocialTokenDto token) {
         return "";
+    }
+
+    /* 
+     * @params
+    */
+    @Override
+    public String socialTokenRefresh() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'socialTokenRefresh'");
     }
     
 }

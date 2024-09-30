@@ -11,7 +11,11 @@ public interface SocialConnect {
 
     public abstract String socialGetTokenUrl(SocialConnectDto socialConnectDto);
 
-    public abstract String socialUserByToken(SocialTokenDto socialTokenDto );
+    public SocialTokenDto socialGetToken(String uriComponents);
 
-    public String socialGetToken(String uriComponents);
+    public String socialGetUserData(SocialTokenDto socialTokenDto);
+
+    public String socialGetUrl();
+
+    // public String socialGetRefreshToken();
 }

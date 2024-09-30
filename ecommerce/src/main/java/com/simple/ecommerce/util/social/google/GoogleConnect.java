@@ -72,9 +72,9 @@ public class GoogleConnect extends AbstractSocialConnect{
     }
 
     @Override
-    public String socialUserByToken(SocialTokenDto socialTokenDto) {
-        return null;
+    public String socialGetUrl() {
+        String url = "";
+        return url;
     }
-
     
 }

@@ -37,6 +37,9 @@ public class NaverConnect extends AbstractSocialConnect{
     @Value("${naver.api.client.secret}")
     private String CLIENT_SECRET;
 
+    @Value("${naver.api.user.data.url}")
+    private String USER_DATA_URL;
+
     @Override
     public String socialConnect() throws UnsupportedEncodingException {
         
@@ -70,37 +73,8 @@ public class NaverConnect extends AbstractSocialConnect{
     }
 
     @Override
-    public String socialUserByToken(SocialTokenDto socialTokenDto) {
-        try {
-            String accessToken = socialTokenDto.getAccessToken();
-            String tokenType = socialTokenDto.getTokenType();
-
-            URL url = new URL("https://openapi.naver.com/v1/nid/me");
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", tokenType + " " + accessToken);
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            br.close();
-            return response.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public String socialGetUrl() {
+        return USER_DATA_URL;
     }
 
     

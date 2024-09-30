@@ -6,18 +6,23 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class AbstractSocialConnect implements SocialConnect {
     // 공통 로직 구현
     public abstract String socialConnect() throws UnsupportedEncodingException;
 
     public abstract String socialGetTokenUrl(SocialConnectDto socialConnectDto);
 
-    public abstract String socialUserByToken(SocialTokenDto socialTokenDto );
+    public SocialTokenDto socialGetToken(String uriComponents){
 
-    public String socialGetToken(String uriComponents){
+        ObjectMapper mapper = new ObjectMapper();
+
         try {
             URL url = new URL(uriComponents.toString());
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -42,12 +47,47 @@ public abstract class AbstractSocialConnect implements SocialConnect {
             while ((inputLine = br.readLine()) != null) {
                 response.append(inputLine);
             }
+            SocialTokenDto socialTokenDto = mapper.readValue(response.toString(), SocialTokenDto.class);
 
+            br.close();
+            return socialTokenDto;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String socialGetUserData(SocialTokenDto socialTokenDto){
+
+        String accessToken = socialTokenDto.getAccessToken();
+        String tokenType = socialTokenDto.getTokenType();
+        String uriComponents = socialTokenDto.getDataGetUrl();
+        
+        try {
+            URL url = new URL("https://kapi.kakao.com/v2/user/me");
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Authorization", tokenType + " " + accessToken);
+            con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
             br.close();
             return response.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return tokenType;
     }
 }
