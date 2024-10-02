@@ -37,6 +37,9 @@ public class SocialTokenDto {
     @JsonProperty("id_token")
     private String idToken;
 
+    @JsonProperty("error_description")
+    private String errorDescription;
+
 }
 // access_token	string	접근 토큰, 발급 후 expires_in 파라미터에 설정된 시간(초)이 지나면 만료됨
 // refresh_token	string	갱신 토큰, 접근 토큰이 만료될 경우 접근 토큰을 다시 발급받을 때 사용

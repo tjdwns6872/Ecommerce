@@ -67,8 +67,10 @@ public class UserServiceImpl implements UserService{
             String url = socialConnect.socialGetTokenUrl(socialConnectDto);
             // 생성된 토큰 발급 URL로 토큰 발급
             SocialTokenDto socialTokenDto = socialConnect.socialGetToken(url);
+            // 유저 데이터 URL 생성
             String userUrl = socialConnect.socialGetUrl();
-            String data = socialConnect.socialGetUserData(socialTokenDto, "");
+            // 유저 데이터 가져오기
+            String data = socialConnect.socialGetUserData(socialTokenDto, userUrl);
 
             log.info("\n\ndata===>{}\n", data.toString());
         } catch(Exception e){

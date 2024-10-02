@@ -42,6 +42,7 @@ public class NaverConnect extends AbstractSocialConnect{
     @Value("${naver.api.client.secret}")
     private String CLIENT_SECRET;
 
+    //properties에 존재하는 naver.api.user.data.url값 USER_DATA_URL에 삽입
     @Value("${naver.api.user.data.url}")
     private String USER_DATA_URL;
 

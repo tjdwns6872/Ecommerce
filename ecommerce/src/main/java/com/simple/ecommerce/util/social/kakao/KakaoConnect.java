@@ -39,6 +39,7 @@ public class KakaoConnect extends AbstractSocialConnect{
     @Value("${kakao.api.callback.url}")
     private String REDIRECT_URL;
 
+    //properties에 존재하는 kakao.api.user.data.url값 USER_DATA_URL에 삽입
     @Value("${kakao.api.user.data.url}")
     private String USER_DATA_URL;
 

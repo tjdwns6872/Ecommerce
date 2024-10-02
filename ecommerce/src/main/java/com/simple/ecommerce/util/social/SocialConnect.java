@@ -23,15 +23,27 @@ public interface SocialConnect {
     public abstract String socialGetTokenUrl(SocialConnectDto socialConnectDto);
 
     /**
-     * 토큰 발급이후 DTO로 객체화
+     * 토큰 발급이후 DTO로 객체화해주는 인터페이스
      * @param uriComponents - (String)생성한 토큰 발급 URL
      * @return 토큰 값 리턴
      * @throws 어떤 상황에서 예외가 발생!
      */
     public SocialTokenDto socialGetToken(String uriComponents);
 
+    /**
+     * 유저 데이터 불러오는 인터페이스
+     * @param uriComponents - 유저 데이터를 요청하는 URL
+     * @param socialTokenDto - 유저 데이터 요청할 때 쓰이는 토큰
+     * @return 토큰 값 리턴
+     * @throws 어떤 상황에서 예외가 발생!
+     */
     public String socialGetUserData(SocialTokenDto socialTokenDto, String uriComponents);
 
+    /**
+     * 유저 데이터 불러오는 URL을 생성하는 인터페이스
+     * @return 유저 데이터 불러오는 URL 리턴
+     * @throws 어떤 상황에서 예외가 발생!
+     */
     public String socialGetUrl();
 
     // public String socialGetRefreshToken();
