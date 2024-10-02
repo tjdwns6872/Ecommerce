@@ -43,6 +43,10 @@ public class GoogleConnect extends AbstractSocialConnect{
     @Value("${google.api.client.secret}")
     private String CLIENT_SECRET;
 
+    //properties에 존재하는 google.api.user.data.url값 USER_DATA_URL에 삽입
+    @Value("${google.api.user.data.url}")
+    private String USER_DATA_URL;
+
     /**
      * 구글 로그인 인증코드를 위한 URL생성 메소드.
      * @return 인증코드를 발급 받을 url값
@@ -102,8 +106,7 @@ public class GoogleConnect extends AbstractSocialConnect{
 
     @Override
     public String socialGetUrl() {
-        String url = "";
-        return url;
+        return USER_DATA_URL;
     }
     
 }
