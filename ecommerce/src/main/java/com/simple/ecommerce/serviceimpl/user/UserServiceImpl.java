@@ -1,15 +1,14 @@
 package com.simple.ecommerce.serviceimpl.user;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simple.ecommerce.component.social.SocialConnectFactory;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.dto.users.UsersLoginDto;
 import com.simple.ecommerce.service.user.UserService;
 import com.simple.ecommerce.util.social.SocialConnect;
 
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService{
     private SocialConnectFactory socialConnectFactory;
 
     @Override
-    public String login(Map<String, Object> params) {
+    public String login(UsersLoginDto dto) {
         return null;
     }
     
@@ -71,7 +70,6 @@ public class UserServiceImpl implements UserService{
             String userUrl = socialConnect.socialGetUrl();
             // 유저 데이터 가져오기
             String data = socialConnect.socialGetUserData(socialTokenDto, userUrl);
-
             log.info("\n\ndata===>{}\n", data.toString());
         } catch(Exception e){
             e.printStackTrace();
@@ -79,14 +77,6 @@ public class UserServiceImpl implements UserService{
         return null;
     }
 
-    @Override
-    public String socialToken(SocialTokenDto token) {
-        return "";
-    }
-
-    /* 
-     * @params
-    */
     @Override
     public String socialTokenRefresh() {
         // TODO Auto-generated method stub

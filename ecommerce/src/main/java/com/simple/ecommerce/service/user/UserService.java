@@ -1,13 +1,12 @@
 package com.simple.ecommerce.service.user;
 
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
-import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.dto.users.UsersLoginDto;
 
 @Service
 public interface UserService {
@@ -26,7 +25,7 @@ public interface UserService {
      * @return 토큰 값을 발급 받을 url값
      * @throws 어떤 상황에서 예외가 발생!
    */
-   String login(Map<String, Object> params);
+   String login(UsersLoginDto dto);
 
    /**
      * 소셜로그인시 넘어오는 인증코드 처리를 위한 인터페이스
@@ -36,8 +35,6 @@ public interface UserService {
      * @throws 어떤 상황에서 예외가 발생!
    */
    String socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonMappingException, JsonProcessingException;
-
-   String socialToken(SocialTokenDto token);
 
    String socialTokenRefresh();
 }
