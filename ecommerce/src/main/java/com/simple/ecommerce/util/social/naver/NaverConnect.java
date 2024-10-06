@@ -1,19 +1,19 @@
 package com.simple.ecommerce.util.social.naver;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
-import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.dto.social.SocialUserDto;
+import com.simple.ecommerce.dto.social.naver.NaverReturnDto;
+import com.simple.ecommerce.dto.social.naver.NaverUserDto;
 import com.simple.ecommerce.util.social.AbstractSocialConnect;
-import com.simple.ecommerce.util.social.SocialConnect;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -107,6 +107,27 @@ public class NaverConnect extends AbstractSocialConnect{
     @Override
     public String socialGetUrl() {
         return USER_DATA_URL;
+    }
+
+    @Override
+    public SocialUserDto UserDataToDto(String data) throws JsonMappingException, JsonProcessingException {
+        // 문자열 데이터를 변환하기 위한 클래스
+        ObjectMapper mapper = new ObjectMapper();
+
+        // 문자열을 NaverReturnDto형태로 변환
+        NaverReturnDto returnDto = mapper.readValue(data, NaverReturnDto.class);
+        // returnDto에 있는 유저 데이터(response) NaverUserDto로 변환
+        NaverUserDto userDto = returnDto.getResponse();
+
+        // 필요한 데이터만 추출해서 리턴
+        SocialUserDto dto = new SocialUserDto();
+        // 유저 이메일 추출
+        dto.setEmail(userDto.getEmail());
+        // 유저 이름 추출
+        dto.setName(userDto.getName());
+
+        // 추출한 데이터 리턴
+        return dto;
     }
 
     

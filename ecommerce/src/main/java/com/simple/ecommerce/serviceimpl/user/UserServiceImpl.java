@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.simple.ecommerce.component.social.SocialConnectFactory;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.dto.social.SocialUserDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
 import com.simple.ecommerce.service.user.UserService;
 import com.simple.ecommerce.util.social.SocialConnect;
@@ -70,7 +71,10 @@ public class UserServiceImpl implements UserService{
             String userUrl = socialConnect.socialGetUrl();
             // 유저 데이터 가져오기
             String data = socialConnect.socialGetUserData(socialTokenDto, userUrl);
-            log.info("\n\ndata===>{}\n", data.toString());
+            // 유저 데이터(문자열) SocialUserDto로 변환
+            SocialUserDto dto = socialConnect.UserDataToDto(data);
+            log.info("\n\n\n{}\n", dto);
+            // 해당 유저 데이터가 DB에 있는지 확인
         } catch(Exception e){
             e.printStackTrace();
         }
