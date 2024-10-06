@@ -2,8 +2,11 @@ package com.simple.ecommerce.util.social;
 
 import java.io.UnsupportedEncodingException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.dto.social.SocialUserDto;
 
 public interface SocialConnect {
     
@@ -45,6 +48,14 @@ public interface SocialConnect {
      * @throws 어떤 상황에서 예외가 발생!
      */
     public String socialGetUrl();
+
+    /**
+     * Json으로 받은 유저 데이터 변환 및 이름, 이메일 추출
+     * @param data - 토큰을 통해 받은 유저 데이터
+     * @return SocialUserDto 리턴
+     * @throws 어떤 상황에서 예외가 발생!
+     */
+    public SocialUserDto UserDataToDto(String data) throws JsonMappingException, JsonProcessingException ;
 
     // public String socialGetRefreshToken();
 }

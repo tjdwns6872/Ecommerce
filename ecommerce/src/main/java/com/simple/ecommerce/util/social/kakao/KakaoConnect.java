@@ -1,9 +1,15 @@
 package com.simple.ecommerce.util.social.kakao;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.dto.social.SocialUserDto;
+import com.simple.ecommerce.dto.social.kakao.KakaoProfileDto;
+import com.simple.ecommerce.dto.social.kakao.KakaoReturnDto;
+import com.simple.ecommerce.dto.social.kakao.KakaoUserDto;
 import com.simple.ecommerce.util.social.AbstractSocialConnect;
 import com.simple.ecommerce.util.social.SocialConnect;
 
@@ -99,6 +105,32 @@ public class KakaoConnect extends AbstractSocialConnect{
     @Override
     public String socialGetUrl() {
         return USER_DATA_URL;
+    }
+
+    @Override
+    public SocialUserDto UserDataToDto(String data) throws JsonMappingException, JsonProcessingException {
+        // 문자열 데이터를 변환하기 위한 클래스
+        ObjectMapper mapper = new ObjectMapper();
+
+        // 문자열을 KakaoReturnDto형태로 변환
+        KakaoReturnDto returnDto = mapper.readValue(data, KakaoReturnDto.class);
+
+        // returnDto에 있는 유저 데이터(kakao_account) userDto로 변환(이메일이 포함된 데이터)
+        KakaoUserDto userDto = returnDto.getKakaoAccount();
+
+        // userDto에 있는 유저 데이터(profile) proDto로 변환(이름이 포함된 데이터)
+        KakaoProfileDto proDto = userDto.getProfile();
+
+        // 필요한 데이터만 추출해서 리턴
+        SocialUserDto dto = new SocialUserDto();
+
+        // 유저 이메일 추출
+        dto.setEmail(userDto.getEmail());
+        // 유저 이름 추출
+        dto.setName(proDto.getNickname());
+        
+        // 추출한 데이터 리턴
+        return dto;
     }
 
 }
