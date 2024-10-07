@@ -10,19 +10,26 @@ import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
 import com.simple.ecommerce.dto.social.SocialUserDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
-import com.simple.ecommerce.service.user.UserService;
+import com.simple.ecommerce.repository.TestRepository;
+import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.social.SocialConnect;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService{
+public class UsersLoginServiceImpl implements UsersLoginService{
     
     // 여러 플랫폼의 로그인 API를 사용하기 위한 커넥션 컴포넌트
     @Autowired
     private SocialConnectFactory socialConnectFactory;
 
+    /**
+     * 일반회원 로그인 인터페이스
+     * @param UsersLoginDto - UsersLoginDto
+     * @return 토큰 값을 발급 받을 url값
+     * @throws 어떤 상황에서 예외가 발생!
+   */
     @Override
     public String login(UsersLoginDto dto) {
         return null;
@@ -71,6 +78,7 @@ public class UserServiceImpl implements UserService{
             String userUrl = socialConnect.socialGetUrl();
             // 유저 데이터 가져오기
             String data = socialConnect.socialGetUserData(socialTokenDto, userUrl);
+            log.info("\n\n{}\n\n", data);
             // 유저 데이터(문자열) SocialUserDto로 변환
             SocialUserDto dto = socialConnect.UserDataToDto(data);
             log.info("\n\n\n{}\n", dto);

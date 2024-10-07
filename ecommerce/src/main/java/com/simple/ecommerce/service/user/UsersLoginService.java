@@ -9,7 +9,7 @@ import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
 
 @Service
-public interface UserService {
+public interface UsersLoginService {
    
    /**
      * 소셜로그인 인터페이스
@@ -21,7 +21,7 @@ public interface UserService {
 
    /**
      * 일반회원 로그인 인터페이스
-     * @param platform - USER DTO 변경예정
+     * @param UsersLoginDto - UsersLoginDto
      * @return 토큰 값을 발급 받을 url값
      * @throws 어떤 상황에서 예외가 발생!
    */
