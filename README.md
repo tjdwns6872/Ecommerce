@@ -17,7 +17,11 @@
 - 서버
     - Apache Tomcat, ubuntu
 - 프레임워크
-    - Spring Boot, React Native(App, Web 개발을 위해 선정), Mybatis
+    - Spring Boot
+    - React Native (App, Web 개발을 위해 선정)
+    - Mybatis (SQL Mapper 프레임워크)
+    - Spring Data JPA (ORM 및 데이터 접근을 위해 선정)
+    - Hibernate (JPA 구현체)
 - DB
     - MySql
 - IDE
@@ -27,6 +31,7 @@
         - Naver, Kakao, Google API(소셜 로그인) → 무신사는 Kakao, apple만 있지만 apple를 제외하고 Naver, Google를 추가
     - Library
         - React
+        - JPA (Java Persistence API)
 
 **역할**
 
