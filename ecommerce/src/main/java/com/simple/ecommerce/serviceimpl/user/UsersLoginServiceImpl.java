@@ -10,7 +10,9 @@ import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
 import com.simple.ecommerce.dto.social.SocialUserDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
+import com.simple.ecommerce.entity.users.UsersEntity;
 import com.simple.ecommerce.repository.TestRepository;
+import com.simple.ecommerce.repository.users.UsersRepository;
 import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.social.SocialConnect;
 
@@ -24,6 +26,9 @@ public class UsersLoginServiceImpl implements UsersLoginService{
     @Autowired
     private SocialConnectFactory socialConnectFactory;
 
+    @Autowired
+    private UsersRepository usersRepository;
+
     /**
      * 일반회원 로그인 인터페이스
      * @param UsersLoginDto - UsersLoginDto
@@ -32,6 +37,9 @@ public class UsersLoginServiceImpl implements UsersLoginService{
    */
     @Override
     public String login(UsersLoginDto dto) {
+        // 로그인 시도를 위해 사용자한테 받은 이메일로 DB 조회
+        UsersEntity entity = usersRepository.findByEcUsersEmail(dto.getEcUsersEmail());
+        log.info("\n\n{}\n\n", entity.toString());
         return null;
     }
     
