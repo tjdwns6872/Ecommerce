@@ -11,7 +11,6 @@ import com.simple.ecommerce.dto.social.SocialTokenDto;
 import com.simple.ecommerce.dto.social.SocialUserDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
 import com.simple.ecommerce.entity.users.UsersEntity;
-import com.simple.ecommerce.repository.TestRepository;
 import com.simple.ecommerce.repository.users.UsersRepository;
 import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.social.SocialConnect;
@@ -91,6 +90,7 @@ public class UsersLoginServiceImpl implements UsersLoginService{
             SocialUserDto dto = socialConnect.UserDataToDto(data);
             log.info("\n\n\n{}\n", dto);
             // 해당 유저 데이터가 DB에 있는지 확인
+            UsersEntity entity = usersRepository.findByEcUsersEmail(dto.getEmail());
         } catch(Exception e){
             e.printStackTrace();
         }

@@ -15,5 +15,7 @@ public interface UsersRepository extends JpaRepository<UsersEntity, Integer>{
      * @return UsersEntity
     */
     UsersEntity findByEcUsersEmail(String email);
-    
+
+    <S extends UsersEntity> S save(S entity);
+
 }
