@@ -16,6 +16,10 @@ public interface UsersRepository extends JpaRepository<UsersEntity, Integer>{
     */
     UsersEntity findByEcUsersEmail(String email);
 
+    /**
+     * 회원 데이터 삽입
+     * @param entity - (UsersEntity) 사용자한테 입력 데이터
+     */
     <S extends UsersEntity> S save(S entity);
 
 }

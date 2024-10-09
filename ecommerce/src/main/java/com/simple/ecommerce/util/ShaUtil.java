@@ -6,6 +6,12 @@ import java.security.SecureRandom;
 import com.google.common.hash.Hashing;
 
 public class ShaUtil {
+
+	/**
+	 * 문자열 암호화 하는 메소드
+	 * @param plainText - (String) 변환할 문자열
+	 * @return sha256으로 인코딩된 문자열
+	 */
 	public static String sha256Encode(String plainText) {
 		
 	    return Hashing.sha256()

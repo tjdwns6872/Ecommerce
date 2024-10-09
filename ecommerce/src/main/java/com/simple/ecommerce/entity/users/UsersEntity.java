@@ -4,18 +4,23 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
+@Builder
 @Table(name="EC_USERS")
 public class UsersEntity {
     
     //회원 고유식별자
     @Id
     @Column(name="EC_USERS_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ecUsersId;
 
     //회원 이메일
