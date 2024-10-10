@@ -49,13 +49,19 @@ public class UserRestController {
     public ResponseEntity<AjaxResult<UsersJoinResultDto>> join(@RequestBody UsersJoinDto joinDto) {
         //회원가입 시도
         UsersJoinResultDto result = joinService.join(joinDto);
+        //회원가입 성공하면 AjaxResult 데이터 폼에 맞춰 데이터 삽입
         AjaxResult<UsersJoinResultDto> response = AjaxResult.<UsersJoinResultDto>builder()
+            //HttpStatus Created 상태 코드 삽입(201) 
             .status(HttpStatus.CREATED.value())
+            //API 사용자한테 안내될 메시지
             .message("회원가입에 성공했습니다.")
+            //회원가입 성공 후 service에서 받아온 데이터 삽입
             .data(result)
+            // 빌드
             .build();
         
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        // ResponseEntity 폼에 맞춰 데이터 입력
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     //로그인 컨트롤러
