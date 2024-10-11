@@ -22,4 +22,11 @@ public interface UsersRepository extends JpaRepository<UsersEntity, Integer>{
      */
     <S extends UsersEntity> S save(S entity);
 
+    /**
+     * 고유 식별 번호 기준 회원 조회
+     * @param id - (Integer) 회원 고유 식별 번호
+     * @return UsersEntity
+     */
+    UsersEntity findByEcUsersId(Integer id);
+
 }
