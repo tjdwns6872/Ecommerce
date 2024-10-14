@@ -1,14 +1,10 @@
 package com.simple.ecommerce.dto.sms;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.*;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class MessageDto {
+public class MessageDataDto {
     
     // 수신자 번호
     private String to;

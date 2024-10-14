@@ -14,7 +14,6 @@ import java.time.ZonedDateTime;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.net.URLEncoder;
 
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +36,9 @@ public class SmsConnect {
     // properties에 있는 sms API SECRET값을 apiSecret 변수에 저장
     @Value("${sms.api.secret}")
     private String apiSecret;
+
+    @Value("${sms.api.outgoing}")
+    private String from;
         
     /**
      * SMS 수신
@@ -50,9 +52,11 @@ public class SmsConnect {
         
         //url 값 targetUrl에 저장
         String targetUrl = url;
+        //고정된 발신번호 값 지정
+        dto.getMessage().setForm(from);
         //service에서 넘어온 DTO String값으로 저장
         String parameters = dto.toString();
-
+        
         // 분석 필요
         String salt = UUID.randomUUID().toString().replaceAll("-", "");
         String date = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toString().split("\\[")[0];

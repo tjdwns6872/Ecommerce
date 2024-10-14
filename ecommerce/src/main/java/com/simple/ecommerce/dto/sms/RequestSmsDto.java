@@ -1,7 +1,5 @@
 package com.simple.ecommerce.dto.sms;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class RequestSmsDto {
 
     // 메시지 정보
-    MessageDto message;   
+    private MessageDataDto message;   
 }
