@@ -1,10 +1,12 @@
 package com.simple.ecommerce.dto.sms;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class RequestSmsDto {
 
     // 메시지 정보
