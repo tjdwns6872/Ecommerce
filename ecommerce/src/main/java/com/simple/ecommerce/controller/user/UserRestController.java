@@ -5,10 +5,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
+import com.simple.ecommerce.dto.users.UsersDetailResultDto;
 import com.simple.ecommerce.dto.users.UsersJoinDto;
 import com.simple.ecommerce.dto.users.UsersJoinResultDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
+import com.simple.ecommerce.service.sms.SmsWriteService;
+import com.simple.ecommerce.service.user.UsersDetailService;
 import com.simple.ecommerce.service.user.UsersJoinService;
 import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.AjaxResult;
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +50,21 @@ public class UserRestController {
     @Autowired
     private UsersJoinService joinService;
 
+    @Autowired
+    private UsersDetailService detailService;
+
+    @Autowired
+    private SmsWriteService smsWriteService;
+
+    @PutMapping("/join/CertCode")
+    public ResponseEntity<AjaxResult<Void>> joinCertCode(RequestSmsDto smsDto) throws InvalidKeyException, NoSuchAlgorithmException, IOException{
+        smsWriteService.SmsWrite(smsDto);
+        return ResponseEntity.status(null).body(null);
+    }
+
+
     //회원가입 컨트롤러
-    @PutMapping("/signup")
+    @PutMapping("/join")
     public ResponseEntity<AjaxResult<UsersJoinResultDto>> join(@RequestBody UsersJoinDto joinDto) {
         //회원가입 시도
         UsersJoinResultDto result = joinService.join(joinDto);
@@ -91,6 +110,24 @@ public class UserRestController {
         String url = usersLoginService.socialCallback(socialConnectDto, platform);
         System.out.println(url);
         return new String();
+    }
+
+    //회원 상세데이터(테스트용)
+    @GetMapping("/detail")
+    public ResponseEntity<AjaxResult<UsersDetailResultDto>> detail(@RequestParam Integer id){
+        UsersDetailResultDto dto = detailService.usersDetail(id);
+        AjaxResult<UsersDetailResultDto> response = AjaxResult.<UsersDetailResultDto>builder()
+            //HttpStatus Ok 상태 코드 삽입(200) 
+            .status(HttpStatus.OK.value())
+            //API 사용자한테 안내될 메시지
+            .message("사용자 확인")
+            //조회 성공 후 service에서 받아온 데이터 삽입
+            .data(dto)
+            // 빌드
+            .build();
+        
+        // ResponseEntity 폼에 맞춰 데이터 입력
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
     
     

@@ -32,4 +32,18 @@ public class ShaUtil {
         }
         return sb.toString().toLowerCase();
 	}
+
+	public static String randomNumber() {
+		int limit = 8;
+		String characters = "0123456789";
+		
+		SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(limit);
+        
+        for (int i = 0; i < limit; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+        return sb.toString().toLowerCase();
+	}
 }

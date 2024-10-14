@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.simple.ecommerce.dto.sms.CustomSmsDto;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.service.sms.SmsWriteService;
 import com.simple.ecommerce.util.sms.SmsConnect;
@@ -23,7 +24,8 @@ public class SmsWriteServiceImpl implements SmsWriteService{
 
     @Override
     public String SmsWrite(RequestSmsDto smsdto) throws IOException, InvalidKeyException, NoSuchAlgorithmException {
-        log.info("\n\n{}\n\n", smsdto.toString());
+        CustomSmsDto customDto = smsdto.getCustom();
+        
         smsConnect.smsRequest(smsdto);
 
         return null;

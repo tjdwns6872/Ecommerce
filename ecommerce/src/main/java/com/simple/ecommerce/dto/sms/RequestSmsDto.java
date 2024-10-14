@@ -9,4 +9,7 @@ public class RequestSmsDto {
 
     // 메시지 정보
     private MessageDataDto message;   
+
+    // SMS 용도 분기처리를 위한 DTO
+    private CustomSmsDto Custom;
 }
