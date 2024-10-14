@@ -52,7 +52,6 @@ public class SmsConnect {
         String targetUrl = url;
         //service에서 넘어온 DTO String값으로 저장
         String parameters = dto.toString();
-        // String parameters = "{\"messages\":[{\"to\":\"01049095329\",\"from\":\"01075579897\",\"text\":\"Test Messages\",\"type\":\"SMS\"}]}";
 
         // 분석 필요
         String salt = UUID.randomUUID().toString().replaceAll("-", "");
