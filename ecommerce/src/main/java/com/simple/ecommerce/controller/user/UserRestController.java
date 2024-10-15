@@ -11,7 +11,7 @@ import com.simple.ecommerce.dto.users.UsersDetailResultDto;
 import com.simple.ecommerce.dto.users.UsersJoinDto;
 import com.simple.ecommerce.dto.users.UsersJoinResultDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
-import com.simple.ecommerce.service.sms.SmsWriteService;
+import com.simple.ecommerce.service.sms.SmsService;
 import com.simple.ecommerce.service.user.UsersDetailService;
 import com.simple.ecommerce.service.user.UsersJoinService;
 import com.simple.ecommerce.service.user.UsersLoginService;
@@ -54,11 +54,11 @@ public class UserRestController {
     private UsersDetailService detailService;
 
     @Autowired
-    private SmsWriteService smsWriteService;
+    private SmsService smsService;
 
     @PutMapping("/join/CertCode")
     public ResponseEntity<AjaxResult<Void>> joinCertCode(RequestSmsDto smsDto) throws InvalidKeyException, NoSuchAlgorithmException, IOException{
-        smsWriteService.SmsWrite(smsDto);
+        smsService.smsRequest(smsDto);
         return ResponseEntity.status(null).body(null);
     }
 

@@ -14,5 +14,7 @@ public class CustomSmsDto {
 
     // 인증코드(없으면 null처리)
     private String code;
+
+    private String headerStr;
     
 }

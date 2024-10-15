@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 
 @Service
-public interface SmsWriteService {
+public interface SmsService {
 
-    String SmsWrite(RequestSmsDto smsdto) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
+    String smsRequest(RequestSmsDto smsDto) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 }

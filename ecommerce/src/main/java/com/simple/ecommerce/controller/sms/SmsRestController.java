@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
-import com.simple.ecommerce.service.sms.SmsWriteService;
+import com.simple.ecommerce.service.sms.SmsService;
 import com.simple.ecommerce.util.AjaxResult;
 
 @RestController
@@ -20,11 +20,11 @@ import com.simple.ecommerce.util.AjaxResult;
 public class SmsRestController {
 
     @Autowired
-    private SmsWriteService smsWriteService;
+    private SmsService smsService;
     
     @PostMapping("/write")
     public ResponseEntity<AjaxResult<Void>> write(@RequestBody RequestSmsDto smsDto) throws InvalidKeyException, NoSuchAlgorithmException, IOException{
-        smsWriteService.SmsWrite(smsDto);
+        smsService.smsRequest(smsDto);
         return null;
     }
 }
