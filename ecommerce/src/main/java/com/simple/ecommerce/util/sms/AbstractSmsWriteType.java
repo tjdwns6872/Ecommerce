@@ -1,11 +1,6 @@
 package com.simple.ecommerce.util.sms;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -17,39 +12,24 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.simple.ecommerce.component.sms.SmsProperties;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 
-import jakarta.annotation.PostConstruct;
-
 public abstract class AbstractSmsWriteType implements SmsWriteType{
-    // properties에 있는 sms 수신 API URL을 url 변수에 저장
-    @Value("${sms.api.url}")
-    private String url;
-
-    // properties에 있는 sms API KEY값을 apiKey 변수에 저장
-    @Value("${sms.api.key}")
-    private String apiKey;
-
-    // properties에 있는 sms API SECRET값을 apiSecret 변수에 저장
-    @Value("${sms.api.secret}")
-    private String apiSecret;
-
-    @Value("${sms.api.outgoing}")
-    private String from;
-
-    @PostConstruct
-    public void init(){}
+    
+    @Autowired
+    private SmsProperties smsProperties;
 
     public String headerSetting() throws IOException, NoSuchAlgorithmException, InvalidKeyException{
         String salt = UUID.randomUUID().toString().replaceAll("-", "");
         String date = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toString().split("\\[")[0];
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secret_key = new SecretKeySpec(apiSecret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        SecretKeySpec secret_key = new SecretKeySpec(smsProperties.getApiSecret().getBytes(StandardCharsets.UTF_8), "HmacSHA256");
         sha256_HMAC.init(secret_key);
         String signature = new String(Hex.encodeHex(sha256_HMAC.doFinal((date + salt).getBytes(StandardCharsets.UTF_8))));
-        String sha256Str = "HMAC-SHA256 ApiKey="+apiKey+", Date="+date+", salt="+salt+", signature="+signature;
+        String sha256Str = "HMAC-SHA256 ApiKey="+smsProperties.getApiKey()+", Date="+date+", salt="+salt+", signature="+signature;
 
         return sha256Str;
     }

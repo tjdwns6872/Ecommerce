@@ -14,5 +14,5 @@ public interface SmsWriteType {
     public abstract RequestSmsDto dtoSetting(RequestSmsDto smsDto);
 
     public String headerSetting() throws IOException, NoSuchAlgorithmException, InvalidKeyException;
-    
+
 }
