@@ -1,6 +1,8 @@
 package com.simple.ecommerce.entity.sms;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,8 +38,9 @@ public class SmsEntity {
     private String ecCertCode;
 
     //인증코드 발급일
+    @CreationTimestamp
     @Column(name = "EC_CERT_CREATED_AT")
-    private Date ecCertCreatedAt;
+    private LocalDateTime ecCertCreatedAt;
 
     //인증코드 삭제여부
     @Column(name = "EC_CERT_DE_FLG")

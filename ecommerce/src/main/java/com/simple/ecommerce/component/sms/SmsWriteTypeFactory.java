@@ -1,5 +1,7 @@
 package com.simple.ecommerce.component.sms;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.simple.ecommerce.util.sms.AbstractSmsWriteType;
@@ -17,10 +19,17 @@ public class SmsWriteTypeFactory {
      * @return SmsWriteType - 사용자가 요청한 커넥션
      * @throws Exception 변경예정
      */
+
+    // 클래스 빈처리를 위한 코드
+    @Autowired
+    private ApplicationContext context;
+
     public AbstractSmsWriteType getSmsWriteType(String type) throws Exception{
+        // Sms를 사용하는 기능에 따라 처리되는 데이터가 달라지기 때문에 분기처리를 위한 코드
         switch (type) {
             case "join":
-                return new SmsJoinWriteCode();
+                // SmsJoinWriteCode클래스 선언
+                return context.getBean(SmsJoinWriteCode.class);
             default:
                 throw new Exception();
         }

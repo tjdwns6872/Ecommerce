@@ -1,18 +1,13 @@
 package com.simple.ecommerce.util.sms;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 
 public interface SmsWriteType {
 
-    public String smsWrite(RequestSmsDto smsDto) throws MalformedURLException, IOException;
-
+    /**
+     * // SMS 전송 시 사용할 데이터 셋팅
+     * @param smsDto
+     * @return RequestSmsDto
+     */
     public abstract RequestSmsDto dtoSetting(RequestSmsDto smsDto);
-
-    public String headerSetting() throws IOException, NoSuchAlgorithmException, InvalidKeyException;
-
 }

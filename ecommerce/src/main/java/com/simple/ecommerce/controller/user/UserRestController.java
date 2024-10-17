@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +54,12 @@ public class UserRestController {
     @Autowired
     private SmsService smsService;
 
+    //회원가입 시 사용되는 SMS 인증 컨트롤러
     @PutMapping("/join/CertCode")
-    public ResponseEntity<AjaxResult<Void>> joinCertCode(RequestSmsDto smsDto) throws InvalidKeyException, NoSuchAlgorithmException, IOException{
+    public ResponseEntity<AjaxResult<Void>> joinCertCode(RequestSmsDto smsDto) throws Exception{
+        // 기능 데이터 처리시 사용되는 sms 타입 선언
+        smsDto.getCustom().setType("join");
+        // SMS 전송
         smsService.smsRequest(smsDto);
         return ResponseEntity.status(null).body(null);
     }
