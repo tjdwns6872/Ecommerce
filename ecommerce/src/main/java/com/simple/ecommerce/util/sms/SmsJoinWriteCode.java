@@ -29,7 +29,7 @@ public class SmsJoinWriteCode extends AbstractSmsWriteType implements SmsCertDb{
         // SMS 내용 세팅
         smsDto.getMessage().setText(String.format("[%s]", cert));
         // 인증코드 저장
-        smsDto.getCustom().setCode(cert);
+        smsDto.getCustom().setCustomCode(cert);
         // SMS 전송할 때 사용되는 타입 선언(coolSMS에서 정해진 타입)
         smsDto.getMessage().setType("SMS");
         // 세팅된 DTO 리턴

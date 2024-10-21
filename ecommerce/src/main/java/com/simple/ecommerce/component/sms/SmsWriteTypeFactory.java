@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.simple.ecommerce.util.sms.AbstractSmsWriteType;
+import com.simple.ecommerce.util.sms.SmsFindWriteCode;
 import com.simple.ecommerce.util.sms.SmsJoinWriteCode;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,12 @@ public class SmsWriteTypeFactory {
             case "join":
                 // SmsJoinWriteCode클래스 선언
                 return context.getBean(SmsJoinWriteCode.class);
+            case "emailFind":
+                //SmsFindWriteCode클래스 선언
+                return context.getBean(SmsFindWriteCode.class);
+            case "passwordFind":
+                //SmsFindWriteCode클래스 선언
+                return context.getBean(SmsFindWriteCode.class);
             default:
                 throw new Exception();
         }

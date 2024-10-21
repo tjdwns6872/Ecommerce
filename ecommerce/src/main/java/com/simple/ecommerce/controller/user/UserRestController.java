@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.users.UsersDetailResultDto;
+import com.simple.ecommerce.dto.users.UsersFindDto;
 import com.simple.ecommerce.dto.users.UsersJoinDto;
 import com.simple.ecommerce.dto.users.UsersJoinResultDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
@@ -55,10 +56,10 @@ public class UserRestController {
     private SmsService smsService;
 
     //회원가입 시 사용되는 SMS 인증 컨트롤러
-    @PutMapping("/join/CertCode")
-    public ResponseEntity<AjaxResult<Void>> joinCertCode(RequestSmsDto smsDto) throws Exception{
+    @PutMapping("/{certType}/CertCode")
+    public ResponseEntity<AjaxResult<Void>> joinCertCode(RequestSmsDto smsDto, @PathVariable String certType) throws Exception{
         // 기능 데이터 처리시 사용되는 sms 타입 선언
-        smsDto.getCustom().setType("join");
+        smsDto.getCustom().setCustomType(certType);
         // SMS 전송
         smsService.smsRequest(smsDto);
         return ResponseEntity.status(null).body(null);
@@ -112,6 +113,13 @@ public class UserRestController {
         String url = usersLoginService.socialCallback(socialConnectDto, platform);
         System.out.println(url);
         return new String();
+    }
+
+    //회원 정보를 찾을 때 사용되는 컨트롤러
+    @GetMapping("/find")
+    public ResponseEntity<AjaxResult<Void>> find(UsersFindDto usersFindDto){
+
+        return ResponseEntity.status(null).body(null);
     }
 
     //회원 상세데이터(테스트용)

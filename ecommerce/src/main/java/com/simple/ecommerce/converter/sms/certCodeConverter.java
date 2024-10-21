@@ -8,7 +8,7 @@ public class certCodeConverter {
     public SmsEntity toEntity(RequestSmsDto smsDto){
         SmsEntity entity = SmsEntity.builder()
             .ecCertPhone(smsDto.getMessage().getTo())
-            .ecCertCode(smsDto.getCustom().getCode())
+            .ecCertCode(smsDto.getCustom().getCustomCode())
             .build();
         return entity;
     }
