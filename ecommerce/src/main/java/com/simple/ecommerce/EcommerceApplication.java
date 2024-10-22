@@ -7,17 +7,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-@MapperScan("com.simple.ecommerce.mapper")
 @EntityScan("com.simple.ecommerce.entity.*")
+@EnableJpaRepositories("com.simple.ecommerce.repository")
 @EnableTransactionManagement
-@EnableWebSecurity
+// @EnableWebSecurity
 public class EcommerceApplication {
 
 	public static void main(String[] args) {
