@@ -56,7 +56,7 @@ public abstract class AbstractSmsWriteType implements SmsWriteType{
         con.setRequestMethod("POST");
     
         // 헤더 값 지정
-        con.setRequestProperty("Authorization", smsDto.getCustom().getHeaderStr());
+        con.setRequestProperty("Authorization", smsDto.getCustom().getCustomHeaderStr());
         con.setRequestProperty("Content-Type", "application/json");
     
         // Body값을 넘기기 위해 true로 지정

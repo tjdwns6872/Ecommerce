@@ -7,13 +7,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
-import com.simple.ecommerce.dto.users.UsersDetailResultDto;
+import com.simple.ecommerce.dto.users.UsersDataResultDto;
 import com.simple.ecommerce.dto.users.UsersFindDto;
 import com.simple.ecommerce.dto.users.UsersJoinDto;
 import com.simple.ecommerce.dto.users.UsersJoinResultDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
 import com.simple.ecommerce.service.sms.SmsService;
-import com.simple.ecommerce.service.user.UsersDetailService;
+import com.simple.ecommerce.service.user.UsersDataService;
 import com.simple.ecommerce.service.user.UsersJoinService;
 import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.AjaxResult;
@@ -50,7 +50,7 @@ public class UserRestController {
     private UsersJoinService joinService;
 
     @Autowired
-    private UsersDetailService detailService;
+    private UsersDataService dataService;
 
     @Autowired
     private SmsService smsService;
@@ -117,16 +117,21 @@ public class UserRestController {
 
     //회원 정보를 찾을 때 사용되는 컨트롤러
     @GetMapping("/find")
-    public ResponseEntity<AjaxResult<Void>> find(UsersFindDto usersFindDto){
-
-        return ResponseEntity.status(null).body(null);
+    public ResponseEntity<AjaxResult<String>> find(UsersFindDto usersFindDto) throws Exception{
+        String result = dataService.usersData(usersFindDto);
+        AjaxResult<String> response = AjaxResult.<String>builder()
+            .status(HttpStatus.OK.value())
+            .message("사용자 확인")
+            .data(result)
+            .build();
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     //회원 상세데이터(테스트용)
     @GetMapping("/detail")
-    public ResponseEntity<AjaxResult<UsersDetailResultDto>> detail(@RequestParam Integer id){
-        UsersDetailResultDto dto = detailService.usersDetail(id);
-        AjaxResult<UsersDetailResultDto> response = AjaxResult.<UsersDetailResultDto>builder()
+    public ResponseEntity<AjaxResult<UsersDataResultDto>> detail(@RequestParam Integer id){
+        UsersDataResultDto dto = dataService.usersData(id);
+        AjaxResult<UsersDataResultDto> response = AjaxResult.<UsersDataResultDto>builder()
             //HttpStatus Ok 상태 코드 삽입(200) 
             .status(HttpStatus.OK.value())
             //API 사용자한테 안내될 메시지

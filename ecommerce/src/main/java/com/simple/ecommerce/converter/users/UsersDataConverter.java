@@ -1,11 +1,11 @@
 package com.simple.ecommerce.converter.users;
 
-import com.simple.ecommerce.dto.users.UsersDetailResultDto;
+import com.simple.ecommerce.dto.users.UsersDataResultDto;
 import com.simple.ecommerce.entity.users.UsersEntity;
 
-public class UsersDetailConverter {
+public class UsersDataConverter {
     
-    public UsersEntity toEntity(UsersDetailResultDto dto) {
+    public UsersEntity toEntity(UsersDataResultDto dto) {
         UsersEntity entity = UsersEntity.builder()
             .ecUsersEmail(dto.getEcUsersEmail())
             .ecUsersPassword(dto.getEcUsersPassword())
@@ -21,8 +21,8 @@ public class UsersDetailConverter {
         return entity;
     }
 
-    public UsersDetailResultDto toDto(UsersEntity entity) {
-        UsersDetailResultDto dto = UsersDetailResultDto.builder()
+    public UsersDataResultDto toDto(UsersEntity entity) {
+        UsersDataResultDto dto = UsersDataResultDto.builder()
             .ecUsersEmail(entity.getEcUsersEmail())
             .ecUsersPassword(entity.getEcUsersPassword())
             .ecUsersName(entity.getEcUsersName())

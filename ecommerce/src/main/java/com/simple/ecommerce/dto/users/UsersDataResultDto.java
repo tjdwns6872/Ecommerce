@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data @Builder
-public class UsersDetailResultDto {
+public class UsersDataResultDto {
 
     //회원 고유식별자
     private Integer ecUsersId;
