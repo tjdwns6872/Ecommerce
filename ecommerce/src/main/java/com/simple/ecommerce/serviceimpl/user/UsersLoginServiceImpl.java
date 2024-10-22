@@ -11,6 +11,7 @@ import com.simple.ecommerce.dto.social.SocialTokenDto;
 import com.simple.ecommerce.dto.social.SocialUserDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
 import com.simple.ecommerce.entity.users.UsersEntity;
+import com.simple.ecommerce.exception.users.SocialLoginException;
 import com.simple.ecommerce.repository.users.UsersRepository;
 import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.social.SocialConnect;
@@ -35,11 +36,9 @@ public class UsersLoginServiceImpl implements UsersLoginService{
      * @throws 어떤 상황에서 예외가 발생!
    */
     @Override
-    public String login(UsersLoginDto dto) {
+    public void login(UsersLoginDto dto) {
         // 로그인 시도를 위해 사용자한테 받은 이메일로 DB 조회
         UsersEntity entity = usersRepository.findByEcUsersEmail(dto.getEcUsersEmail());
-        log.info("\n\n{}\n\n", entity.toString());
-        return null;
     }
     
     /**
@@ -71,7 +70,7 @@ public class UsersLoginServiceImpl implements UsersLoginService{
      * @throws 어떤 상황에서 예외가 발생!
    */
     @Override
-    public String socialCallback(SocialConnectDto socialConnectDto, String platform) {
+    public void socialCallback(SocialConnectDto socialConnectDto, String platform) {
         try {
             // API에서 토큰 발급을 위한 기본 grant_type값 삽입
             socialConnectDto.setGrantType("authorization_code");
@@ -85,16 +84,16 @@ public class UsersLoginServiceImpl implements UsersLoginService{
             String userUrl = socialConnect.socialGetUrl();
             // 유저 데이터 가져오기
             String data = socialConnect.socialGetUserData(socialTokenDto, userUrl);
-            log.info("\n\n{}\n\n", data);
             // 유저 데이터(문자열) SocialUserDto로 변환
             SocialUserDto dto = socialConnect.UserDataToDto(data);
-            log.info("\n\n\n{}\n", dto);
             // 해당 유저 데이터가 DB에 있는지 확인
             UsersEntity entity = usersRepository.findByEcUsersEmail(dto.getEmail());
-        } catch(Exception e){
+            log.info("Users Login Entity Null Check====>{}", entity.toString());
+        } catch(NullPointerException e){
+            throw new SocialLoginException();
+        }catch(Exception e){
             e.printStackTrace();
         }
-        return null;
     }
 
     @Override

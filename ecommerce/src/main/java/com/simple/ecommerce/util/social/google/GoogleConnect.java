@@ -1,20 +1,16 @@
 package com.simple.ecommerce.util.social.google;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.liferay.portal.kernel.security.SecureRandom;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
-import com.simple.ecommerce.dto.social.SocialTokenDto;
+import com.simple.ecommerce.dto.social.SocialUserDto;
+import com.simple.ecommerce.dto.social.google.GoogleUserDto;
 import com.simple.ecommerce.util.social.AbstractSocialConnect;
-import com.simple.ecommerce.util.social.SocialConnect;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.math.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -66,7 +62,7 @@ public class GoogleConnect extends AbstractSocialConnect{
         url.append("&response_type=code");
         // 인증 후 인증코드를 발급 받을 callback URL를 URLEncoder로 인코딩 후 파라미터에 추가
         url.append("&redirect_uri="+URLEncoder.encode(REDIRECT_URL, "UTF-8"));
-        url.append("&scope=email%20profile%20openid&access_type=offline");
+        url.append("&scope=email%20profile%20openid");
 
         // 생성한 URL 리턴
         return url.toString();
@@ -108,5 +104,21 @@ public class GoogleConnect extends AbstractSocialConnect{
     public String socialGetUrl() {
         return USER_DATA_URL;
     }
-    
+
+    @Override
+    public SocialUserDto UserDataToDto(String data) throws JsonMappingException, JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        log.info("\n\n\n{}\n", data);
+        GoogleUserDto userDto = mapper.readValue(data, GoogleUserDto.class);
+        
+        log.info("\n\n\n{}\n", userDto);
+        // 필요한 데이터만 추출해서 리턴
+        SocialUserDto dto = new SocialUserDto();
+
+        dto.setEmail(userDto.getEmail());
+
+        // 추출한 데이터 리턴
+        return dto;
+    }
+
 }

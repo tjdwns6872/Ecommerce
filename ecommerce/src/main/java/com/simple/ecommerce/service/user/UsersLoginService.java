@@ -25,7 +25,7 @@ public interface UsersLoginService {
      * @return 토큰 값을 발급 받을 url값
      * @throws 어떤 상황에서 예외가 발생!
    */
-   String login(UsersLoginDto dto);
+   void login(UsersLoginDto dto);
 
    /**
      * 소셜로그인시 넘어오는 인증코드 처리를 위한 인터페이스
@@ -34,7 +34,7 @@ public interface UsersLoginService {
      * @return 토큰 값을 발급 받을 url값
      * @throws 어떤 상황에서 예외가 발생!
    */
-   String socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonMappingException, JsonProcessingException;
+   void socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonMappingException, JsonProcessingException;
 
    String socialTokenRefresh();
 }

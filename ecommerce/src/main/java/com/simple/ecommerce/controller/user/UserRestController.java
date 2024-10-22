@@ -88,13 +88,14 @@ public class UserRestController {
 
     //로그인 컨트롤러
     @PostMapping("/login")
-    public ResponseEntity<String> login(HttpServletResponse response
-        ,@RequestBody UsersLoginDto loginDto) throws IOException {
-        // 로그인 시 상태메시지를 저장할 변수 선언
-        String message = null;
+    public ResponseEntity<AjaxResult<Void>> login(@RequestBody UsersLoginDto loginDto) throws IOException {
         // 로그인 시도
-        message = usersLoginService.login(loginDto);
-        return ResponseEntity.ok(message);
+        usersLoginService.login(loginDto);
+        AjaxResult<Void> response = AjaxResult.<Void>builder()
+            .status(HttpStatus.OK.value())
+            .message("로그인 성공")
+            .build();
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     //소셜 로그인 컨트롤러
@@ -109,10 +110,13 @@ public class UserRestController {
 
     //소셜로그인 시 인증코드를 받는 컨트롤러
     @GetMapping("/{platform}/callback")
-    public String platformCallback(SocialConnectDto socialConnectDto, @PathVariable("platform") String platform) throws JsonMappingException, JsonProcessingException {
-        String url = usersLoginService.socialCallback(socialConnectDto, platform);
-        System.out.println(url);
-        return new String();
+    public ResponseEntity<AjaxResult<Void>> platformCallback(SocialConnectDto socialConnectDto, @PathVariable("platform") String platform) throws JsonMappingException, JsonProcessingException {
+        usersLoginService.socialCallback(socialConnectDto, platform);
+        AjaxResult<Void> response = AjaxResult.<Void>builder()
+            .status(HttpStatus.OK.value())
+            .message("로그인 성공")
+            .build();
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     //회원 정보를 찾을 때 사용되는 컨트롤러
