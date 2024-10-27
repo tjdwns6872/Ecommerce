@@ -24,6 +24,7 @@ public class UsersDataServiceImpl implements UsersDataService{
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
     private MailComponent mailComponent;
 
     @Override
@@ -38,15 +39,14 @@ public class UsersDataServiceImpl implements UsersDataService{
                 entity = usersRepository.findByEcUsersEmailAndEcUsersPhone(findDto.getEmail(), findDto.getPhone());
                 log.info("\n\n{}\n\n", entity.toString());
                 String password = ShaUtil.randomString();
-                // entity.setEcUsersPassword(password);
-                // usersRepository.save(entity);
+                entity.setEcUsersPassword(password);
+                usersRepository.save(entity);
                 SendMailForm form = SendMailForm.builder()
-                .from("Excited User <USER@sandboxe95dc03f6b1e43fe876fd4bf447a64a8.mailgun.org>")
-                .to("tjdwns6872@naver.com")
-                .subject("hello")
-                .text("testing")
+                .to(entity.getEcUsersEmail())
+                .subject("임시 비밀번호 발송")
+                .text(password)
                 .build();
-                mailComponent.sendEmail(form).getBody();
+                mailComponent.sendSimpleMessage(form);
                 result = entity.getEcUsersEmail()+"로 임시 비밀번호 발송했습니다.";
             }
         } catch (NullPointerException e) {

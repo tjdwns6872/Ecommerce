@@ -33,7 +33,7 @@ public interface UsersRepository extends JpaRepository<UsersEntity, Integer>{
     UsersEntity findByEcUsersPhoneAndEcUsersName(String phone, String name);
 
     /**
-     * 회원 데이터 삽입
+     * 회원 데이터 저장
      * @param entity - (UsersEntity) 사용자한테 입력 데이터
      */
     <S extends UsersEntity> S save(S entity);

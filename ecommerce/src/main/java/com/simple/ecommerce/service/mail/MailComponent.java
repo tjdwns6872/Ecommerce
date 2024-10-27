@@ -1,27 +1,36 @@
 package com.simple.ecommerce.service.mail;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
-@FeignClient(name="mailgun", url="https://api.mailgun.net/v3/")
-public interface MailComponent {
+import lombok.extern.slf4j.Slf4j;
 
-    // @Value("${mailgun.api.key}")
-    // private String API_KEY;
+@Component
+@Slf4j
+public class MailComponent {
+
+    @Value("${mailgun.api.key}")
+    private String API_KEY;
     
-    // public JsonNode sendSimpleMessage() throws UnirestException {
-    //     HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/sandboxe95dc03f6b1e43fe876fd4bf447a64a8.mailgun.org/messages")
-    //         .basicAuth("api", API_KEY)
-    //         .queryString("from", "Excited User <USER@sandboxe95dc03f6b1e43fe876fd4bf447a64a8.mailgun.org>")
-    //         .queryString("to", "tjdwns6872@naver.com")
-    //         .queryString("subject", "hello")
-    //         .queryString("text", "testing")
-    //         .asJson();
-    //     return request.getBody();
-  	// }
+    @Value("${mailgun.api.url}")
+    private String MAILGUN_URL;
 
-    @PostMapping("sandboxe95dc03f6b1e43fe876fd4bf447a64a8.mailgun.org/messages")
-    ResponseEntity<String> sendEmail(@SpringQueryMap SendMailForm mailForm);
+    @Value("${mailgun.api.domain}")
+    private String DOMAIN;
+
+    public JsonNode sendSimpleMessage(SendMailForm sendMailForm) throws UnirestException {
+      HttpResponse<JsonNode> request = Unirest.post(MAILGUN_URL+DOMAIN+"/messages")
+        .basicAuth("api", API_KEY)
+        .field("from", "Excited User <USER@"+DOMAIN+">")
+        .field("to", sendMailForm.getTo())
+        .field("subject", sendMailForm.getSubject())
+        .field("text", sendMailForm.getText())
+        .asJson();
+      return request.getBody();
+  	}
+
 }
