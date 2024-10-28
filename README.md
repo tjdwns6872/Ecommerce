@@ -18,8 +18,8 @@
 - 서버
     - Apache Tomcat, ubuntu
 - 프레임워크
-    - Spring Boot
-    - React Native (App, Web 개발을 위해 선정)
+    - Spring Boot (Server)
+    - React Native (Client) - App, Web 개발을 위해 선정
     - Mybatis (SQL Mapper 프레임워크)
     - Spring Data JPA (ORM 및 데이터 접근을 위해 선정)
     - Hibernate (JPA 구현체)
@@ -33,6 +33,8 @@
     - Library
         - React
         - JPA (Java Persistence API)
+- ADMIN 페이지(운영자 전용)
+    - NodeJS(제작 예정)
 
 **역할**
 

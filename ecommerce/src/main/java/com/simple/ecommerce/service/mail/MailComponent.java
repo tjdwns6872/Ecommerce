@@ -22,6 +22,12 @@ public class MailComponent {
     @Value("${mailgun.api.domain}")
     private String DOMAIN;
 
+    /**
+     * 메일 전송을 위한 메소드
+     * @param sendMailForm
+     * @return Body 데이터
+     * @throws UnirestException
+     */
     public JsonNode sendSimpleMessage(SendMailForm sendMailForm) throws UnirestException {
       HttpResponse<JsonNode> request = Unirest.post(MAILGUN_URL+DOMAIN+"/messages")
         .basicAuth("api", API_KEY)
