@@ -5,15 +5,20 @@ import java.io.UnsupportedEncodingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.simple.ecommerce.component.social.SocialConnectFactory;
+import com.simple.ecommerce.dto.jwt.UserJwtDto;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.social.SocialTokenDto;
 import com.simple.ecommerce.dto.social.SocialUserDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
 import com.simple.ecommerce.entity.users.UsersEntity;
+import com.simple.ecommerce.exception.users.LoginException;
 import com.simple.ecommerce.exception.users.SocialLoginException;
 import com.simple.ecommerce.repository.users.UsersRepository;
 import com.simple.ecommerce.service.user.UsersLoginService;
+import com.simple.ecommerce.util.JwtUtil;
+import com.simple.ecommerce.util.ShaUtil;
 import com.simple.ecommerce.util.social.SocialConnect;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,16 +34,29 @@ public class UsersLoginServiceImpl implements UsersLoginService{
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     /**
      * 일반회원 로그인 인터페이스
      * @param UsersLoginDto - UsersLoginDto
      * @return 토큰 값을 발급 받을 url값
-     * @throws 어떤 상황에서 예외가 발생!
+     * @throws JsonProcessingException 
+     * @throws LoginException
    */
     @Override
-    public void login(UsersLoginDto dto) {
+    public String login(UsersLoginDto dto) throws JsonProcessingException {
         // 로그인 시도를 위해 사용자한테 받은 이메일로 DB 조회
         UsersEntity entity = usersRepository.findByEcUsersEmail(dto.getEcUsersEmail());
+        if(!ShaUtil.sha256Encode(dto.getEcUsersPassword()).equals(entity.getEcUsersPassword())){
+            throw new LoginException();
+        }
+        UserJwtDto jwtDto = UserJwtDto.builder()
+            .ecUsersId(entity.getEcUsersId())
+            .ecUsersEmail(entity.getEcUsersEmail())
+            .ecUsersName(entity.getEcUsersName())
+            .build();
+        return jwtUtil.createToken(jwtDto);
     }
     
     /**
@@ -67,10 +85,12 @@ public class UsersLoginServiceImpl implements UsersLoginService{
      * @param socialConnectDto - (SocialConnectDto) 토큰 값을 요청할 때 사용할 파라미터 값
      * @param platform - (String) 사용자가 요청한 플랫폼 명
      * @return 토큰 값을 발급 받을 url값
+     * @throws JsonProcessingException 
      * @throws 어떤 상황에서 예외가 발생!
    */
     @Override
-    public void socialCallback(SocialConnectDto socialConnectDto, String platform) {
+    public String socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonProcessingException {
+        UsersEntity entity = new UsersEntity();
         try {
             // API에서 토큰 발급을 위한 기본 grant_type값 삽입
             socialConnectDto.setGrantType("authorization_code");
@@ -87,13 +107,19 @@ public class UsersLoginServiceImpl implements UsersLoginService{
             // 유저 데이터(문자열) SocialUserDto로 변환
             SocialUserDto dto = socialConnect.UserDataToDto(data);
             // 해당 유저 데이터가 DB에 있는지 확인
-            UsersEntity entity = usersRepository.findByEcUsersEmail(dto.getEmail());
+            entity = usersRepository.findByEcUsersEmail(dto.getEmail());
             log.info("Users Login Entity Null Check====>{}", entity.toString());
         } catch(NullPointerException e){
             throw new SocialLoginException();
         }catch(Exception e){
             e.printStackTrace();
         }
+        UserJwtDto jwtDto = UserJwtDto.builder()
+            .ecUsersId(entity.getEcUsersId())
+            .ecUsersEmail(entity.getEcUsersEmail())
+            .ecUsersName(entity.getEcUsersName())
+            .build();
+        return jwtUtil.createToken(jwtDto);
     }
 
     @Override

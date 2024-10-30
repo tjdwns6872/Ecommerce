@@ -60,5 +60,19 @@ public class UsersExceptionHandler {
         
         return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler(LoginException.class)
+    public ResponseEntity<AjaxResult<Void>> LoginException(LoginException ex){
+        AjaxResult<Void> response = AjaxResult.<Void>builder()
+        .status(HttpStatus.BAD_REQUEST.value())
+            .message("해당 정보의 회원을 찾을 수 없습니다.")
+            .error(AjaxResult.ErrorDetails.builder()
+                .code("The member for that information could not be found.")
+                .details(ex.getMessage())
+                .build())
+            .build();
+        
+        return ResponseEntity.badRequest().body(response);
+    }
 }
 

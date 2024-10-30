@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.users.UsersLoginDto;
+import com.simple.ecommerce.entity.users.UsersEntity;
 
 @Service
 public interface UsersLoginService {
@@ -25,7 +26,7 @@ public interface UsersLoginService {
      * @return 토큰 값을 발급 받을 url값
      * @throws 어떤 상황에서 예외가 발생!
    */
-   void login(UsersLoginDto dto);
+   String login(UsersLoginDto dto) throws JsonProcessingException;
 
    /**
      * 소셜로그인시 넘어오는 인증코드 처리를 위한 인터페이스
@@ -34,7 +35,7 @@ public interface UsersLoginService {
      * @return 토큰 값을 발급 받을 url값
      * @throws 어떤 상황에서 예외가 발생!
    */
-   void socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonMappingException, JsonProcessingException;
+   String socialCallback(SocialConnectDto socialConnectDto, String platform) throws JsonMappingException, JsonProcessingException;
 
    String socialTokenRefresh();
 }
