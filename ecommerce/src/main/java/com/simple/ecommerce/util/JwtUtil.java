@@ -1,18 +1,28 @@
 package com.simple.ecommerce.util;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simple.ecommerce.dto.jwt.UserJwtDto;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
+import kotlinx.datetime.Instant;
+import kotlinx.datetime.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import java.security.Key;
 import java.util.*;
@@ -22,19 +32,20 @@ import java.util.*;
 public class JwtUtil {
     
     @Value("${jwt.secret}")
-    private String secret;
+    private String SECRET_KEY;
 
     @Value("${jwt.expiration}")
     private long jwtExpiration;
     
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
     private Date getExpireDate(){
-        Date now = new Date();
-        return new Date(now.getTime()+jwtExpiration);
+        ZonedDateTime kstDateTime = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+        kstDateTime = kstDateTime.plusSeconds(jwtExpiration);
+        return Date.from(kstDateTime.toInstant());
     }
 
     @SuppressWarnings("unchecked")
@@ -53,20 +64,36 @@ public class JwtUtil {
                 .setIssuer("admin")
                 .setClaims(claims)
                 .setExpiration(expireDate)
+                .setId(String.valueOf(jwtDto.getEcUsersId()))
                 .signWith(key, SignatureAlgorithm.HS512).compact();
     }
 
-    public void validateToken(String token) {
+    public boolean validateToken(String token) {
         try {
-            // 토큰을 각 섹션(Header, Payload, Signature)으로 분할
-            String[] chunks = token.split("\\.");
-            Base64.Decoder decoder = Base64.getUrlDecoder();
-
-            String header = new String(decoder.decode(chunks[0]));
-            String payload = new String(decoder.decode(chunks[1]));
-
-            log.info("\n\n{}\n\n", payload);
+            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
+            return true;
         } catch (JwtException | IllegalArgumentException e) {
+            log.error("{}", e);
+            return false;
         }
+    }
+
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+    public Authentication getAuthentication(String token) {
+        Claims claims = Jwts.parserBuilder()
+                              .setSigningKey(getSigningKey())
+                              .build()
+                              .parseClaimsJws(token)
+                              .getBody();
+        
+        User principal = new User(claims.getId(), "", List.of());
+        return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
     }
 }

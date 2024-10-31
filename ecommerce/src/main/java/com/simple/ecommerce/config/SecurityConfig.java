@@ -6,11 +6,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.simple.ecommerce.component.JwtAuthenticationFilter;
+import com.simple.ecommerce.util.JwtUtil;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     
+    private final JwtUtil jwtUtil;
+
+    public SecurityConfig(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -25,7 +35,7 @@ public class SecurityConfig {
                     , "/swagger-ui/**"
                     , "/v3/api-docs/**").permitAll() // 인증없이 접근 가능한 url패턴
                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
-            );
+            ).addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
