@@ -90,11 +90,11 @@ public class UserRestController {
     @PostMapping("/login")
     public ResponseEntity<AjaxResult<String>> login(@RequestBody UsersLoginDto loginDto) throws IOException {
         // 로그인 시도
-        usersLoginService.login(loginDto);
+        String data = usersLoginService.login(loginDto);
         AjaxResult<String> response = AjaxResult.<String>builder()
             .status(HttpStatus.OK.value())
             .message("로그인 성공")
-            .data(null)
+            .data(data)
             .build();
         return ResponseEntity.status(response.getStatus()).body(response);
     }

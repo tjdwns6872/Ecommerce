@@ -40,7 +40,7 @@ public class UsersLoginServiceImpl implements UsersLoginService{
     /**
      * 일반회원 로그인 인터페이스
      * @param UsersLoginDto - UsersLoginDto
-     * @return 토큰 값을 발급 받을 url값
+     * @return JWT 토큰값
      * @throws JsonProcessingException 
      * @throws LoginException
    */
@@ -84,7 +84,7 @@ public class UsersLoginServiceImpl implements UsersLoginService{
      * 인증 후 리다이렉트된 매소드로 토큰 URL를 생성, 토큰 발급 후 유저 데이터를 처리하는 메소드 
      * @param socialConnectDto - (SocialConnectDto) 토큰 값을 요청할 때 사용할 파라미터 값
      * @param platform - (String) 사용자가 요청한 플랫폼 명
-     * @return 토큰 값을 발급 받을 url값
+     * @return JWT 토큰 값
      * @throws JsonProcessingException 
      * @throws 어떤 상황에서 예외가 발생!
    */
@@ -114,11 +114,13 @@ public class UsersLoginServiceImpl implements UsersLoginService{
         }catch(Exception e){
             e.printStackTrace();
         }
+        //JWT 토큰 생성 시 포함할 유저 데이터 저장
         UserJwtDto jwtDto = UserJwtDto.builder()
             .ecUsersId(entity.getEcUsersId())
             .ecUsersEmail(entity.getEcUsersEmail())
             .ecUsersName(entity.getEcUsersName())
             .build();
+        //JWT 토큰 생성 후 리턴 
         return jwtUtil.createToken(jwtDto);
     }
 
