@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +33,8 @@ public class SmsRestController {
         return null;
     }
 
-    @GetMapping("/cert/code")
-    public ResponseEntity<AjaxResult<Void>> certCode(RequestCertDto certDto){
+    @GetMapping("/cert/code/{type}")
+    public ResponseEntity<AjaxResult<Void>> certCode(@PathVariable String type, RequestCertDto certDto){
         //사용자한테 받은 인증코드 비교
         smsCertCodeService.codeCert(certDto);
         //사용자한테 리턴해줄 데이터 폼
