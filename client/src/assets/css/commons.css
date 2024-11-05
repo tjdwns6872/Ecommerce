@@ -200,3 +200,84 @@ img {
 .footer-nav a:hover {
   color: #007BFF; /* hover 시 색상 변경 */
 }
+
+
+/* 기본 버튼 */
+.basic-button {
+  background-color: #000000;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.basic-button:hover {
+  background-color: #444444;
+}
+
+/* 아웃라인 버튼 */
+.outline-button {
+  background-color: transparent;
+  color: #000000;
+  padding: 10px 20px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.outline-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 강조 버튼 */
+.emphasis-button {
+  background-color: #1a1a1a;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.emphasis-button:hover {
+  background-color: #333333;
+}
+
+.emphasis-button:active {
+  transform: scale(1.05);
+}
+
+/* 라운드 버튼 */
+.round-button {
+  background-color: #000000;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+}
+
+.round-button:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 그라데이션 버튼 */
+.gradient-button {
+  background: linear-gradient(45deg, #333333, #000000);
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(45deg, #444444, #1a1a1a);
+}
+  
