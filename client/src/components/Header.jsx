@@ -1,5 +1,5 @@
 import React from 'react';
-import { BiSolidCategoryAlt, BiSolidHome, BiSolidHeart, BiSolidUser, BiLogoSnapchat } from "react-icons/bi";
+import { BiSolidCategoryAlt, BiSolidHome, BiSolidHeart, BiSolidUser, BiLogoSnapchat, BiSolidShoppingBag, BiSolidBell } from "react-icons/bi";
 import '../assets/css/commons.css';
 
 function Header(){
@@ -8,12 +8,12 @@ function Header(){
     <header class="top-header">
         <div class="top-header-container">
             <div class="logo">
-                <h1>Novoa</h1>
+                <h1><a href='/'>Novoa</a></h1>
             </div>
             <div class="header-actions">
                 <input type="text" class="search-input" placeholder="검색" />
-                <button class="cart-button">장바구니</button>
-                <button class="notification-button">알림</button>
+                <button class="cart-button"><BiSolidShoppingBag/><br/></button>
+                <button class="notification-button"><BiSolidBell/><br/></button>
             </div>
         </div>
     </header>
