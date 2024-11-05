@@ -33,6 +33,7 @@
     - Library
         - React
         - JPA (Java Persistence API)
+        - axios(React 비동기 통신을 위한 라이브러리)
 - ADMIN 페이지(운영자 전용)
     - NodeJS(제작 예정)
 
