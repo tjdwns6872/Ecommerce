@@ -29,7 +29,7 @@ img {
   max-width: 100%; /* 이미지가 부모 요소를 넘어가지 않도록 설정 */
   height: auto; /* 이미지의 비율을 유지하면서 높이 자동 조정 */
 }
-/* 기타 요소의 기본 스타일을 필요에 따라 추가 */
+
 /* 기본 스타일 설정 */
 .container {
   max-width: 1200px; /* 최대 너비 설정 */
@@ -37,209 +37,38 @@ img {
   padding: 20px; /* 여백 설정 */
 }
 
-.header {
-  background-color: #ffffff; /* 헤더 배경색 */
-  padding: 10px 0; /* 상하 패딩 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-}
-
-.header h1 {
-  font-size: 24px; /* 헤더 제목 크기 */
-  color: #333; /* 제목 색상 */
-}
-
-.button {
-  background-color: #007BFF; /* 버튼 배경색 */
-  color: white; /* 버튼 텍스트 색상 */
-  padding: 10px 20px; /* 버튼 패딩 */
-  border: none; /* 테두리 제거 */
-  border-radius: 4px; /* 모서리 둥글게 */
-  cursor: pointer; /* 마우스 커서 변경 */
-  transition: background-color 0.3s; /* 배경색 변화 효과 */
-}
-
-.button:hover {
-  background-color: #0056b3; /* hover 시 배경색 변화 */
-}
-  
-  
-/* 상단 헤더 스타일 */
-.top-header {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px 20px;
-    position: fixed;
-    top: 0; /* 화면 상단에 고정 */
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    height: 10%;
-}
-
-/* 상단 헤더 컨테이너 */
-.top-header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-}
-
-/* 로고 스타일 */
-.logo h1 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-}
-
-/* 상단 액션 버튼 스타일 */
-.header-actions {
-  display: flex;
-  align-items: center;
-}
-
-.search-input {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.cart-button, .notification-button {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
+/* 기본 버튼 */
+.basic-button, .outline-button, .emphasis-button, .round-button, .gradient-button {
+  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 10px; /* 여백 추가 */
   transition: background-color 0.3s;
 }
 
-.cart-button:hover, .notification-button:hover {
-  background-color: #444;
-}
-
-/* 하단 고정 메뉴 스타일 */
-.bottom-header {
-    background-color: #fff;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 0; /* 화면 하단에 고정 */
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 10px 0; /* 상하 패딩 추가 */
-    height: 10%;
-}
-
-/* 하단 메뉴 스타일 */
-.nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: space-around; /* 메뉴 항목 사이 공간 조정 */
-    margin: 0;
-    padding: 0; /* 패딩 제거 */
-}
-
-.nav li {
-    text-align: center;
-    margin: 0; /* 메뉴 항목 여백 제거 */
-}
-
-.nav a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.nav a:hover {
-  color: #007BFF; /* hover 시 파란색으로 변경 */
-}
-  
-  /* 메인 콘텐츠 스타일 */
-.main-content {
-    margin-top: 60px; /* 상단 헤더 높이에 맞춰 여백 추가 */
-    margin-bottom: 60px; /* 하단 메뉴 높이에 맞춰 여백 추가 */
-    padding: 20px; /* 콘텐츠 내부 여백 */
-    min-height: calc(100vh - 120px); /* 전체 높이에서 상단 헤더와 하단 메뉴의 높이를 뺀 최소 높이 설정 */
-}
-
-.footer {
-    background-color: #f8f8f8; /* 밝은 배경색 */
-    padding: 20px; /* 여백 */
-    text-align: center; /* 가운데 정렬 */
-    position: relative; /* 기본 위치 설정 */
-    width: 100%;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* 위쪽 그림자 */
-    margin-top: 20px; /* 하단 메뉴와의 간격 설정 */
-    margin-bottom: 4%;
-}
-
-/* 푸터 내비게이션 스타일 */
-.footer-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 0; /* 상단 여백 */
-}
-
-.footer-nav li {
-  display: inline; /* 가로 배치 */
-  margin: 0 15px; /* 좌우 여백 */
-}
-
-.footer-nav a {
-  text-decoration: none; /* 링크 밑줄 제거 */
-  color: #333; /* 텍스트 색상 */
-  transition: color 0.3s; /* 색상 변화 효과 */
-}
-
-.footer-nav a:hover {
-  color: #007BFF; /* hover 시 색상 변경 */
-}
-
-
-/* 기본 버튼 */
 .basic-button {
   background-color: #000000;
   color: #FFFFFF;
-  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .basic-button:hover {
   background-color: #444444;
 }
 
-/* 아웃라인 버튼 */
 .outline-button {
   background-color: transparent;
   color: #000000;
-  padding: 10px 20px;
   border: 1px solid #000000;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .outline-button:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* 강조 버튼 */
 .emphasis-button {
   background-color: #1a1a1a;
   color: #FFFFFF;
-  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
   transition: background-color 0.3s, transform 0.1s;
 }
 
@@ -251,14 +80,11 @@ img {
   transform: scale(1.05);
 }
 
-/* 라운드 버튼 */
 .round-button {
   background-color: #000000;
   color: #FFFFFF;
-  padding: 10px 20px;
   border: none;
   border-radius: 50px;
-  cursor: pointer;
   transition: box-shadow 0.3s;
 }
 
@@ -266,23 +92,18 @@ img {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* 그라데이션 버튼 */
 .gradient-button {
   background: linear-gradient(45deg, #333333, #000000);
   color: #FFFFFF;
-  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s;
 }
 
 .gradient-button:hover {
   background: linear-gradient(45deg, #444444, #1a1a1a);
 }
 
-/* 기본 입력 창 */
-.input-field {
+/* 입력 필드 */
+.input-field, .password-field {
   width: 100%;
   padding: 12px 16px;
   font-size: 16px;
@@ -291,17 +112,14 @@ img {
   outline: none;
   background-color: #f9f9f9;
   transition: border-color 0.3s, box-shadow 0.3s;
-  font-family: Arial, sans-serif;
 }
 
-/* 입력 필드 내의 플레이스홀더 스타일 */
-.input-field::placeholder {
+.input-field::placeholder, .password-field::placeholder {
   color: #aaa;
   font-size: 15px;
 }
 
-/* 포커스 효과 */
-.input-field:focus {
+.input-field:focus, .password-field:focus {
   border-color: #333;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
@@ -317,38 +135,16 @@ img {
   box-shadow: 0 4px 10px rgba(255, 77, 77, 0.2);
 }
 
-/* 비활성화 상태 */
-.input-field:disabled {
+.input-field:disabled, .password-field:disabled {
   background-color: #f0f0f0;
   color: #999;
   cursor: not-allowed;
-}
-
-/* 기본 비밀번호 입력 창 */
-.password-field {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  font-family: Arial, sans-serif;
-}
-
-/* 포커스 효과 */
-.password-field:focus {
-  border-color: #333;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
 }
 
 /* 비밀번호 토글 버튼 */
 .toggle-button {
   position: absolute;
   right: 16px;
-  /* top: 50%; */
   transform: translateY(50%);
   background: none;
   border: none;
@@ -375,3 +171,141 @@ img {
 .strength-weak { background-color: #ff4d4d; }
 .strength-medium { background-color: #ffa500; }
 .strength-strong { background-color: #4caf50; }
+
+/* 헤더 스타일 */
+.top-header, .bottom-header {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.top-header {
+  top: 0;
+  height: 10%;
+}
+
+.bottom-header {
+  bottom: 0;
+  height: 10%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.logo h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.cart-button, .notification-button {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+
+.cart-button:hover, .notification-button:hover {
+  background-color: #444;
+}
+
+/* 하단 메뉴 스타일 */
+.nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li {
+  text-align: center;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: #007BFF;
+}
+
+/* 메인 콘텐츠 스타일 */
+.main-content {
+  margin-top: 60px; /* 상단 헤더 높이에 맞춰 여백 추가 */
+  margin-bottom: 60px; /* 하단 메뉴 높이에 맞춰 여백 추가 */
+  padding: 20px; /* 콘텐츠 내부 여백 */
+  min-height: calc(100vh - 120px); /* 전체 높이에서 상단 헤더와 하단 메뉴의 높이를 뺀 최소 높이 설정 */
+}
+
+/* 푸터 스타일 */
+.footer {
+  background-color: #f8f8f8;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.footer-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+.footer-nav li {
+  display: inline;
+  margin: 0 15px;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+  color: #007BFF;
+}
+
+/* 기본 스타일 */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
