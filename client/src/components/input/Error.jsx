@@ -1,11 +1,13 @@
 import React from 'react';
 import '../../assets/css/commons.css';
 
-function Error(){
+const Error = ({placeholder = "", value = "", className = ""}) => {
     return (
-        <div>
-            <input type="text" class="input-field error" placeholder=""/>
-            <input type="text" class="input-field" placeholder="" disabled/>
+        <div className="input-container">
+            <input 
+                type="text"
+                className={`input-field error ${className}`}
+                placeholder={placeholder}/>
         </div>
     )
 }
