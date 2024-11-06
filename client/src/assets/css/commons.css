@@ -280,4 +280,98 @@ img {
 .gradient-button:hover {
   background: linear-gradient(45deg, #444444, #1a1a1a);
 }
-  
+
+/* 기본 입력 창 */
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: Arial, sans-serif;
+}
+
+/* 입력 필드 내의 플레이스홀더 스타일 */
+.input-field::placeholder {
+  color: #aaa;
+  font-size: 15px;
+}
+
+/* 포커스 효과 */
+.input-field:focus {
+  border-color: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+/* 에러 상태 */
+.input-field.error {
+  border-color: #ff4d4d;
+  background-color: #fff5f5;
+}
+
+.input-field.error:focus {
+  box-shadow: 0 4px 10px rgba(255, 77, 77, 0.2);
+}
+
+/* 비활성화 상태 */
+.input-field:disabled {
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* 기본 비밀번호 입력 창 */
+.password-field {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: Arial, sans-serif;
+}
+
+/* 포커스 효과 */
+.password-field:focus {
+  border-color: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+/* 비밀번호 토글 버튼 */
+.toggle-button {
+  position: absolute;
+  right: 16px;
+  /* top: 50%; */
+  transform: translateY(50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+}
+
+/* 비밀번호 강도 표시 */
+.strength-meter {
+  height: 5px;
+  margin-top: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.strength-meter div {
+  height: 100%;
+  width: 0;
+  transition: width 0.3s;
+}
+
+.strength-weak { background-color: #ff4d4d; }
+.strength-medium { background-color: #ffa500; }
+.strength-strong { background-color: #4caf50; }
