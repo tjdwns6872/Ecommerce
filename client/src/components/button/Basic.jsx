@@ -1,9 +1,13 @@
 import React from 'react';
 import '../../assets/css/commons.css';
 
-function Basic(){
+const Basic = ({id= "", className = "", text = ""}) => {
     return (
-        <button className='basic-button'>basic</button>
+        <button 
+            id={id} 
+            className={`basic-button ${className}`}>
+            {text}
+        </button>
     )
 }
 

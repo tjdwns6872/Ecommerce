@@ -1,9 +1,13 @@
 import React from 'react';
 import '../../assets/css/commons.css';
 
-function Gradient(){
+const Gradient = ({id= "", className = "", text = ""}) => {
     return (
-        <button className='gradient-button'>gradient</button>
+        <button 
+            id={id} 
+            className={`gradient-button ${className}`}>
+            {text}
+        </button>
     )
 }
 

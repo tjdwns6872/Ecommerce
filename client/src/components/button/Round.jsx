@@ -1,9 +1,13 @@
 import React from 'react';
 import '../../assets/css/commons.css';
 
-function Round(){
+const Round = ({id= "", className = "", text = ""}) => {
     return (
-        <button className='round-button'>round</button>
+        <button 
+            id={id} 
+            className={`round-button ${className}`}>
+            {text}
+        </button>
     )
 }
 

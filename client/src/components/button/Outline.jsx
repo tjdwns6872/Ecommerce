@@ -1,9 +1,13 @@
 import React from 'react';
 import '../../assets/css/commons.css';
 
-function Outline(){
+const Outline = ({id= "", className = "", text = ""}) => {
     return (
-        <button className='outline-button'>outline</button>
+        <button 
+            id={id} 
+            className={`outline-button ${className}`}>
+            {text}
+        </button>
     )
 }
 
