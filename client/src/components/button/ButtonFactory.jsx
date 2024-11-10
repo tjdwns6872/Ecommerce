@@ -7,22 +7,22 @@ import Round from "./Round";
 
 const ButtonFactory = {
     basic: (id, className, text) => {
-        return <Basic id={id} className={className} text={text}></Basic>;
+        return <Basic id={id} text={text} className={className}></Basic>;
     },
     emphasis: (id, className, text) =>{
-        return <Emphasis id={id} className={className} text={text}></Emphasis>
+        return <Emphasis id={id} text={text} className={className}></Emphasis>
     },
     gradient: (id, className, text) =>{
-        return <Gradient id={id} className={className} text={text}></Gradient>
+        return <Gradient id={id} text={text} className={className}></Gradient>
     },
     outline: (id, className, text) =>{
-        return <Outline id={id} className={className} text={text}></Outline>
+        return <Outline id={id} text={text} className={className}></Outline>
     },
     round: (id, className, text) =>{
-        return <Round id={id} className={className} text={text}></Round>
+        return <Round id={id} text={text} className={className}></Round>
     },
-    icon: (id, className, icon) =>{
-        return <IconButton id={id} className={className} icon={icon}></IconButton>
+    icon: (id, icon, onClick, className) =>{
+        return <IconButton id={id} icon={icon} onClick={onClick} className={className}></IconButton>
     }
 }
 
