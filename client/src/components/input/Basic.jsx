@@ -8,10 +8,11 @@ import '../../assets/css/commons.css';
  * @param {클래스명} className
  * @returns 
  */
-const Basic = ({placeholder = "", value = "", className = ""}) => {
+const Basic = ({id = "", placeholder = "", value = "", className = ""}) => {
     return (
         <div className="input-container">
             <input 
+                id={id}
                 type="text"
                 className={`input-field ${className}`}
                 placeholder={placeholder}/>

@@ -1,6 +1,7 @@
 import Basic from "./Basic";
 import Emphasis from "./Emphasis";
 import Gradient from "./Gradient";
+import IconButton from "./IconButton";
 import Outline from "./Outline";
 import Round from "./Round";
 
@@ -20,6 +21,9 @@ const ButtonFactory = {
     round: (id, className, text) =>{
         return <Round id={id} className={className} text={text}></Round>
     },
+    icon: (id, className, icon) =>{
+        return <IconButton id={id} className={className} icon={icon}></IconButton>
+    }
 }
 
 export default ButtonFactory;

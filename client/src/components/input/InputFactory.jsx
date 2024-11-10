@@ -3,13 +3,13 @@ import Error from "./Error";
 import Password from "./Password";
 
 const InputFactory = {
-    basic: (placeholder = "", value = "", className = "") => {
+    basic: (id = "", placeholder = "", value = "", className = "") => {
         return <Basic type="text" placeholder={placeholder} value={value} className={className} />;
     },
-    error: (placeholder = "", value = "", className = "") => {
+    error: (id = "", placeholder = "", value = "", className = "") => {
         return <Error type="text" placeholder={placeholder} value={value} className={className} />;
     },
-    password: (className = "") => {
+    password: (id = "", className = "") => {
         return <Password className={className} />;
     }
 }

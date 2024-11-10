@@ -29,7 +29,7 @@ const Password = ({className = ""}) => {
     };
 
     return (
-      <div style={{ position: 'relative', width: '100%' }}>
+      <div className='input-container' style={{ position: 'relative' }}>
         <input
           type={showPassword ? 'text' : 'password'}
           onChange={handlePasswordChange}
@@ -39,9 +39,9 @@ const Password = ({className = ""}) => {
         <button type="button" onClick={togglePasswordVisibility} className="toggle-button">
           {showPassword ? <AiFillEyeInvisible/> : <AiFillEye/>}
         </button>
-        <div className="strength-meter">
+        {/* <div className="strength-meter">
           <div className={`strength-bar ${strength}`}></div>
-        </div>
+        </div> */}
       </div>
     );
 }
