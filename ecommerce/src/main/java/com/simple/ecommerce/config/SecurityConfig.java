@@ -28,9 +28,10 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안 함
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(
-                    "/ecommerce/api/user/login/*"
+                    "/ecommerce/api/user/login/**"
                     , "/ecommerce/api/user/login"
                     , "/ecommerce/api/user/join"
+                    , "/ecommerce/api/user/**"
                     , "/test"
                     , "/swagger-ui/**"
                     , "/v3/api-docs/**").permitAll() // 인증없이 접근 가능한 url패턴
