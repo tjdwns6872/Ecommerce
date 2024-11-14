@@ -15,7 +15,7 @@ function Login() {
                 {InputFactory.password("user-pw")}
             </div>
             <div className='w-100'>
-                {ButtonFactory.basic("basic-login", "w-100", "로그인")}
+                {ButtonFactory.basic("basic-login", "로그인", () => loginEvent.basicLogin(), "w-100")}
             </div>
             <div className='w-100' style={{display: "flex", justifyContent: "space-evenly"}}>
                 {ButtonFactory.icon("social-login", SiNaver, () => loginEvent.socialLogin("naver"))}

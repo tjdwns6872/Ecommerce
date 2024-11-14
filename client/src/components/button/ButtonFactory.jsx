@@ -6,8 +6,8 @@ import Outline from "./Outline";
 import Round from "./Round";
 
 const ButtonFactory = {
-    basic: (id, className, text) => {
-        return <Basic id={id} text={text} className={className}></Basic>;
+    basic: (id, text, onClick, className) => {
+        return <Basic id={id} text={text} onClick={onClick} className={className}></Basic>;
     },
     emphasis: (id, className, text) =>{
         return <Emphasis id={id} text={text} className={className}></Emphasis>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../assets/css/commons.css';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
-const Password = ({className = ""}) => {
+const Password = ({id="", className = ""}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [strength, setStrength] = useState('');
 
@@ -31,6 +31,7 @@ const Password = ({className = ""}) => {
     return (
       <div className='input-container' style={{ position: 'relative' }}>
         <input
+          id={id}
           type={showPassword ? 'text' : 'password'}
           onChange={handlePasswordChange}
           className={`password-field ${className}`}
