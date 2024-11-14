@@ -46,16 +46,21 @@ public class UsersLoginServiceImpl implements UsersLoginService{
    */
     @Override
     public String login(UsersLoginDto dto) throws JsonProcessingException {
+        UserJwtDto jwtDto = null;
         // 로그인 시도를 위해 사용자한테 받은 이메일로 DB 조회
         UsersEntity entity = usersRepository.findByEcUsersEmail(dto.getEcUsersEmail());
-        if(!ShaUtil.sha256Encode(dto.getEcUsersPassword()).equals(entity.getEcUsersPassword())){
+        try{
+            if(!ShaUtil.sha256Encode(dto.getEcUsersPassword()).equals(entity.getEcUsersPassword())){
+                throw new LoginException();
+            }
+            jwtDto = UserJwtDto.builder()
+                .ecUsersId(entity.getEcUsersId())
+                .ecUsersEmail(entity.getEcUsersEmail())
+                .ecUsersName(entity.getEcUsersName())
+                .build();
+        }catch(Exception e){
             throw new LoginException();
         }
-        UserJwtDto jwtDto = UserJwtDto.builder()
-            .ecUsersId(entity.getEcUsersId())
-            .ecUsersEmail(entity.getEcUsersEmail())
-            .ecUsersName(entity.getEcUsersName())
-            .build();
         return jwtUtil.createToken(jwtDto);
     }
     
