@@ -17,6 +17,7 @@ const loginEvent = {
         }
       }, 500);
     } catch (error) {
+      //회원가입 화면으로 넘어갈 예정
     }
   }, basicLogin: async () => {
     try{

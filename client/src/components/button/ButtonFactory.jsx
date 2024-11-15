@@ -9,16 +9,16 @@ const ButtonFactory = {
     basic: (id, text, onClick, className) => {
         return <Basic id={id} text={text} onClick={onClick} className={className}></Basic>;
     },
-    emphasis: (id, className, text) =>{
+    emphasis: (id, text, onClick, className) =>{
         return <Emphasis id={id} text={text} className={className}></Emphasis>
     },
-    gradient: (id, className, text) =>{
+    gradient: (id, text, onClick, className) =>{
         return <Gradient id={id} text={text} className={className}></Gradient>
     },
-    outline: (id, className, text) =>{
+    outline: (id, text, onClick, className) =>{
         return <Outline id={id} text={text} className={className}></Outline>
     },
-    round: (id, className, text) =>{
+    round: (id, text, onClick, className) =>{
         return <Round id={id} text={text} className={className}></Round>
     },
     icon: (id, icon, onClick, className) =>{

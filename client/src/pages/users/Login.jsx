@@ -12,8 +12,8 @@ function Login() {
             if (event.origin !== "http://localhost:8081") return;
             const { token } = event.data;
             if (token) {
-                console.log("토큰 수신 완료:", token);
-                // 토큰 저장 후 추가 작업 (예: 로그인 상태 업데이트)
+                localStorage.setItem('accessToken', token);
+                window.location.href='/';
             }
         };
 
@@ -35,6 +35,9 @@ function Login() {
             </div>
             <div className='w-100'>
                 {ButtonFactory.basic("basic-login", "로그인", () => loginEvent.basicLogin(), "w-100")}
+            </div>
+            <div className='w-100' style={{display: "flex", justifyContent: "space-evenly"}}>
+                <a href='#'>아이디/비밀번호찾기</a>
             </div>
             <div className='w-100' style={{display: "flex", justifyContent: "space-evenly"}}>
                 {ButtonFactory.icon("social-login", SiNaver, () => loginEvent.socialLogin("naver"))}
