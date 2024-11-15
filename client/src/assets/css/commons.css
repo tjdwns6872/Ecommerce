@@ -352,3 +352,61 @@ img {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transform: translate(0%, 50%);
 }
+
+.signup-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.signup-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.signup-header p {
+  font-size: 14px;
+  color: #666;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #333;
+}
+
+.form-group input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.signup-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.signup-footer p {
+  font-size: 14px;
+  color: #666;
+}
+
+.signup-footer a {
+  color: #2a9d8f; /* 링크 색상 */
+  text-decoration: none;
+}
+
+.signup-footer a:hover {
+  text-decoration: underline;
+}
