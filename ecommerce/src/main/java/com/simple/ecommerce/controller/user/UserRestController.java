@@ -3,8 +3,6 @@ package com.simple.ecommerce.controller.user;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.users.UsersDataResultDto;
@@ -18,14 +16,13 @@ import com.simple.ecommerce.service.user.UsersJoinService;
 import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.AjaxResult;
 
-import io.swagger.v3.oas.models.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,12 +30,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 
-
+@Slf4j
 @RestController
 @RequestMapping("/ecommerce/api/user")
 public class UserRestController {
@@ -101,24 +97,52 @@ public class UserRestController {
 
     //소셜 로그인 컨트롤러
     @PostMapping("/login/{platform}")
-    public void login(HttpServletResponse response
-        , @PathVariable("platform") String platform) throws IOException {
+    public ResponseEntity<AjaxResult<String>> login(@PathVariable("platform") String platform) throws IOException {
         //URL에서 받은 PathVariable값을 가지고 login 함수로 이동
         String url = usersLoginService.login(platform);
-        //리턴 받은 url로 리다이렉트
-        response.sendRedirect(url);
+        AjaxResult<String> response = AjaxResult.<String>builder()
+            .status(HttpStatus.OK.value())
+            .message("플랫폼 로그인 링크 발급")
+            .data(url)
+            .build();
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     //소셜로그인 시 인증코드를 받는 컨트롤러
-    @GetMapping("/{platform}/callback")
-    public ResponseEntity<AjaxResult<String>> platformCallback(SocialConnectDto socialConnectDto, @PathVariable("platform") String platform) throws JsonMappingException, JsonProcessingException {
-        usersLoginService.socialCallback(socialConnectDto, platform);
-        AjaxResult<String> response = AjaxResult.<String>builder()
-            .status(HttpStatus.OK.value())
-            .message("로그인 성공")
-            .data(null)
-            .build();
-        return ResponseEntity.status(response.getStatus()).body(response);
+    // @GetMapping("/{platform}/callback")
+    // public ResponseEntity<AjaxResult<String>> platformCallback(SocialConnectDto socialConnectDto
+    // , @PathVariable("platform") String platform) throws JsonMappingException, JsonProcessingException {
+    //     String token = usersLoginService.socialCallback(socialConnectDto, platform);
+    //     AjaxResult<String> response = AjaxResult.<String>builder()
+    //         .status(HttpStatus.OK.value())
+    //         .message("로그인 성공")
+    //         .data(token)
+    //         .build();
+    //     return ResponseEntity.status(response.getStatus()).body(response);
+    // }
+
+    //소셜로그인 시 인증코드를 받는 컨트롤러
+    @GetMapping("/callback/{platform}")
+    public void platformCallback(SocialConnectDto socialConnectDto
+    , @PathVariable("platform") String platform
+    , HttpServletResponse respons) throws IOException {
+        String token = usersLoginService.socialCallback(socialConnectDto, platform);
+        try {
+            String script = "<script>"
+                + "window.opener.postMessage({ token: '" + token + "' }, 'http://localhost:3000');"
+                + "window.close();"
+                + "</script>";
+            respons.setContentType("text/html;charset=UTF-8");
+            respons.getWriter().write(script);
+        }catch(Exception e){
+            String errorScript = "<script>"
+            + "window.opener.postMessage({ error: '로그인 실패: " + e.getMessage() + "' }, 'http://localhost:3000');"
+            + "window.close();"
+            + "</script>";
+
+            respons.setContentType("text/html;charset=UTF-8");
+            respons.getWriter().write(errorScript);
+        }
     }
 
     //회원 정보를 찾을 때 사용되는 컨트롤러
@@ -150,6 +174,4 @@ public class UserRestController {
         // ResponseEntity 폼에 맞춰 데이터 입력
         return ResponseEntity.status(response.getStatus()).body(response);
     }
-    
-    
 }
