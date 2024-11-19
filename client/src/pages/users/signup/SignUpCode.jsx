@@ -1,5 +1,6 @@
 import InputFactory from '../../../components/input/InputFactory';
 import ButtonFactory from '../../../components/button/ButtonFactory';
+import signUpEvent from '../../../assets/js/signUpEvent';
 
 function SignUpCode() {
 
@@ -10,7 +11,7 @@ function SignUpCode() {
     </div>
     <div className="form-group">
     {InputFactory.basic('user-code', '인증번호를 입력하세요', "", 'input-field')}
-    {ButtonFactory.basic('code-btn','인증번호 전송', () => '', '')}
+    {ButtonFactory.basic('code-btn','인증번호 전송', () => signUpEvent.authCodeSend(), 'w-100')}
     </div>
     </div>
   )

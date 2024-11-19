@@ -3,6 +3,8 @@ package com.simple.ecommerce.controller.user;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.simple.ecommerce.dto.sms.CustomSmsDto;
+import com.simple.ecommerce.dto.sms.MessageDataDto;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.users.UsersDataResultDto;
@@ -15,6 +17,7 @@ import com.simple.ecommerce.service.user.UsersDataService;
 import com.simple.ecommerce.service.user.UsersJoinService;
 import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.AjaxResult;
+import com.simple.ecommerce.util.JsonUtil;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,10 +57,25 @@ public class UserRestController {
 
     //회원가입 시 사용되는 SMS 인증 컨트롤러
     @PutMapping("/{certType}/CertCode")
-    public ResponseEntity<AjaxResult<Void>> joinCertCode(RequestSmsDto smsDto, @PathVariable String certType) throws Exception{
+    public ResponseEntity<AjaxResult<Void>> joinCertCode(@RequestBody String phone, @PathVariable String certType) throws Exception{
+        // json형태의 문자열로 넘어온 데이터 json형태로 변경
+        JSONObject json = JsonUtil.stringToJson(phone);
+        // json에서 전화번호 데이터 추출
+        phone = (String) JsonUtil.getJsonValue(json, "phone");
+        // dto 생성
+        RequestSmsDto smsDto = new RequestSmsDto();
+        // message dto 생성
+        MessageDataDto messageDataDto = new MessageDataDto();
+        // 추출한 전화번호 데이터 삽입
+        messageDataDto.setTo(phone);
+        // message dto 삽입
+        smsDto.setMessage(messageDataDto);
         // 기능 데이터 처리시 사용되는 sms 타입 선언
-        smsDto.getCustom().setCustomType(certType);
+        CustomSmsDto customSmsDto = new CustomSmsDto();
+        customSmsDto.setCustomType(certType);
+        smsDto.setCustom(customSmsDto);;
         // SMS 전송
+        log.info("\n\n{}", smsDto.toString());
         smsService.smsRequest(smsDto);
         return ResponseEntity.status(null).body(null);
     }
