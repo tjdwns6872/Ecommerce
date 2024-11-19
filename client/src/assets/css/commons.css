@@ -357,6 +357,7 @@ img {
   max-width: 480px;
   margin: 0 auto;
   padding: 20px;
+  transform: translate(0%, 50%);
 }
 
 .signup-header {
