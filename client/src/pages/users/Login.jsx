@@ -37,6 +37,7 @@ function Login() {
                 {ButtonFactory.basic("basic-login", "로그인", () => loginEvent.basicLogin(), "w-100")}
             </div>
             <div className='w-100' style={{display: "flex", justifyContent: "space-evenly"}}>
+                <a href='/signup'>회원가입</a>
                 <a href='#'>아이디/비밀번호찾기</a>
             </div>
             <div className='w-100' style={{display: "flex", justifyContent: "space-evenly"}}>

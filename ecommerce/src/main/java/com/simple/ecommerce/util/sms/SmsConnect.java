@@ -53,7 +53,7 @@ public class SmsConnect {
         //url 값 targetUrl에 저장
         String targetUrl = url;
         //고정된 발신번호 값 지정
-        dto.getMessage().setForm(from);
+        dto.getMessage().setFrom(from);
         //service에서 넘어온 DTO String값으로 저장
         String parameters = dto.toString();
         

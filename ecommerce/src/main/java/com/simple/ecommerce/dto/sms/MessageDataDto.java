@@ -10,7 +10,7 @@ public class MessageDataDto {
     private String to;
 
     // 발신자 번호(사전에 등록된 번호)
-    private String form;
+    private String from;
 
     // 메시지 제목
     private String subject;

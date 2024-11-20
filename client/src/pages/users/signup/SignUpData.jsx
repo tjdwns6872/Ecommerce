@@ -1,12 +1,13 @@
 import InputFactory from '../../../components/input/InputFactory';
 import ButtonFactory from '../../../components/button/ButtonFactory';
+import signUpEvent from '../../../assets/js/signUpEvent';
 
 function SignUpData() {
 
   return (
     <div className='signup-div signup-data'>
       <div className="signup-form">
-        <form>
+        <form id="signup-form">
           <div className="form-group">
             {InputFactory.basic('user-email', '이메일을 입력하세요', "", 'input-field')}
           </div>
@@ -25,10 +26,10 @@ function SignUpData() {
           <div className="form-group">
             {InputFactory.basic('user-referral-code', '추천인 코드를 입력하세요', "", 'input-field')}
           </div>
-          <div className="form-group">
-            {ButtonFactory.basic('signup-btn','회원가입', () => '', 'w-100')}
-          </div>
         </form>
+        <div className="form-group">
+          {ButtonFactory.basic('signup-btn','회원가입', () => signUpEvent.createUser(), 'w-100')}
+        </div>
       </div>
     </div>
   )
