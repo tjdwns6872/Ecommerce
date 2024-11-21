@@ -28,6 +28,7 @@ public class SmsServiceImpl implements SmsService{
      */
     @Override
     public String smsRequest(RequestSmsDto smsDto) throws Exception {
+        String smsId = null;
         // 사용하는 SMS 기능 모듈을 불러오기 위한 코드
         AbstractSmsWriteType smsWrite = smsWriteTypeFactory.getSmsWriteType(smsDto.getCustom().getCustomType());
         // SMS 전송 시 필요한 헤더 데이터 세팅
@@ -39,11 +40,11 @@ public class SmsServiceImpl implements SmsService{
         // SmsCertDb 인터페이스를 상속 받은 클래스는 해당 메소드 실행
         if(smsWrite instanceof SmsCertDb){
             // JPA를 통해 데이터를 DB에 삽입
-            ((SmsCertDb)smsWrite).certCodeInsert(smsDto);
+            smsId = ((SmsCertDb)smsWrite).certCodeInsert(smsDto);
         }
         // SMS 전송
         smsWrite.smsWrite(dto);
 
-        return null;
+        return smsId;
     }
 }

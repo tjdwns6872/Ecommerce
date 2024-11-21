@@ -32,6 +32,7 @@ public class SecurityConfig {
                     , "/ecommerce/api/user/login"
                     , "/ecommerce/api/user/join"
                     , "/ecommerce/api/user/**"
+                    , "/ecommerce/api/sms/**"
                     , "/test"
                     , "/swagger-ui/**"
                     , "/v3/api-docs/**").permitAll() // 인증없이 접근 가능한 url패턴

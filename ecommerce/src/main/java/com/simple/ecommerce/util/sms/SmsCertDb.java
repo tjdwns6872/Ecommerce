@@ -4,5 +4,5 @@ import com.simple.ecommerce.dto.sms.RequestSmsDto;
 
 public interface SmsCertDb {
     
-    public void certCodeInsert(RequestSmsDto smsDto);
+    public String certCodeInsert(RequestSmsDto smsDto);
 }

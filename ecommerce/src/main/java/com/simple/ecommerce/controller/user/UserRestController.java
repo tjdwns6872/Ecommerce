@@ -56,7 +56,7 @@ public class UserRestController {
 
     //회원가입 시 사용되는 SMS 인증 컨트롤러
     @PutMapping("/{certType}/CertCode")
-    public ResponseEntity<AjaxResult<Void>> joinCertCode(@RequestBody String phone, @PathVariable String certType) throws Exception{
+    public ResponseEntity<AjaxResult<String>> joinCertCode(@RequestBody String phone, @PathVariable String certType) throws Exception{
         // json형태의 문자열로 넘어온 데이터 json형태로 변경
         JSONObject json = JsonUtil.stringToJson(phone);
         // json에서 전화번호 데이터 추출
@@ -74,11 +74,12 @@ public class UserRestController {
         customSmsDto.setCustomType(certType);
         smsDto.setCustom(customSmsDto);;
         // SMS 전송
-        smsService.smsRequest(smsDto);
+        String smsId = smsService.smsRequest(smsDto);
 
-        AjaxResult<Void> response = AjaxResult.<Void>builder()
+        AjaxResult<String> response = AjaxResult.<String>builder()
             .status(HttpStatus.OK.value())
             .message("SMS 전송")
+            .data(smsId)
             .build();
 
         return ResponseEntity.status(response.getStatus()).body(response);

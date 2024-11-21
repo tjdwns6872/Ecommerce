@@ -11,7 +11,6 @@ const apiRequest = async (method, url, params = {}, data = {}) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response)
     return response.data;
   } catch (error) {
     console.error(`API 호출 실패: ${error}`);
