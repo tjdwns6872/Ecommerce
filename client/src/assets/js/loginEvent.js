@@ -1,5 +1,4 @@
 import ApiFactory from '../../services/ApiFactory';
-import { useState, useEffect, useCallback } from 'react';
 
 const loginEvent = {
   socialLogin: async (type) => {
