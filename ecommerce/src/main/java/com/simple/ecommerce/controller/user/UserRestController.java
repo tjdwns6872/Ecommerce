@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 
-@Slf4j
 @RestController
 @RequestMapping("/ecommerce/api/user")
 public class UserRestController {
@@ -75,9 +74,14 @@ public class UserRestController {
         customSmsDto.setCustomType(certType);
         smsDto.setCustom(customSmsDto);;
         // SMS 전송
-        log.info("\n\n{}", smsDto.toString());
         smsService.smsRequest(smsDto);
-        return ResponseEntity.status(null).body(null);
+
+        AjaxResult<Void> response = AjaxResult.<Void>builder()
+            .status(HttpStatus.OK.value())
+            .message("SMS 전송")
+            .build();
+
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
 

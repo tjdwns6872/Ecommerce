@@ -23,15 +23,15 @@ public class SmsJoinWriteCode extends AbstractSmsWriteType implements SmsCertDb{
     @Override
     public RequestSmsDto dtoSetting(RequestSmsDto smsDto) {
         // SMS TITLE 세팅
-        smsDto.getMessage().setSubject("회원가입을 위한 인증번호");
+        smsDto.getMessage().setSubject("Novoa");
         // 인증코드 생성
         String cert = ShaUtil.randomNumber();
         // SMS 내용 세팅
-        smsDto.getMessage().setText(String.format("[%s]", cert));
+        smsDto.getMessage().setText(String.format("Novoa SignUp Code:[%s]", cert));
         // 인증코드 저장
         smsDto.getCustom().setCustomCode(cert);
         // SMS 전송할 때 사용되는 타입 선언(coolSMS에서 정해진 타입)
-        smsDto.getMessage().setType("SMS");
+        // smsDto.getMessage().setType("SMS");
         // 세팅된 DTO 리턴
         return smsDto;
     }

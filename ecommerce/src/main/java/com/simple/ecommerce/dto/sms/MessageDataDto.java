@@ -19,5 +19,5 @@ public class MessageDataDto {
     private String text;
 
     // 메시지 타입
-    private String type;
+    // private String type;
 }

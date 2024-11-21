@@ -22,6 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.simple.ecommerce.component.sms.SmsProperties;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class AbstractSmsWriteType implements SmsWriteType{
     
     // SMS 사용 시 기본적으로 사용되는 공통 데이터를 가져오기 위해 선언
@@ -45,7 +48,7 @@ public abstract class AbstractSmsWriteType implements SmsWriteType{
     // SMS 전송
     public String smsWrite(RequestSmsDto smsDto) throws IOException{
         // SMS를 전송할 때 사용될 번호 세팅
-        smsDto.getMessage().setForm(smsProperties.getFrom());
+        smsDto.getMessage().setFrom(smsProperties.getFrom());
         //문자열 url URL형태로 변환
         URL targetUrl = new URL(smsProperties.getUrl());
         // API통신을 위한 과정
@@ -65,7 +68,10 @@ public abstract class AbstractSmsWriteType implements SmsWriteType{
         // Body값을 입력하기 위한 객체 생성
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         // Body값 입력
-        wr.writeBytes(smsDto.toString());
+        String jsonString = String.format("{\"message\":{\"to\":\"%s\",\"from\":\"%s\",\"subject\":\"%s\",\"text\":\"%s\"}}",
+        smsDto.getMessage().getTo(), smsDto.getMessage().getFrom(), smsDto.getMessage().getSubject(), smsDto.getMessage().getText());
+
+        wr.writeBytes(jsonString);
         // writeBytes를 통해 작성한 데이터를 전송
         wr.flush();
         // DataOutputStream 닫기
