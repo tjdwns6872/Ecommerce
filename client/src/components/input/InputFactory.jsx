@@ -6,8 +6,8 @@ import CheckRound from "./checkBox/Round";
 import CheckSwitch from "./checkBox/Switch";
 
 const InputFactory = {
-    basic: (id = "", placeholder = "", value = "", className = "") => {
-        return <Basic id={id} type="text" placeholder={placeholder} value={value} className={className} />;
+    basic: (id = "", placeholder = "", value = "", className = "", disabled=false) => {
+        return <Basic id={id} type="text" placeholder={placeholder} value={value} className={className} disabled={disabled}/>;
     },
     error: (id = "", placeholder = "", value = "", className = "") => {
         return <Error type="text" placeholder={placeholder} value={value} className={className} />;
