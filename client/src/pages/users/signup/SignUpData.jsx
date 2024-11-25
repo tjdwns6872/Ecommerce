@@ -9,22 +9,25 @@ function SignUpData() {
       <div className="signup-form">
         <form id="signup-form">
           <div className="form-group">
-            {InputFactory.basic('user-email', '이메일을 입력하세요', "", 'input-field')}
+            {InputFactory.basic('ecUsersEmail', '이메일을 입력하세요', "", 'input-field')}
           </div>
           <div className="form-group">
-            {InputFactory.password('user-pw', '비밀번호를 입력하세요', "", 'input-field')}
+            {InputFactory.password('ecUsersPassword', '비밀번호를 입력하세요', "", 'input-field')}
           </div>
           <div className="form-group">
-            {InputFactory.password('user-pw-check', '비밀번호 확인', "", 'input-field')}
+            {InputFactory.password('ecUsersPasswordCheck', '비밀번호 확인', "", 'input-field')}
           </div>
           <div className="form-group">
-            {InputFactory.basic('user-name', '이름을 입력하세요', "", 'input-field')}
+            {InputFactory.basic('ecUsersName', '이름을 입력하세요', "", 'input-field')}
           </div>
           <div className="form-group">
-            {InputFactory.basic('user-birth-date', '생년월일 입력하세요', "", 'input-field')}
+            {InputFactory.basic('ecUsersPhone', '전화번호를 입력하세요', "", 'input-field', true)}
           </div>
           <div className="form-group">
-            {InputFactory.basic('user-referral-code', '추천인 코드를 입력하세요', "", 'input-field')}
+            {InputFactory.basic('ecUsersBirthDate', '생년월일 입력하세요', "", 'input-field')}
+          </div>
+          <div className="form-group">
+            {InputFactory.basic('ecUsersReferralCode', '추천인 코드를 입력하세요', "", 'input-field')}
           </div>
         </form>
         <div className="form-group">

@@ -4,27 +4,34 @@ const signUpEvent = {
         try{
             var phone = document.getElementById("user-phone").value;
             var data = await ApiFactory.put('http://localhost:8081/ecommerce/api/user/join/CertCode', {'phone':phone});
-            console.log(data);
+            return data;
         }catch(error){
             console.error(error)
         }
     },
+    codeCheck: async () => {
+        var certId = document.getElementById('user-certId').value;
+        var code = document.getElementById('user-code').value;
+        var params = {"certId":certId, "code":code}
+        var data = await ApiFactory.get("http://localhost:8081/ecommerce/api/sms/cert/code/join", params);
+        return data;
+    },
     createUser: async () => {
         var form = document.getElementById('signup-form').elements;
-        var post = {}
+        var params = {}
         console.log(form)
         for (const item of form) {
             switch (item.localName) {
                 case 'input':
-                    post[item.id] = item.value;
+                    params[item.id] = item.value;
                     break;
                 default:
                     break;
             }
         }
-        console.log(post);
-        // var data = await ApiFactory.put('http://localhost:8081/ecommerce/api/user/join', {});
-        // console.log(data);
+        console.log(params);
+        var data = await ApiFactory.put("http://localhost:8081/ecommerce/api/user/join", params);
+        console.log(data);
     }
 }
 
