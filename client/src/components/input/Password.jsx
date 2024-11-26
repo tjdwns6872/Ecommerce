@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../assets/css/commons.css';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
-const Password = ({id="", className = ""}) => {
+const Password = ({id = "", placeholder = "", initialValue = "", className = "", disabled=false, onValueChange}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [strength, setStrength] = useState('');
 
@@ -11,21 +11,18 @@ const Password = ({id="", className = ""}) => {
         setShowPassword(!showPassword);
     };
 
-    // 비밀번호 강도 평가 함수
-    const checkPasswordStrength = (password) => {
-      if (password.length > 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
-        setStrength('strong');
-      } else if (password.length > 5) {
-        setStrength('medium');
-      } else {
-        setStrength('weak');
-      }
-    };
+    const [value, setValue] = useState(initialValue);
 
-    // 비밀번호 변경 처리 함수
-    const handlePasswordChange = (e) => {
-      const newPassword = e.target.value;
-      checkPasswordStrength(newPassword);
+    useEffect(() => {
+        setValue(initialValue);
+    }, [initialValue]);
+
+    const handleChange = (e) => {
+        const newValue = e.target.value;
+        setValue(newValue);
+        if (onValueChange) {
+            onValueChange(id, newValue);
+        }
     };
 
     return (
@@ -33,9 +30,11 @@ const Password = ({id="", className = ""}) => {
         <input
           id={id}
           type={showPassword ? 'text' : 'password'}
-          onChange={handlePasswordChange}
+          disabled={disabled}
           className={`password-field ${className}`}
-          placeholder="비밀번호를 입력하세요"
+          placeholder={placeholder}
+          value={value}
+          onChange={handleChange}
         />
         <button type="button" onClick={togglePasswordVisibility} className="toggle-button">
           {showPassword ? <AiFillEyeInvisible/> : <AiFillEye/>}

@@ -1,3 +1,4 @@
+import React from 'react';
 import Basic from "./Basic";
 import Error from "./Error";
 import Password from "./Password";
@@ -6,23 +7,23 @@ import CheckRound from "./checkBox/Round";
 import CheckSwitch from "./checkBox/Switch";
 
 const InputFactory = {
-    basic: (id = "", placeholder = "", value = "", className = "", disabled=false) => {
-        return <Basic id={id} type="text" placeholder={placeholder} value={value} className={className} disabled={disabled}/>;
+    basic: (id = "", placeholder = "", initialValue = "", className = "", disabled=false, onValueChange) => {
+        return <Basic id={id} type="text" placeholder={placeholder} initialValue={initialValue} className={className} disabled={disabled} onValueChange={onValueChange}/>;
     },
-    error: (id = "", placeholder = "", value = "", className = "") => {
-        return <Error type="text" placeholder={placeholder} value={value} className={className} />;
+    error: (id = "", placeholder = "", initialValue = "", className = "", disabled=false, onValueChange) => {
+        return <Error id={id} type="text" placeholder={placeholder} initialValue={initialValue} className={className} disabled={disabled} onValueChange={onValueChange}/>;
     },
-    password: (id = "", className = "") => {
-        return <Password id={id} className={className} />;
+    password: (id = "", placeholder = "", initialValue = "", className = "", disabled=false, onValueChange) => {
+        return <Password id={id} placeholder={placeholder} initialValue={initialValue} className={className} disabled={disabled} onValueChange={onValueChange}/>;
     },
-    CheckBasic: (id = "", placeholder="", value = "", className = "") => {
-        return <CheckBasic id={id} placeholder={placeholder} value={value} className={className} />;
+    CheckBasic: (id = "", placeholder="", value = "", className = "", disabled=false, onChange) => {
+        return <CheckBasic id={id} placeholder={placeholder} value={value} className={className} disabled={disabled} onChange={onChange}/>;
     },
-    CheckRound: (id = "", placeholder="", value = "", className = "") => {
-        return <CheckRound id={id} placeholder={placeholder} value={value} className={className} />;
+    CheckRound: (id = "", placeholder="", value = "", className = "", disabled=false, onChange) => {
+        return <CheckRound id={id} placeholder={placeholder} value={value} className={className} disabled={disabled} onChange={onChange}/>;
     },
-    CheckSwitch: (id = "", placeholder="", value = "", className = "") => {
-        return <CheckSwitch id={id} placeholder={placeholder} value={value} className={className} />;
+    CheckSwitch: (id = "", placeholder="", value = "", className = "", disabled=false, onChange) => {
+        return <CheckSwitch id={id} placeholder={placeholder} value={value} className={className} disabled={disabled} onChange={onChange}/>;
     }
 }
 
