@@ -4,9 +4,21 @@ import signUpEvent from '../../../assets/js/signUpEvent';
 import pageMove from '../../../assets/js/pageMove';
 import React, { useState, useEffect } from 'react';
 
-function SignUpCode() {
+function SignUpCode(status={}) {
 
-  const [changeBtn, setChangeBtn] = useState(1);
+  const [changeBtn, setChangeBtn] = useState(2);
+
+  const [formData, setFormData] = useState({
+    userPhone: '',
+    userCode: '',
+  });
+
+  const handleValueChange = (id, value) => {
+    setFormData(prevData => ({
+      ...prevData,
+      [id]: value
+    }));
+  };
 
   const buttonChange = async (e) => {
     var data;
@@ -28,10 +40,10 @@ function SignUpCode() {
   return (
     <div className='signup-div signup-code'>
     <div className="form-group">
-    {InputFactory.basic('user-phone', '휴대폰 번호', "", 'input-field')}
+    {InputFactory.basic('userPhone', '휴대폰 번호', formData.userPhone, 'input-field', false, handleValueChange)}
     </div>
     <div className="form-group">
-      {InputFactory.basic('user-code', '인증번호를 입력하세요', "", 'input-field')}
+      {InputFactory.basic('userCode', '인증번호를 입력하세요', formData.userCode, 'input-field', false, handleValueChange)}
       {changeBtn === 0 && ButtonFactory.basic('code-btn','인증번호 전송', () => buttonChange(changeBtn), 'w-100')}
       {changeBtn === 1 && ButtonFactory.basic('check-btn','인증번호 확인', () => buttonChange(changeBtn), 'w-100')}
       {changeBtn === 2 && ButtonFactory.basic('check-btn','다음단계', () => buttonChange(changeBtn), 'w-100')}
