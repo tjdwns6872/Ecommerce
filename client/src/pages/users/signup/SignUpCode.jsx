@@ -2,15 +2,16 @@ import InputFactory from '../../../components/input/InputFactory';
 import ButtonFactory from '../../../components/button/ButtonFactory';
 import signUpEvent from '../../../assets/js/signUpEvent';
 import pageMove from '../../../assets/js/pageMove';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-function SignUpCode(status={}) {
+function SignUpCode() {
 
   const [changeBtn, setChangeBtn] = useState(2);
 
   const [formData, setFormData] = useState({
     userPhone: '',
     userCode: '',
+    userEmail: '',
   });
 
   const handleValueChange = (id, value) => {
@@ -33,7 +34,11 @@ function SignUpCode(status={}) {
         setChangeBtn(e+1);
       }
     }else{
-      pageMove.paramsUrl('http://localhost:3000/signup?', 'step=3');
+      var data = {};
+      data['step'] = 3;
+      data['ecUsersPhone'] = formData.userPhone;
+      data['ecUsersEmail'] = formData.userEmail;
+      pageMove.paramsUrl('http://localhost:3000/signup?', data);
     }
   }
 

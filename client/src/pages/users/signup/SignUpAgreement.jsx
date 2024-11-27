@@ -13,7 +13,7 @@ function SignUpAgreement() {
             {InputFactory.CheckBasic("advertisingConsent", "광고 수신에 동의합니다.", "")}
         </div>
         <div className="form-group">
-            {ButtonFactory.basic('signup-btn','동의합니다', () => pageMove.paramsUrl('http://localhost:3000/signup', '?step=2'), 'w-100')}
+            {ButtonFactory.basic('signup-btn','동의합니다', () => pageMove.paramUrl('http://localhost:3000/signup', '?step=2'), 'w-100')}
         </div>
     </div>
   )

@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import InputFactory from '../../../components/input/InputFactory';
 import ButtonFactory from '../../../components/button/ButtonFactory';
 import signUpEvent from '../../../assets/js/signUpEvent';
+import pageMove from '../../../assets/js/pageMove';
 
 function SignUpData() {
+  var json = pageMove.paramsToJson(window.location.href);
   const [formData, setFormData] = useState({
-    ecUsersEmail: '',
+    ecUsersEmail: json['ecUsersEmail'],
     ecUsersPassword: '',
     ecUsersPasswordCheck: '',
     ecUsersName: '',
-    ecUsersPhone: '',
+    ecUsersPhone: json['ecUsersPhone'],
     ecUsersBirthDate: '',
     ecUsersReferralCode: ''
   });
@@ -23,7 +25,10 @@ function SignUpData() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signUpEvent.createUser(formData);
+    var data = signUpEvent.createUser(formData);
+    if(data.status === 200){
+      window.location.href="/login";
+    }
   };
 
   return (
