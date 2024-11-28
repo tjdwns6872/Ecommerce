@@ -1,10 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../assets/css/commons.css';
 import InputFactory from '../../components/input/InputFactory';
 import ButtonFactory from '../../components/button/ButtonFactory';
 import { SiKakaotalk, SiNaver, SiGoogle } from "react-icons/si";
-import loginEvent from '../../assets/js/loginEvent';
+import loginEvent from '../../assets/js/user/loginEvent';
 function Login() {
+
+    const [formData, setFormData] = useState({
+        userId: '',
+        userPw: ''
+    });
+
+    const handleValueChange = (id, value) => {
+        setFormData(prevData => ({
+          ...prevData,
+          [id]: value
+        }));
+    };
 
     useEffect(() => {
         const handleMessage = (event) => {
@@ -30,15 +42,15 @@ function Login() {
                 <h2>로그인</h2>
             </div>
             <div className='w-100'>
-                {InputFactory.basic("user-id", "아이디를 입력하세요.", "", "")}
-                {InputFactory.password("user-pw")}
+                {InputFactory.basic("userId", "아이디를 입력하세요.", formData.userId, 'input-field', false, handleValueChange)}
+                {InputFactory.password("userPw", "비밀번호를 입력하세요.")}
             </div>
             <div className='w-100'>
                 {ButtonFactory.basic("basic-login", "로그인", () => loginEvent.basicLogin(), "w-100")}
             </div>
             <div className='w-100' style={{display: "flex", justifyContent: "space-evenly"}}>
                 <a href='/signup'>회원가입</a>
-                <a href='#'>아이디/비밀번호찾기</a>
+                <a href='/find'>아이디/비밀번호찾기</a>
             </div>
             <div className='w-100' style={{display: "flex", justifyContent: "space-evenly"}}>
                 {ButtonFactory.icon("social-login", SiNaver, () => loginEvent.socialLogin("naver"))}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputFactory from '../../../components/input/InputFactory';
 import ButtonFactory from '../../../components/button/ButtonFactory';
-import signUpEvent from '../../../assets/js/signUpEvent';
+import signUpEvent from '../../../assets/js/user/signUpEvent';
 import pageMove from '../../../assets/js/pageMove';
 
 function SignUpData() {
