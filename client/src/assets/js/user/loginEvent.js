@@ -1,4 +1,4 @@
-import ApiFactory from '../../services/ApiFactory';
+import ApiFactory from '../../../services/ApiFactory';
 
 const loginEvent = {
   socialLogin: async (type) => {
