@@ -1,5 +1,6 @@
 import InputFactory from '../../../components/input/InputFactory';
 import ButtonFactory from '../../../components/button/ButtonFactory';
+import findEvent from '../../../assets/js/user/FindEvent';
 import React, { useState } from 'react';
 
 function FindId(){
@@ -22,12 +23,12 @@ function FindId(){
     const buttonChange = async (e) => {
         var data;
         if(e === 0){
-            //   data = await signUpEvent.authCodeSend();
+              data = await findEvent.findCodeSend("emailFind");
             if(data.status === 200){
                 setChangeBtn(e+1);
             }
         }else if(e === 1){
-            //   data = await signUpEvent.codeCheck();
+              data = await findEvent.codeCheck();
             if(data.status === 200){
                 setChangeBtn(e+1);
             }
