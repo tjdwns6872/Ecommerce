@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import FindCode from './FindCode';
 import FindId from "./FindId";
 import FindPw from "./FindPw"
 import { Link } from 'react-router-dom'; // 로그인 링크를 위한 react-router-dom 사용
