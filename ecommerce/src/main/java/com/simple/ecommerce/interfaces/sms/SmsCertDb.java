@@ -1,4 +1,4 @@
-package com.simple.ecommerce.util.sms;
+package com.simple.ecommerce.interfaces.sms;
 
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 

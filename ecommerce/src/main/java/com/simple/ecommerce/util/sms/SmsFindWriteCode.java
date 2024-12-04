@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.simple.ecommerce.converter.sms.certCodeConverter;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.entity.sms.SmsEntity;
+import com.simple.ecommerce.interfaces.sms.SmsCertDb;
 import com.simple.ecommerce.repository.sms.SmsRepository;
 import com.simple.ecommerce.util.ShaUtil;
 

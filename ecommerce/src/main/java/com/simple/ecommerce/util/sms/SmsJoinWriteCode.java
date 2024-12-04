@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.simple.ecommerce.converter.sms.certCodeConverter;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.entity.sms.SmsEntity;
+import com.simple.ecommerce.interfaces.sms.SmsCertDb;
 import com.simple.ecommerce.repository.sms.SmsRepository;
 import com.simple.ecommerce.util.ShaUtil;
 
@@ -38,13 +39,15 @@ public class SmsJoinWriteCode extends AbstractSmsWriteType implements SmsCertDb{
 
     // 전송한 데이터 DB에 저장
     @Override
-    public void certCodeInsert(RequestSmsDto smsDto) {
+    public String certCodeInsert(RequestSmsDto smsDto) {
         // DTO -> Entity로 전환하기 위한 인스턴스 생성
         certCodeConverter converter = new certCodeConverter();
         // DTO를 Entity로 변환
         SmsEntity entity = converter.toEntity(smsDto);
         // DB에 저장
-        smsRepository.save(entity);
+        SmsEntity result = smsRepository.save(entity);
+
+        return String.valueOf(result.getEcCertId());
     }
 
     
