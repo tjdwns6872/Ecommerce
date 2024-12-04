@@ -1,19 +1,28 @@
 package com.simple.ecommerce.util.sms;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.simple.ecommerce.converter.sms.certCodeConverter;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
+import com.simple.ecommerce.dto.sms.UserCheck;
 import com.simple.ecommerce.entity.sms.SmsEntity;
+import com.simple.ecommerce.entity.users.UsersEntity;
 import com.simple.ecommerce.interfaces.sms.SmsCertDb;
+import com.simple.ecommerce.interfaces.user.UserCheckInterface;
 import com.simple.ecommerce.repository.sms.SmsRepository;
+import com.simple.ecommerce.repository.users.UsersRepository;
 import com.simple.ecommerce.util.ShaUtil;
 
-public class SmsFindWriteCode extends AbstractSmsWriteType implements SmsCertDb{
+@Component
+public class SmsFindWriteCode extends AbstractSmsWriteType implements SmsCertDb, UserCheckInterface{
 
     // 데이터를 DB에 저장하기 위해 사용되는 모듈 선언
     @Autowired
     private SmsRepository smsRepository;
+
+    @Autowired
+    private UsersRepository usersRepository;
 
     @Override
     public RequestSmsDto dtoSetting(RequestSmsDto smsDto) {
@@ -47,6 +56,23 @@ public class SmsFindWriteCode extends AbstractSmsWriteType implements SmsCertDb{
         SmsEntity result = smsRepository.save(entity);
 
         return String.valueOf(result.getEcCertId());
+    }
+
+    @Override
+    public Integer userCheck(UserCheck userCheck) {
+        UsersEntity entity = new UsersEntity();
+
+        int count = 0;
+
+        entity.setEcUsersName(userCheck.getName());
+        entity.setEcUsersPhone(userCheck.getPhone());
+        if(userCheck.getType().equals("emailFind")){
+            entity.setEcUsersEmail(userCheck.getEmail());
+            count = usersRepository.countByEcUsersNameAndEcUsersPhone("우성준","010-7557-9897");
+        }else{
+            count = usersRepository.countByEcUsersPhoneAndEcUsersNameAndEcUsersEmail("","","");
+        }
+        return count;
     }
     
 }

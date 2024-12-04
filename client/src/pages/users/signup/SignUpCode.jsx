@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 function SignUpCode() {
 
-  const [changeBtn, setChangeBtn] = useState(2);
+  const [changeBtn, setChangeBtn] = useState(0);
 
   const [formData, setFormData] = useState({
     userPhone: '',

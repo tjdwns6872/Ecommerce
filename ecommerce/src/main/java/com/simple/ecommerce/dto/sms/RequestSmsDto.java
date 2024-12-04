@@ -12,4 +12,6 @@ public class RequestSmsDto {
 
     // SMS 용도 분기처리를 위한 DTO
     private CustomSmsDto Custom;
+
+    private UserCheck check;
 }

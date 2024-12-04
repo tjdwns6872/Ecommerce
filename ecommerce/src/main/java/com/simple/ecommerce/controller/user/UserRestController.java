@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.simple.ecommerce.dto.sms.CustomSmsDto;
 import com.simple.ecommerce.dto.sms.MessageDataDto;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
+import com.simple.ecommerce.dto.sms.UserCheck;
 import com.simple.ecommerce.dto.social.SocialConnectDto;
 import com.simple.ecommerce.dto.users.UsersDataResultDto;
 import com.simple.ecommerce.dto.users.UsersFindDto;
@@ -56,11 +57,13 @@ public class UserRestController {
 
     //회원가입 시 사용되는 SMS 인증 컨트롤러
     @PutMapping("/{certType}/CertCode")
-    public ResponseEntity<AjaxResult<String>> joinCertCode(@RequestBody String phone, @PathVariable String certType) throws Exception{
+    public ResponseEntity<AjaxResult<String>> joinCertCode(@RequestBody String jsonStr, @PathVariable String certType) throws Exception{
+        
+        
         // json형태의 문자열로 넘어온 데이터 json형태로 변경
-        JSONObject json = JsonUtil.stringToJson(phone);
+        JSONObject json = JsonUtil.stringToJson(jsonStr);
         // json에서 전화번호 데이터 추출
-        phone = (String) JsonUtil.getJsonValue(json, "phone");
+        String phone = (String) JsonUtil.getJsonValue(json, "phone");
         // dto 생성
         RequestSmsDto smsDto = new RequestSmsDto();
         // message dto 생성
@@ -72,7 +75,18 @@ public class UserRestController {
         // 기능 데이터 처리시 사용되는 sms 타입 선언
         CustomSmsDto customSmsDto = new CustomSmsDto();
         customSmsDto.setCustomType(certType);
-        smsDto.setCustom(customSmsDto);;
+        smsDto.setCustom(customSmsDto);
+
+        // 회원 찾기일 경우 사용되는 데이터
+        String name = (String) JsonUtil.getJsonValue(json, "name");
+        String email = (String) JsonUtil.getJsonValue(json, "email");
+        UserCheck check = new UserCheck();
+        check.setEmail(email);
+        check.setName(name);
+        check.setPhone(phone);
+        check.setType(certType);
+
+        smsDto.setCheck(check);
         // SMS 전송
         String smsId = smsService.smsRequest(smsDto);
 

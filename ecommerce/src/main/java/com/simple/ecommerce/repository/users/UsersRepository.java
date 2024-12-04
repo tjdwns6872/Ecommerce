@@ -3,6 +3,7 @@ package com.simple.ecommerce.repository.users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.simple.ecommerce.dto.sms.UserCheck;
 import com.simple.ecommerce.entity.users.UsersEntity;
 
 //회원 Data JPA Repository 
@@ -44,5 +45,9 @@ public interface UsersRepository extends JpaRepository<UsersEntity, Integer>{
      * @return UsersEntity
      */
     UsersEntity findByEcUsersId(Integer id);
+
+    Integer countByEcUsersNameAndEcUsersPhone(String name, String phone);
+
+    Integer countByEcUsersPhoneAndEcUsersNameAndEcUsersEmail(String phone, String name, String email);
 
 }
