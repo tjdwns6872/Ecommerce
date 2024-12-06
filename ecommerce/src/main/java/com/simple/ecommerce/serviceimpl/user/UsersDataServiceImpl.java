@@ -7,6 +7,7 @@ import com.simple.ecommerce.converter.users.UsersDataConverter;
 import com.simple.ecommerce.dto.users.UsersDataResultDto;
 import com.simple.ecommerce.dto.users.UsersFindDto;
 import com.simple.ecommerce.entity.users.UsersEntity;
+import com.simple.ecommerce.exception.users.FindBadRequestException;
 import com.simple.ecommerce.exception.users.FindNullException;
 import com.simple.ecommerce.repository.users.UsersRepository;
 import com.simple.ecommerce.service.mail.MailComponent;
@@ -34,12 +35,12 @@ public class UsersDataServiceImpl implements UsersDataService{
         String result = null;
         try {
             //타입에 따라 데이터 조회 필터링 변경
-            if(findDto.getType().equals("findEmail")){
+            if(findDto.getType().equals("emailFind")){
                 //사용자가 이메일을 찾을 경우 이름과 전화번호를 통해 찾음
                 entity = usersRepository.findByEcUsersPhoneAndEcUsersName(findDto.getPhone(), findDto.getName());
                 //조회 후 이메일을 리턴할 변수에 저장
                 result = entity.getEcUsersEmail();
-            }else{
+            }else if(findDto.getType().equals("passwordFind")){
                 //비밀번호를 찾을 경우 이메일과 전화번호를 통해 찾음
                 entity = usersRepository.findByEcUsersEmailAndEcUsersPhone(findDto.getEmail(), findDto.getPhone());
                 //임시 비밀번호 발급
@@ -61,6 +62,8 @@ public class UsersDataServiceImpl implements UsersDataService{
                 mailComponent.sendSimpleMessage(form);
                 //전송 후 사용자한테 안내
                 result = entity.getEcUsersEmail()+"로 임시 비밀번호 발송했습니다.";
+            }else{
+                throw new FindBadRequestException();
             }
         } catch (NullPointerException e) {
             e.printStackTrace();

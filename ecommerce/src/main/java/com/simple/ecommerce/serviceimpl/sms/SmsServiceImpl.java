@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import com.simple.ecommerce.component.sms.SmsWriteTypeFactory;
 import com.simple.ecommerce.dto.sms.RequestSmsDto;
 import com.simple.ecommerce.dto.sms.UserCheck;
+import com.simple.ecommerce.exception.users.FindBadRequestException;
 import com.simple.ecommerce.exception.users.FindNullException;
 import com.simple.ecommerce.service.sms.SmsService;
+import com.simple.ecommerce.util.StringUtils;
 import com.simple.ecommerce.util.sms.AbstractSmsWriteType;
 import com.simple.ecommerce.interfaces.sms.*;
 import com.simple.ecommerce.interfaces.user.UserCheckInterface;
@@ -45,11 +47,15 @@ public class SmsServiceImpl implements SmsService{
         // 세팅된 헤더 데이터 dto에 삽입
         dto.getCustom().setCustomHeaderStr(headerStr);
         // SmsCertDb 인터페이스를 상속 받은 클래스는 해당 메소드 실행
-        if(smsWrite instanceof UserCheckInterface){
-            count = ((UserCheckInterface)smsWrite).userCheck(smsDto.getCheck());
-            if(count <= 0){
-                throw new FindNullException();
+        if(!StringUtils.isStringEmpty(smsDto.getCheck().getName())){
+            if(smsWrite instanceof UserCheckInterface){
+                count = ((UserCheckInterface)smsWrite).userCheck(smsDto.getCheck());
+                if(count <= 0){
+                    throw new FindNullException();
+                }
             }
+        }else{
+            throw new FindBadRequestException();
         }
         // // SMS 전송
         smsWrite.smsWrite(dto);
