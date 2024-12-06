@@ -74,5 +74,19 @@ public class UsersExceptionHandler {
         
         return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler(FindBadRequestException.class)
+    public ResponseEntity<AjaxResult<Void>> FindBadRequestException(LoginException ex){
+        AjaxResult<Void> response = AjaxResult.<Void>builder()
+        .status(HttpStatus.BAD_REQUEST.value())
+            .message("잘못된 요청입니다.")
+            .error(AjaxResult.ErrorDetails.builder()
+                .code("Bad Request")
+                .details(ex.getMessage())
+                .build())
+            .build();
+        
+        return ResponseEntity.badRequest().body(response);
+    }
 }
 
