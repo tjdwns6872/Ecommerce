@@ -5,6 +5,7 @@ import InputFactory from '../../../components/input/InputFactory';
 import ButtonFactory from '../../../components/button/ButtonFactory';
 import findEvent from '../../../assets/js/user/FindEvent';
 import { Link } from 'react-router-dom'; // 로그인 링크를 위한 react-router-dom 사용
+import FindResult from "./FindResult";
 
 function Find(){
 
@@ -85,7 +86,7 @@ function Find(){
                         ):(
                             <div>
                                 <div className="form-group">
-                                    <h2>{formData.result.data}</h2>
+                                    <FindResult data={formData.result.data}/>
                                 </div>
                             </div>
                         )}
