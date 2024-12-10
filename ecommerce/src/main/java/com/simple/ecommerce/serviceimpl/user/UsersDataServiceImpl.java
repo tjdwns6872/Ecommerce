@@ -46,7 +46,7 @@ public class UsersDataServiceImpl implements UsersDataService{
                 //임시 비밀번호 발급
                 String password = ShaUtil.randomString();
                 //발급 받은 임시비밀번호 entity에 저장
-                entity.setEcUsersPassword(password);
+                entity.setEcUsersPassword(ShaUtil.sha256Encode(password));
                 //임시 비밀번호로 해당 사용자 비밀번호 업데이트
                 usersRepository.save(entity);
                 //임시 비밀번호를 전송할 이메일 세팅

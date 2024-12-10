@@ -20,10 +20,12 @@ const loginEvent = {
     }
   }, basicLogin: async () => {
     try{
-      var id = document.getElementById("user-id").value;
-      var pw = document.getElementById("user-pw").value;
+      var id = document.getElementById("userId").value;
+      var pw = document.getElementById("userPw").value;
       var data = await ApiFactory.post("http://localhost:8081/ecommerce/api/user/login", {"ecUsersEmail":id,"ecUsersPassword":pw});
-      console.log('API 호출 성공:', data); // 성공적으로 받은 데이터 처리
+      if(data.status === 200){
+        window.location.href="/"
+      }
     } catch(error){
       //토스트 메시지 컴포넌트 추가 후 수정 예정
       console.error(error.response.data.message);
