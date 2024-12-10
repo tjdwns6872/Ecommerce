@@ -24,6 +24,7 @@ const loginEvent = {
       var pw = document.getElementById("userPw").value;
       var data = await ApiFactory.post("http://localhost:8081/ecommerce/api/user/login", {"ecUsersEmail":id,"ecUsersPassword":pw});
       if(data.status === 200){
+        localStorage.setItem('accessToken', data.data);
         window.location.href="/"
       }
     } catch(error){
