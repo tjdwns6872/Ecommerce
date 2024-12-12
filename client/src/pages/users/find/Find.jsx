@@ -3,7 +3,7 @@ import FindId from "./FindId";
 import FindPw from "./FindPw";
 import InputFactory from '../../../components/input/InputFactory';
 import ButtonFactory from '../../../components/button/ButtonFactory';
-import findEvent from '../../../assets/js/user/FindEvent';
+import findEvent from '../../../assets/js/user/findEvent';
 import { Link } from 'react-router-dom'; // 로그인 링크를 위한 react-router-dom 사용
 import FindResult from "./FindResult";
 
@@ -48,7 +48,7 @@ function Find(){
     };
 
     return (
-        <div className="signup-container">
+        <div className="signup-container-notrans">
             <div className="signup-header">
                 <h2>아이디/비밀번호 찾기</h2>
                 <div className="custom-radio-box">
