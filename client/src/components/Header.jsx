@@ -8,7 +8,7 @@ function Header(){
     <header class="top-header">
         <div class="top-header-container">
             <div class="logo">
-                <h1><a href='/'>Novoa</a></h1>
+                <h1><a href='/home'>Novoa</a></h1>
             </div>
             <div class="header-actions">
                 <input type="text" class="search-input" placeholder="검색" />
@@ -22,7 +22,7 @@ function Header(){
             <ul>
                 <li><a href="/#"><BiSolidCategoryAlt/><br/>카테고리</a></li>
                 <li><a href="/#"><BiLogoSnapchat/><br/>스냅</a></li>
-                <li><a href="/"><BiSolidHome/><br/>홈</a></li>
+                <li><a href="/home"><BiSolidHome/><br/>홈</a></li>
                 <li><a href="/#"><BiSolidHeart/><br/>좋아요</a></li>
                 <li><a href="/#"><BiSolidUser/><br/>마이</a></li>
             </ul>

@@ -25,7 +25,7 @@ function Login() {
             const { token } = event.data;
             if (token) {
                 localStorage.setItem('accessToken', token);
-                window.location.href='/';
+                window.location.href='/home';
             }
         };
 
