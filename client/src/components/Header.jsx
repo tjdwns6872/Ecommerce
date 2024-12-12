@@ -24,7 +24,7 @@ function Header(){
                 <li><a href="/#"><BiLogoSnapchat/><br/>스냅</a></li>
                 <li><a href="/home"><BiSolidHome/><br/>홈</a></li>
                 <li><a href="/#"><BiSolidHeart/><br/>좋아요</a></li>
-                <li><a href="/#"><BiSolidUser/><br/>마이</a></li>
+                <li><a href="/mypage"><BiSolidUser/><br/>마이</a></li>
             </ul>
         </nav>
     </div>
