@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const apiRequest = async (method, url, params = {}, data = {}) => {
   try {
+    var token = "Bearer "+localStorage.getItem('accessToken');
     const response = await axios({
       method,
       url,
@@ -9,6 +10,7 @@ const apiRequest = async (method, url, params = {}, data = {}) => {
       data,
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': token,
       },
     });
     return response.data;

@@ -4,12 +4,29 @@ import '../../../assets/css/commons.css';
 
 const MyPage = () => {
 
-    const [userDat, setUsetData] = useState();
+    const [formData, setFormData] = useState({
+        ecUsersName: '',
+        ecUsersPhone: '',
+        ecUsersEmail: '',
+    });
+
+    const handleValueChange = (id, value) => {
+        setFormData(prevData => ({
+          ...prevData,
+          [id]: value
+        }));
+    };
 
     useEffect(() => {
-        // console.log(localStorage.getItem('accessToken'));
-        // setUsetData(myPageEvent.userData());
-    }, []);
+        async function fetchAndSetUser() {
+            var data = await  myPageEvent.userData();
+            var userData = data.data;
+            for(var key in userData) {
+                handleValueChange(key, userData[key]);
+            }
+        }
+        fetchAndSetUser();
+    },[]);
 
     return (
         <div className="mypage-container">
@@ -23,8 +40,8 @@ const MyPage = () => {
                     />
             </div>
                 <div className="profile-info">
-                    <h2 className="username">홍길동</h2>
-                    <p className="user-email">example@example.com</p>
+                    <h2 className="username">{formData.ecUsersName}</h2>
+                    <p className="user-email">{formData.ecUsersEmail}</p>
                     <button className="edit-profile-btn">프로필 수정</button>
                 </div>
             </div>
@@ -34,7 +51,7 @@ const MyPage = () => {
                     <li className="menu-item">주문 내역</li>
                     <li className="menu-item">찜한 상품</li>
                     <li className="menu-item">알림 설정</li>
-                    <li className="menu-item">로그아웃</li>
+                    <li className="menu-item" onClick={() => myPageEvent.logout()}>로그아웃</li>
                 </ul>
             </div>
         </div>
