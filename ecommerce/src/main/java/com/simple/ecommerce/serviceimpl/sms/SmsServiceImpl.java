@@ -58,7 +58,7 @@ public class SmsServiceImpl implements SmsService{
             throw new FindBadRequestException();
         }
         // // SMS 전송
-        smsWrite.smsWrite(dto);
+        // smsWrite.smsWrite(dto);
         
         if(smsWrite instanceof SmsCertDb){
             // JPA를 통해 데이터를 DB에 삽입

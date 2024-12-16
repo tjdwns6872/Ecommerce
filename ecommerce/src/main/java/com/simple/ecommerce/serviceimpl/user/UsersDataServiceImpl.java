@@ -1,6 +1,7 @@
 package com.simple.ecommerce.serviceimpl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.simple.ecommerce.converter.users.UsersDataConverter;
@@ -14,8 +15,10 @@ import com.simple.ecommerce.service.mail.MailComponent;
 import com.simple.ecommerce.service.mail.SendMailForm;
 import com.simple.ecommerce.service.sms.SmsService;
 import com.simple.ecommerce.service.user.UsersDataService;
+import com.simple.ecommerce.util.JwtUtil;
 import com.simple.ecommerce.util.ShaUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -27,6 +30,9 @@ public class UsersDataServiceImpl implements UsersDataService{
 
     @Autowired
     private MailComponent mailComponent;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public String usersData(UsersFindDto findDto) {
@@ -75,9 +81,11 @@ public class UsersDataServiceImpl implements UsersDataService{
     }
 
     @Override
-    public UsersDataResultDto usersData(Integer id) {
+    public UsersDataResultDto usersData(HttpServletRequest request) {
+        String token = jwtUtil.resolveToken(request);
+        Authentication userData = jwtUtil.getAuthentication(token);
         UsersDataConverter converter = new UsersDataConverter();
-        UsersEntity entity = usersRepository.findByEcUsersId(id);
+        UsersEntity entity = usersRepository.findByEcUsersId(Integer.valueOf(userData.getName()));
         UsersDataResultDto dto = converter.toDto(entity);
         return dto;
     }

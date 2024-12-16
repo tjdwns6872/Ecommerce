@@ -18,13 +18,15 @@ import com.simple.ecommerce.service.user.UsersDataService;
 import com.simple.ecommerce.service.user.UsersJoinService;
 import com.simple.ecommerce.service.user.UsersLoginService;
 import com.simple.ecommerce.util.AjaxResult;
-import com.simple.ecommerce.util.JsonUtil;
+import com.simple.ecommerce.util.StringUtils;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.io.IOException;
 
@@ -35,10 +37,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
-
+@Slf4j
 @RestController
 @RequestMapping("/ecommerce/api/user")
 public class UserRestController {
@@ -61,9 +62,9 @@ public class UserRestController {
         
         
         // json형태의 문자열로 넘어온 데이터 json형태로 변경
-        JSONObject json = JsonUtil.stringToJson(jsonStr);
+        JSONObject json = StringUtils.stringToJson(jsonStr);
         // json에서 전화번호 데이터 추출
-        String phone = (String) JsonUtil.getJsonValue(json, "phone");
+        String phone = (String) StringUtils.getJsonValue(json, "phone");
         // dto 생성
         RequestSmsDto smsDto = new RequestSmsDto();
         // message dto 생성
@@ -78,8 +79,8 @@ public class UserRestController {
         smsDto.setCustom(customSmsDto);
 
         // 회원 찾기일 경우 사용되는 데이터
-        String name = (String) JsonUtil.getJsonValue(json, "name");
-        String email = (String) JsonUtil.getJsonValue(json, "email");
+        String name = (String) StringUtils.getJsonValue(json, "name");
+        String email = (String) StringUtils.getJsonValue(json, "email");
         UserCheck check = new UserCheck();
         check.setEmail(email);
         check.setName(name);
@@ -197,8 +198,8 @@ public class UserRestController {
 
     //회원 상세데이터(테스트용)
     @GetMapping("/detail")
-    public ResponseEntity<AjaxResult<UsersDataResultDto>> detail(@RequestParam Integer id){
-        UsersDataResultDto dto = dataService.usersData(id);
+    public ResponseEntity<AjaxResult<UsersDataResultDto>> detail(HttpServletRequest request){
+        UsersDataResultDto dto = dataService.usersData(request);
         AjaxResult<UsersDataResultDto> response = AjaxResult.<UsersDataResultDto>builder()
             //HttpStatus Ok 상태 코드 삽입(200) 
             .status(HttpStatus.OK.value())

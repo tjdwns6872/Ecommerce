@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.simple.ecommerce.dto.users.UsersDataResultDto;
 import com.simple.ecommerce.dto.users.UsersFindDto;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Service
 public interface UsersDataService {    
     
@@ -17,8 +19,8 @@ public interface UsersDataService {
 
     /**
      * 마이페이지 또는 사용자 데이터를 불러올 때 사용하는 메소드
-     * @param id
+     * @param Authorization
      * @return UsersDataResultDto
      */
-    public UsersDataResultDto usersData(Integer id);
+    public UsersDataResultDto usersData(HttpServletRequest request);
 }
