@@ -21,11 +21,11 @@ public class InsertDto {
 
     private String description;
 
-    private String price;
+    private Integer price;
 
     private Integer stockQuantity;
 
-    private StatusEnum status;
+    private Integer status;
 
     private Date createdAt;
 
