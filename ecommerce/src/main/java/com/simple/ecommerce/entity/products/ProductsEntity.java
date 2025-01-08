@@ -41,7 +41,7 @@ public class ProductsEntity {
     private String ecProductsDescription;
 
     @Column(name = "EC_PRODUCTS_PRICE")
-    private String ecProductsPrice;
+    private Integer ecProductsPrice;
 
     @Column(name = "EC_PRODUCTS_STOCK_QUANTITY")
     private Integer ecProductsStockQuantity;
