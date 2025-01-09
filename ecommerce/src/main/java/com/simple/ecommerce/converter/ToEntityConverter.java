@@ -1,7 +1,7 @@
 package com.simple.ecommerce.converter;
 
-public interface ToEntityConverter<E, D> {
+public interface ToEntityConverter<T1, T2> {
 
-    E toEntity(D dto);
+    T1 toEntity(T2 dto);
     
 }

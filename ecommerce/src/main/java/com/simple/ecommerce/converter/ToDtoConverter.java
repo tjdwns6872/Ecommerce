@@ -1,6 +1,6 @@
 package com.simple.ecommerce.converter;
 
-public interface ToDtoConverter<D, E> {
+public interface ToDtoConverter<T1, T2> {
     
-    D toEntity(E entity);
+    T1 toEntity(T2 entity);
 }
