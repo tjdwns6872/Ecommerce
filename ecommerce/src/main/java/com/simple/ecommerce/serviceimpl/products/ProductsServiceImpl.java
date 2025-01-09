@@ -27,6 +27,7 @@ public class ProductsServiceImpl implements ProductsService{
         Integer productId = 0;
         try {
             ProductsEntity entity = new ProductsConverter().toEntity(dto);
+            log.info("ProductsEntity=>{}", entity.toString());
             productId = productsRepository.save(entity).getEcProductsId();
         } catch (Exception e) {
             throw new ProductsException("저장 실패");

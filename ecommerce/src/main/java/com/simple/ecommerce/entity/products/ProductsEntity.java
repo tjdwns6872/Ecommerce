@@ -47,7 +47,7 @@ public class ProductsEntity {
     private Integer ecProductsStockQuantity;
 
     @Column(name = "EC_PRODUCTS_STATUS")
-    private StatusEnum ecProductsStatus;
+    private String ecProductsStatus;
 
     @Column(name = "EC_PRODUCTS_CREATED_AT")
     private Date ecProductsCreatedAt;

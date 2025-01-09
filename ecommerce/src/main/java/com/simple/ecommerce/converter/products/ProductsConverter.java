@@ -17,7 +17,7 @@ public class ProductsConverter implements ToEntityConverter<ProductsEntity, Inse
             .ecProductsDescription(dto.getDescription())
             .ecProductsPrice(dto.getPrice())
             .ecProductsStockQuantity(dto.getStockQuantity())
-            .ecProductsStatus(StatusEnum.ACTIVE)
+            .ecProductsStatus(StatusEnum.getEnum(dto.getStatus()).getType())
             .ecProductsCreatedAt(dto.getCreatedAt())
             .ecProductsUpdatedAt(dto.getUpdatedAt())
             .build();
