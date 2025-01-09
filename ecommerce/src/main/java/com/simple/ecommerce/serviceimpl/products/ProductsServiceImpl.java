@@ -39,5 +39,23 @@ public class ProductsServiceImpl implements ProductsService{
         // 데이터 삭제 로직
         throw new UnsupportedOperationException("Unimplemented method 'dataDelete'");
     }
+
+    @Override
+    public Integer dataUpdate(InsertDto dto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'dataUpdate'");
+    }
+
+    @Override
+    public ProductsEntity dataDetailSelect(Integer id) {
+        ProductsEntity entity;
+        try {
+            entity = productsRepository.findByEcProductsId(id);
+            log.info("Product Detail Entity Null Check====>{}", entity.toString());
+        } catch (Exception e) {
+            throw new ProductsException("조회 실패");
+        }
+        return entity;
+    }
     
 }

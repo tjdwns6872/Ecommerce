@@ -9,4 +9,6 @@ import com.simple.ecommerce.entity.products.ProductsEntity;
 public interface ProductsRepository extends JpaRepository<ProductsEntity, Integer>{
 
     <S extends ProductsEntity> S save(S entity);
+
+    ProductsEntity findByEcProductsId(Integer ecProductsId);
 }

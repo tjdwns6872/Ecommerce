@@ -2,8 +2,6 @@ package com.simple.ecommerce.dto.products;
 
 import java.sql.Date;
 
-import com.simple.ecommerce.util.products.StatusEnum;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
