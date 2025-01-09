@@ -1,9 +1,12 @@
 package com.simple.ecommerce.serviceimpl.products;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.simple.ecommerce.converter.products.ProductsConverter;
 import com.simple.ecommerce.dto.products.InsertDto;
+import com.simple.ecommerce.dto.products.SelectDto;
 import com.simple.ecommerce.entity.products.ProductsEntity;
 import com.simple.ecommerce.exception.products.ProductsException;
 import com.simple.ecommerce.repository.products.ProductsRepository;
@@ -56,6 +59,12 @@ public class ProductsServiceImpl implements ProductsService{
             throw new ProductsException("조회 실패");
         }
         return entity;
+    }
+
+    @Override
+    public List<ProductsEntity> dataListSelect(SelectDto dto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'dataListSelect'");
     }
     
 }
