@@ -1,6 +1,6 @@
 package com.simple.ecommerce.dto.products;
 
-import java.sql.Date;
+import org.springframework.data.domain.Pageable;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,18 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SelectDto {
     
-    private String name;
+    private SelectRequestDto requestDto;
 
-    private Integer categoryId;
-
-    private Integer userId;
-
-    private Date startDate;
-    private Date endDate;
-
-    private Integer startPrice;
-    private Integer endPrice;
-
-    private Integer nowPage;
-
+    private Pageable pageable;
 }

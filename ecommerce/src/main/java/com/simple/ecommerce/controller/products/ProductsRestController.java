@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.simple.ecommerce.dto.products.InsertDto;
+import com.simple.ecommerce.dto.products.SelectDto;
+import com.simple.ecommerce.dto.products.SelectRequestDto;
 import com.simple.ecommerce.entity.products.ProductsEntity;
 import com.simple.ecommerce.service.products.ProductsService;
 import com.simple.ecommerce.util.AjaxResult;
@@ -11,6 +13,10 @@ import com.simple.ecommerce.util.AjaxResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +63,20 @@ public class ProductsRestController {
             .status(HttpStatus.OK.value())
             .message("상품 조회")
             .data(result)
+            .build();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<AjaxResult<List<ProductsEntity>>> productList(SelectRequestDto dto, Pageable pageable){
+        SelectDto sDto = new SelectDto();
+        sDto.setPageable(pageable);
+        sDto.setRequestDto(dto);
+        List<ProductsEntity> list = productsService.dataListSelect(sDto);
+        AjaxResult<List<ProductsEntity>> response = AjaxResult.<List<ProductsEntity>>builder()
+            .status(HttpStatus.OK.value())
+            .message("상품 조회")
+            .data(list)
             .build();
         return ResponseEntity.status(response.getStatus()).body(response);
     }

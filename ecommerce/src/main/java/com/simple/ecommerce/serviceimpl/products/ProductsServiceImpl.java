@@ -2,6 +2,7 @@ package com.simple.ecommerce.serviceimpl.products;
 
 import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.simple.ecommerce.converter.products.ProductsConverter;
@@ -10,6 +11,7 @@ import com.simple.ecommerce.dto.products.SelectDto;
 import com.simple.ecommerce.entity.products.ProductsEntity;
 import com.simple.ecommerce.exception.products.ProductsException;
 import com.simple.ecommerce.repository.products.ProductsRepository;
+import com.simple.ecommerce.repository.products.ProductsSpecification;
 import com.simple.ecommerce.service.products.ProductsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,8 +65,14 @@ public class ProductsServiceImpl implements ProductsService{
 
     @Override
     public List<ProductsEntity> dataListSelect(SelectDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dataListSelect'");
+        List<ProductsEntity> list = null;
+        Specification<ProductsEntity> spec = ProductsSpecification.productList(dto.getRequestDto());
+        try {
+            list = productsRepository.findAll(spec, dto.getPageable()).getContent();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
     
 }
