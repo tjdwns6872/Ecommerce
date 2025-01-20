@@ -2,11 +2,11 @@ package com.simple.ecommerce.dto.products;
 
 import java.sql.Date;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.simple.ecommerce.util.StringUtils;
 
-@Data
-@NoArgsConstructor
+import lombok.Getter;
+
+@Getter
 public class SelectRequestDto {
     
     private String name;
@@ -17,4 +17,37 @@ public class SelectRequestDto {
 
     private Date startDate;
     private Date endDate;
+
+    private Integer page;
+    private Integer size;
+    private String sort;
+    private String sortWay;
+
+    public SelectRequestDto(String name, Integer categoryId
+                        , Integer userId, Date startDate
+                        , Date endDate, Integer page
+                        , Integer size, String sort, String sortWay){
+        this.name = name;
+        this.categoryId = categoryId;
+        this.userId = userId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+
+        if(page == null || page.equals(0)){
+            this.page = 1;
+        }else{
+            this.page = page;
+        }
+        if(size == null || size == 0){
+            this.size = 10;
+        }else{
+            this.size = size;
+        }
+        if(StringUtils.isStringEmpty(sortWay)){
+            this.sortWay = "ASC";
+        }else{
+            this.sortWay = sortWay;
+        }
+        this.sort = sort;
+    }
 }

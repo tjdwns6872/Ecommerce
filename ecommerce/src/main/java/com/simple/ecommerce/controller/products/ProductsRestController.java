@@ -9,6 +9,7 @@ import com.simple.ecommerce.dto.products.SelectRequestDto;
 import com.simple.ecommerce.entity.products.ProductsEntity;
 import com.simple.ecommerce.service.products.ProductsService;
 import com.simple.ecommerce.util.AjaxResult;
+import com.simple.ecommerce.util.PagingUtil;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -68,8 +69,9 @@ public class ProductsRestController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<AjaxResult<List<ProductsEntity>>> productList(SelectRequestDto dto, Pageable pageable){
+    public ResponseEntity<AjaxResult<List<ProductsEntity>>> productList(SelectRequestDto dto){
         SelectDto sDto = new SelectDto();
+        Pageable pageable = PagingUtil.getPaging(dto.getPage(), dto.getSize(), dto.getSort(), dto.getSortWay());
         sDto.setPageable(pageable);
         sDto.setRequestDto(dto);
         List<ProductsEntity> list = productsService.dataListSelect(sDto);
