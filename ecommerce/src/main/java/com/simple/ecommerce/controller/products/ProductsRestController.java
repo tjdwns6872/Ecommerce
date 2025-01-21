@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +53,17 @@ public class ProductsRestController {
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 등록 완료")
+            .data(result)
+            .build();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @Delete("/delete/{id}")
+    public ResponseEntity<AjaxResult<Integer>> productDelete(@PathVariable Integer id){
+        Integer result = productsService.dataDelete(id);
+        AjaxResult<Integer> response = AjaxResult.<Integer>builder()
+            .status(HttpStatus.OK.value())
+            .message("상품 삭제")
             .data(result)
             .build();
         return ResponseEntity.status(response.getStatus()).body(response);

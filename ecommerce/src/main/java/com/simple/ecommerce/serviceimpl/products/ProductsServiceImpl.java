@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.liferay.admin.kernel.util.PortalProductMenuApplicationType.ProductMenu;
 import com.simple.ecommerce.converter.products.ProductsConverter;
 import com.simple.ecommerce.dto.products.InsertDto;
 import com.simple.ecommerce.dto.products.SelectDto;
@@ -13,6 +14,7 @@ import com.simple.ecommerce.exception.products.ProductsException;
 import com.simple.ecommerce.repository.products.ProductsRepository;
 import com.simple.ecommerce.repository.products.ProductsSpecification;
 import com.simple.ecommerce.service.products.ProductsService;
+import com.simple.ecommerce.util.products.StatusEnum;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,8 +43,14 @@ public class ProductsServiceImpl implements ProductsService{
     } 
 
     public Integer dataDelete(Integer data) {
-        // 데이터 삭제 로직
-        throw new UnsupportedOperationException("Unimplemented method 'dataDelete'");
+        try {
+            ProductsEntity entity = productsRepository.findByEcProductsId(data);
+            entity.setEcProductsStatus(StatusEnum.INACTIVE.getType());
+            data = productsRepository.save(entity).getEcProductsId();
+        } catch (Exception e) {
+            throw new ProductsException("삭제 실패");
+        }
+        return data;
     }
 
     @Override
