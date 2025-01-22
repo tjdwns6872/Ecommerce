@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.liferay.admin.kernel.util.PortalProductMenuApplicationType.ProductMenu;
 import com.simple.ecommerce.converter.products.ProductsConverter;
@@ -54,9 +55,16 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
+    @Transactional
     public Integer dataUpdate(InsertDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dataUpdate'");
+        ProductsEntity entity;
+        try {
+            entity = productsRepository.findByEcProductsId(dto.getProductsId());
+            entity.setEcProductsName(dto.getName());
+        } catch (Exception e) {
+            throw new ProductsException("업데이트 실패");
+        }
+        return entity.getEcProductsId();
     }
 
     @Override
