@@ -1,19 +1,18 @@
 package com.simple.ecommerce.serviceimpl.products;
 
-import java.util.List;
-
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.liferay.admin.kernel.util.PortalProductMenuApplicationType.ProductMenu;
 import com.simple.ecommerce.converter.products.ProductsConverter;
 import com.simple.ecommerce.dto.products.InsertDto;
+import com.simple.ecommerce.dto.products.ProductSelectResponse;
 import com.simple.ecommerce.dto.products.SelectDto;
 import com.simple.ecommerce.entity.products.ProductsEntity;
 import com.simple.ecommerce.exception.products.ProductsException;
 import com.simple.ecommerce.repository.products.ProductsRepository;
 import com.simple.ecommerce.repository.products.ProductsSpecification;
+import com.simple.ecommerce.service.category.CategoryService;
 import com.simple.ecommerce.service.products.ProductsService;
 import com.simple.ecommerce.util.products.StatusEnum;
 
@@ -25,8 +24,12 @@ public class ProductsServiceImpl implements ProductsService{
 
     private final ProductsRepository productsRepository;
 
-    public ProductsServiceImpl(ProductsRepository productsRepository) {
+    private final CategoryService categoryService;
+
+    public ProductsServiceImpl(ProductsRepository productsRepository
+                            , CategoryService categoryService) {
         this.productsRepository = productsRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -80,15 +83,16 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
-    public List<ProductsEntity> dataListSelect(SelectDto dto) {
-        List<ProductsEntity> list = null;
+    public ProductSelectResponse dataListSelect(SelectDto dto) {
+        ProductSelectResponse response = new ProductSelectResponse();
         Specification<ProductsEntity> spec = ProductsSpecification.productList(dto.getRequestDto());
         try {
-            list = productsRepository.findAll(spec, dto.getPageable()).getContent();
+            response.setProductList(productsRepository.findAll(spec, dto.getPageable()).getContent());
+            response.setCategoryList(categoryService.dataListSelect(null).getCategoryList());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return list;
+        return response;
     }
     
 }
