@@ -3,6 +3,8 @@ package com.simple.ecommerce.controller.category;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.simple.ecommerce.dto.category.CategorySelectRequestDto;
+import com.simple.ecommerce.dto.category.CategorySelectResponse;
 import com.simple.ecommerce.entity.category.CategoryEntity;
 import com.simple.ecommerce.entity.products.ProductsEntity;
 import com.simple.ecommerce.service.category.CategoryService;
@@ -24,6 +26,17 @@ public class CategoryRestController {
         this.categoryService = categoryService;
     }
     
+    @GetMapping("/list")
+    public ResponseEntity<AjaxResult<CategorySelectResponse>> categoryList(CategorySelectRequestDto dto){
+        CategorySelectResponse responseData = categoryService.dataListSelect(dto);
+        AjaxResult<CategorySelectResponse> response = AjaxResult.<CategorySelectResponse>builder()
+            .status(HttpStatus.OK.value())
+            .message("카테고리 조회")
+            .data(responseData)
+            .build();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
     @GetMapping("/detail/{id}")
     public ResponseEntity<AjaxResult<CategoryEntity>> categoryDetail(@RequestParam Integer categoryId) {
         CategoryEntity result = categoryService.dataDetailSelect(categoryId);
