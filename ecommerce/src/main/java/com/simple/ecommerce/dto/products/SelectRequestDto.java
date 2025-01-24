@@ -18,6 +18,8 @@ public class SelectRequestDto {
     private Date startDate;
     private Date endDate;
 
+    private String categoryStatus;
+
     private Integer page;
     private Integer size;
     private String sort;
@@ -34,9 +36,9 @@ public class SelectRequestDto {
         this.endDate = endDate;
 
         if(page == null || page.equals(0)){
-            this.page = 1;
+            this.page = 0;
         }else{
-            this.page = page;
+            this.page = page+1;
         }
         if(size == null || size == 0){
             this.size = 10;
@@ -47,6 +49,8 @@ public class SelectRequestDto {
             this.sortWay = "ASC";
         }else{
             this.sortWay = sortWay;
+        }if(StringUtils.isStringEmpty(categoryStatus)){
+            this.categoryStatus = "enald";
         }
         this.sort = sort;
     }

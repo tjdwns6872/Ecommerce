@@ -88,7 +88,9 @@ public class ProductsServiceImpl implements ProductsService{
         Specification<ProductsEntity> spec = ProductsSpecification.productList(dto.getRequestDto());
         try {
             response.setProductList(productsRepository.findAll(spec, dto.getPageable()).getContent());
-            response.setCategoryList(categoryService.dataListSelect(null).getCategoryList());
+            if(dto.getRequestDto().getCategoryStatus().equals("enald")){
+                response.setCategoryList(categoryService.dataListSelect(null).getCategoryList());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
