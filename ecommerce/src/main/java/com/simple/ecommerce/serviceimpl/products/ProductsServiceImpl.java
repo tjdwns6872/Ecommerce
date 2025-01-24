@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.simple.ecommerce.converter.products.ProductsConverter;
+import com.simple.ecommerce.dto.category.CategorySelectRequestDto;
 import com.simple.ecommerce.dto.products.InsertDto;
 import com.simple.ecommerce.dto.products.ProductSelectResponse;
 import com.simple.ecommerce.dto.products.SelectDto;
@@ -89,7 +90,7 @@ public class ProductsServiceImpl implements ProductsService{
         try {
             response.setProductList(productsRepository.findAll(spec, dto.getPageable()).getContent());
             if(dto.getRequestDto().getCStatus().equals(StatusEnum.ACTIVE)){
-                response.setCategoryList(categoryService.dataListSelect(null).getCategoryList());
+                response.setCategoryList(categoryService.dataListSelect(new CategorySelectRequestDto()).getCategoryList());
             }
         } catch (Exception e) {
             e.printStackTrace();
