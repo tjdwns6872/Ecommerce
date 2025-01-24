@@ -35,6 +35,9 @@ public class ProductsSpecification {
                     // criteriaBuilder.greaterThanOrEqualTo(dto.getStartDate())
                 );
             }
+            predicate = criteriaBuilder.and(
+                criteriaBuilder.equal(root.get("ecProductsStatus"), dto.getPStatus().getType())
+            );
             
             return predicate;
         };

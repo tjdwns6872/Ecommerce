@@ -3,6 +3,7 @@ package com.simple.ecommerce.dto.products;
 import java.sql.Date;
 
 import com.simple.ecommerce.util.StringUtils;
+import com.simple.ecommerce.util.products.StatusEnum;
 
 import lombok.Getter;
 
@@ -18,7 +19,11 @@ public class SelectRequestDto {
     private Date startDate;
     private Date endDate;
 
-    private String categoryStatus;
+    private StatusEnum cStatus;
+    private Integer categoryStatus;
+
+    private StatusEnum pStatus;
+    private Integer productStatus;
 
     private Integer page;
     private Integer size;
@@ -28,7 +33,8 @@ public class SelectRequestDto {
     public SelectRequestDto(String name, Integer categoryId
                         , Integer userId, Date startDate
                         , Date endDate, Integer page
-                        , Integer size, String sort, String sortWay){
+                        , Integer size, String sort, String sortWay
+                        , Integer categoryStatus, Integer productStatus){
         this.name = name;
         this.categoryId = categoryId;
         this.userId = userId;
@@ -38,7 +44,7 @@ public class SelectRequestDto {
         if(page == null || page.equals(0)){
             this.page = 0;
         }else{
-            this.page = page+1;
+            this.page = page-1;
         }
         if(size == null || size == 0){
             this.size = 10;
@@ -49,9 +55,14 @@ public class SelectRequestDto {
             this.sortWay = "ASC";
         }else{
             this.sortWay = sortWay;
-        }if(StringUtils.isStringEmpty(categoryStatus)){
-            this.categoryStatus = "enald";
+        }if(categoryStatus == null){
+            categoryStatus = 0;
         }
+        this.cStatus = StatusEnum.getEnum(categoryStatus);
+        if(productStatus == null){
+            productStatus = 0;
+        }
+        this.pStatus = StatusEnum.getEnum(productStatus);
         this.sort = sort;
     }
 }
