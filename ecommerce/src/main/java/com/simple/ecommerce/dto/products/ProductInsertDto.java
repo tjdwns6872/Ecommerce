@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor
-public class InsertDto {
+public class ProductInsertDto {
     
     private Integer productsId;
 

@@ -3,7 +3,7 @@ package com.simple.ecommerce.controller.products;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.simple.ecommerce.dto.products.InsertDto;
+import com.simple.ecommerce.dto.products.ProductInsertDto;
 import com.simple.ecommerce.dto.products.ProductSelectResponse;
 import com.simple.ecommerce.dto.products.SelectDto;
 import com.simple.ecommerce.dto.products.SelectRequestDto;
@@ -37,7 +37,7 @@ public class ProductsRestController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<AjaxResult<Integer>> productInsert(@RequestBody InsertDto insertDto) {
+    public ResponseEntity<AjaxResult<Integer>> productInsert(@RequestBody ProductInsertDto insertDto) {
         Integer result = productsService.dataInsert(insertDto);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
@@ -48,7 +48,7 @@ public class ProductsRestController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<AjaxResult<Integer>> productUpdate(@RequestBody InsertDto updateDto) {
+    public ResponseEntity<AjaxResult<Integer>> productUpdate(@RequestBody ProductInsertDto updateDto) {
         Integer result = productsService.dataUpdate(updateDto);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())

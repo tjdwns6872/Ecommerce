@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.simple.ecommerce.converter.products.ProductsConverter;
 import com.simple.ecommerce.dto.category.CategorySelectRequestDto;
-import com.simple.ecommerce.dto.products.InsertDto;
+import com.simple.ecommerce.dto.products.ProductInsertDto;
 import com.simple.ecommerce.dto.products.ProductSelectResponse;
 import com.simple.ecommerce.dto.products.SelectDto;
 import com.simple.ecommerce.entity.products.ProductsEntity;
@@ -34,7 +34,7 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
-    public Integer dataInsert(InsertDto dto) {
+    public Integer dataInsert(ProductInsertDto dto) {
         // 데이터 삽입 로직        
         Integer productId = 0;
         try {
@@ -60,7 +60,7 @@ public class ProductsServiceImpl implements ProductsService{
 
     @Override
     @Transactional
-    public Integer dataUpdate(InsertDto dto) {
+    public Integer dataUpdate(ProductInsertDto dto) {
         ProductsEntity entity;
         try {
             entity = productsRepository.findByEcProductsId(dto.getProductsId());
@@ -75,6 +75,7 @@ public class ProductsServiceImpl implements ProductsService{
     public ProductsEntity dataDetailSelect(Integer id) {
         ProductsEntity entity;
         try {
+            // 상품 리뷰 쿼리 추가 예정
             entity = productsRepository.findByEcProductsId(id);
             log.info("Product Detail Entity Null Check====>{}", entity.toString());
         } catch (Exception e) {

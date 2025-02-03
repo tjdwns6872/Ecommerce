@@ -3,7 +3,7 @@ package com.simple.ecommerce.controller.reviews;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.simple.ecommerce.dto.reviews.InsertDto;
+import com.simple.ecommerce.dto.reviews.ReviewsInsertDto;
 import com.simple.ecommerce.service.reviews.ReviewsService;
 import com.simple.ecommerce.util.AjaxResult;
 
@@ -24,7 +24,7 @@ public class ReviewsRestController {
     }
     
     @PostMapping("/insert")
-    public ResponseEntity<AjaxResult<Integer>> reviewInsert (@RequestBody InsertDto insetDto) {
+    public ResponseEntity<AjaxResult<Integer>> reviewInsert (@RequestBody ReviewsInsertDto insetDto) {
         Integer result = reviewsService.dataInsert(insetDto);
         AjaxResult<Integer> responese = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
