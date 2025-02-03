@@ -3,7 +3,6 @@ package com.simple.ecommerce.repository.users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.simple.ecommerce.dto.sms.UserCheck;
 import com.simple.ecommerce.entity.users.UsersEntity;
 
 //회원 Data JPA Repository 
