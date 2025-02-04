@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public class ReviewsInsertDto {
     
+    private String userToken;
     private Integer userId;
 
     private Integer productId;
