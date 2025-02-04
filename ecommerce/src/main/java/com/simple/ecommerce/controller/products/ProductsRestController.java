@@ -10,13 +10,15 @@ import com.simple.ecommerce.dto.products.SelectRequestDto;
 import com.simple.ecommerce.entity.products.ProductsEntity;
 import com.simple.ecommerce.service.products.ProductsService;
 import com.simple.ecommerce.util.AjaxResult;
+import com.simple.ecommerce.util.JwtUtil;
 import com.simple.ecommerce.util.PagingUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +33,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ProductsRestController {
     
     private final ProductsService productsService;
+    private final JwtUtil jwtUtil;
 
-    public ProductsRestController(ProductsService productsService){
+    public ProductsRestController(ProductsService productsService
+            ,JwtUtil jwtUtil){
         this.productsService = productsService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<AjaxResult<Integer>> productInsert(@RequestBody ProductInsertDto insertDto) {
+    public ResponseEntity<AjaxResult<Integer>> productInsert(HttpServletRequest request
+                                                            , @RequestBody ProductInsertDto insertDto) {
+        String token = jwtUtil.resolveToken(request);
+        insertDto.setUserToken(token);
         Integer result = productsService.dataInsert(insertDto);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
@@ -48,7 +56,10 @@ public class ProductsRestController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<AjaxResult<Integer>> productUpdate(@RequestBody ProductInsertDto updateDto) {
+    public ResponseEntity<AjaxResult<Integer>> productUpdate(HttpServletRequest request
+                                                            , @RequestBody ProductInsertDto updateDto) {
+        String token = jwtUtil.resolveToken(request);
+        updateDto.setUserToken(token);
         Integer result = productsService.dataUpdate(updateDto);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())

@@ -14,6 +14,8 @@ public class ProductInsertDto {
 
     //넘어온 토큰으로 구할 예정
     private Integer userId;
+    
+    private String userToken;
 
     private String name;
 

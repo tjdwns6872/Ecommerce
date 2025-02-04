@@ -14,6 +14,7 @@ import com.simple.ecommerce.exception.products.ProductsException;
 import com.simple.ecommerce.repository.products.ProductsRepository;
 import com.simple.ecommerce.repository.products.ProductsSpecification;
 import com.simple.ecommerce.service.category.CategoryService;
+import com.simple.ecommerce.service.jwt.JwtService;
 import com.simple.ecommerce.service.products.ProductsService;
 import com.simple.ecommerce.util.products.StatusEnum;
 
@@ -27,10 +28,14 @@ public class ProductsServiceImpl implements ProductsService{
 
     private final CategoryService categoryService;
 
+    private final JwtService jwtService;
+
     public ProductsServiceImpl(ProductsRepository productsRepository
-                            , CategoryService categoryService) {
+                            , CategoryService categoryService
+                            , JwtService jwtService) {
         this.productsRepository = productsRepository;
         this.categoryService = categoryService;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -38,6 +43,7 @@ public class ProductsServiceImpl implements ProductsService{
         // 데이터 삽입 로직        
         Integer productId = 0;
         try {
+            dto.setUserId(jwtService.tokenToUserId(dto.getUserToken()));
             ProductsEntity entity = new ProductsConverter().toEntity(dto);
             log.info("ProductsEntity=>{}", entity.toString());
             productId = productsRepository.save(entity).getEcProductsId();
@@ -63,6 +69,7 @@ public class ProductsServiceImpl implements ProductsService{
     public Integer dataUpdate(ProductInsertDto dto) {
         ProductsEntity entity;
         try {
+            dto.setUserId(jwtService.tokenToUserId(dto.getUserToken()));
             entity = productsRepository.findByEcProductsId(dto.getProductsId());
             entity.setEcProductsName(dto.getName());
         } catch (Exception e) {
