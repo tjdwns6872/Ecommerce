@@ -3,6 +3,7 @@ package com.simple.ecommerce.controller.products;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.simple.ecommerce.dto.products.ProductDeleteDto;
 import com.simple.ecommerce.dto.products.ProductInsertDto;
 import com.simple.ecommerce.dto.products.ProductSelectResponse;
 import com.simple.ecommerce.dto.products.SelectDto;
@@ -70,8 +71,10 @@ public class ProductsRestController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<AjaxResult<Integer>> productDelete(@PathVariable Integer id){
-        Integer result = productsService.dataDelete(id);
+    public ResponseEntity<AjaxResult<Integer>> productDelete(HttpServletRequest request
+                                                            , @PathVariable Integer id){
+        ProductDeleteDto dto = ProductDeleteDto.builder().productId(id).userToken(jwtUtil.resolveToken(request)).build();
+        Integer result = productsService.dataDelete(dto);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 삭제")

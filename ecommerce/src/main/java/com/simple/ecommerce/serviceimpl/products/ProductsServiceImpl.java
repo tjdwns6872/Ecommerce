@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.simple.ecommerce.converter.products.ProductsConverter;
 import com.simple.ecommerce.dto.category.CategorySelectRequestDto;
+import com.simple.ecommerce.dto.products.ProductDeleteDto;
 import com.simple.ecommerce.dto.products.ProductInsertDto;
 import com.simple.ecommerce.dto.products.ProductSelectResponse;
 import com.simple.ecommerce.dto.products.SelectDto;
@@ -53,15 +54,16 @@ public class ProductsServiceImpl implements ProductsService{
         return productId;
     } 
 
-    public Integer dataDelete(Integer data) {
+    public Integer dataDelete(ProductDeleteDto data) {
+        Integer productId = 0;
         try {
-            ProductsEntity entity = productsRepository.findByEcProductsId(data);
+            ProductsEntity entity = productsRepository.findByEcProductsId(data.getProductId());
             entity.setEcProductsStatus(StatusEnum.INACTIVE.getType());
-            data = productsRepository.save(entity).getEcProductsId();
+            productId = productsRepository.save(entity).getEcProductsId();
         } catch (Exception e) {
             throw new ProductsException("삭제 실패");
         }
-        return data;
+        return productId;
     }
 
     @Override
