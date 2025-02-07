@@ -10,6 +10,7 @@ import com.simple.ecommerce.dto.products.SelectDto;
 import com.simple.ecommerce.dto.products.SelectRequestDto;
 import com.simple.ecommerce.entity.products.ProductsEntity;
 import com.simple.ecommerce.service.products.ProductsService;
+import com.simple.ecommerce.serviceimpl.products.ProductsProducer;
 import com.simple.ecommerce.util.AjaxResult;
 import com.simple.ecommerce.util.JwtUtil;
 import com.simple.ecommerce.util.PagingUtil;
@@ -34,12 +35,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ProductsRestController {
     
     private final ProductsService productsService;
+    private final ProductsProducer productsProducer;
     private final JwtUtil jwtUtil;
 
     public ProductsRestController(ProductsService productsService
+            ,ProductsProducer productsProducer
             ,JwtUtil jwtUtil){
         this.productsService = productsService;
         this.jwtUtil = jwtUtil;
+        this.productsProducer = productsProducer;
     }
 
     @PostMapping("/insert")

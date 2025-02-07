@@ -18,6 +18,12 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitMqConfig {
 
+    private final RabbitMQProperties rabbitMQProperties;
+
+    public RabbitMqConfig(RabbitMQProperties rabbitMQProperties) {
+        this.rabbitMQProperties = rabbitMQProperties;
+    }
+    
     @Value("${spring.rabbitmq.host}")
     private String host;
 
@@ -29,6 +35,24 @@ public class RabbitMqConfig {
 
     @Value("${spring.rabbitmq.password}")
     private String password;
+    
+    @Value("${spring.rabbitmq.exchange.topic}")
+    public static String EXCHANGE_TOPIC;
+
+
+    @Bean
+    public Queue testing(){
+        return new Queue(rabbitMQProperties.getQueues().getProductInsert(), true);
+    }
+    @Bean
+    public Binding testBinding(Queue testing, TopicExchange appTopicExchange){
+        return BindingBuilder.bind(testing).to(appTopicExchange).with(rabbitMQProperties.getRoutingKeys().getProductInsert());
+    }
+
+    @Bean 
+    public TopicExchange appTopicExchange(){
+        return new TopicExchange(EXCHANGE_TOPIC);
+    }
 
     @Bean
     public ConnectionFactory connectionFactory() {
