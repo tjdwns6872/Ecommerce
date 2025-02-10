@@ -5,6 +5,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
 
 import com.simple.ecommerce.config.RabbitMQProperties;
+import com.simple.ecommerce.dto.products.ProductInsertDto;
 import com.simple.ecommerce.service.products.ProductsService;
 
 @Service
@@ -20,10 +21,10 @@ public class ProductsConsumer{
         this.productsService = productsService;
     }
 
-    @RabbitListener(queues = "#{rabbitMQProperties.getQueues().getProductList()}")
+    @RabbitListener(queues = "#{rabbitMQProperties.getQueues().getProductInsert()}")
     @SendTo
-    public Integer ProductsList() {
-        Integer productId = productsService.dataInsert(null);
+    public Integer ProductsInsert(ProductInsertDto dto) {
+        Integer productId = productsService.dataInsert(dto);
         return productId;
     }
 

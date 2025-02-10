@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.simple.ecommerce.config.RabbitMQProperties;
 import com.simple.ecommerce.config.RabbitMqConfig;
+import com.simple.ecommerce.dto.products.ProductInsertDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,11 +21,11 @@ public class ProductsProducer {
         this.rabbitMQProperties = rabbitMQProperties;
     }
 
-    public Integer sendMessage(Object message){
+    public Integer sendMessage(ProductInsertDto dto){
         Object response = rabbitTemplate.convertSendAndReceive(
                 RabbitMqConfig.EXCHANGE_TOPIC
                 , rabbitMQProperties.getRoutingKeys().getProductInsert()
-                , message
+                , dto
         );
         if (response != null) {
             return Integer.valueOf(response.toString());
