@@ -28,4 +28,11 @@ public class ProductsConsumer{
         return productId;
     }
 
+    @RabbitListener(queues = "#{rabbitMQProperties.getQueues().getProductUpdate()}")
+    @SendTo
+    public Integer ProductsUpdate(ProductInsertDto dto) {
+        Integer productId = productsService.dataUpdate(dto);
+        return productId;
+    }
+
 }

@@ -14,6 +14,7 @@ import com.simple.ecommerce.serviceimpl.products.ProductsProducer;
 import com.simple.ecommerce.util.AjaxResult;
 import com.simple.ecommerce.util.JwtUtil;
 import com.simple.ecommerce.util.PagingUtil;
+import com.simple.ecommerce.util.products.ProductsRoutingKey;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -51,7 +52,7 @@ public class ProductsRestController {
                                                             , @RequestBody ProductInsertDto insertDto) {
         String token = jwtUtil.resolveToken(request);
         insertDto.setUserToken(token);
-        Integer result = productsService.dataInsert(insertDto);
+        Integer result = productsProducer.sendMessage(insertDto, ProductsRoutingKey.INSERT);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 등록 완료")
@@ -65,7 +66,7 @@ public class ProductsRestController {
                                                             , @RequestBody ProductInsertDto updateDto) {
         String token = jwtUtil.resolveToken(request);
         updateDto.setUserToken(token);
-        Integer result = productsService.dataUpdate(updateDto);
+        Integer result = productsProducer.sendMessage(updateDto, ProductsRoutingKey.UPDATE);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 등록 완료")

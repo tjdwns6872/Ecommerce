@@ -18,12 +18,13 @@ public class RabbitMQProperties {
     @Data
     public static class Queues {
         private String productInsert;
+        private String productUpdate;
     }
 
     @Data
     public static class RoutingKeys {
         private String productInsert;
-        private String order;
+        private String productUpdate;
     }
     
 }
