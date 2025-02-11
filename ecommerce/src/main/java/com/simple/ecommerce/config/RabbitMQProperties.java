@@ -14,6 +14,7 @@ public class RabbitMQProperties {
 
     private Queues queues;
     private RoutingKeys routingKeys;
+    private Exchange exchange;
 
     @Data
     public static class Queues {
@@ -25,6 +26,11 @@ public class RabbitMQProperties {
     public static class RoutingKeys {
         private String productInsert;
         private String productUpdate;
+    }
+
+    @Data
+    public static class Exchange {
+        private String topic;
     }
     
 }

@@ -24,14 +24,24 @@ public class ProductsConsumer{
     @RabbitListener(queues = "#{rabbitMQProperties.getQueues().getProductInsert()}")
     @SendTo
     public Integer ProductsInsert(ProductInsertDto dto) {
-        Integer productId = productsService.dataInsert(dto);
+        Integer productId = 0;
+        try {
+            productId = productsService.dataInsert(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return productId;
     }
 
     @RabbitListener(queues = "#{rabbitMQProperties.getQueues().getProductUpdate()}")
     @SendTo
     public Integer ProductsUpdate(ProductInsertDto dto) {
-        Integer productId = productsService.dataUpdate(dto);
+        Integer productId = 0;
+        try {
+            productId = productsService.dataUpdate(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return productId;
     }
 

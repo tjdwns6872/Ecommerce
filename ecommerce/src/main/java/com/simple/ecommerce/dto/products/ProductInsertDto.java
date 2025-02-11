@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public class ProductInsertDto {
     
-    @NotBlank
     private Integer productsId;
 
     @NotBlank

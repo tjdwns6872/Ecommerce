@@ -29,11 +29,12 @@ public class ProductsProducer {
                 break;
             case UPDATE:
                 routingKey = rabbitMQProperties.getRoutingKeys().getProductUpdate();
+                break;
             default:
                 throw new RuntimeException("No Consumer Type");
         }
         Object response = rabbitTemplate.convertSendAndReceive(
-                RabbitMqConfig.EXCHANGE_TOPIC
+                rabbitMQProperties.getExchange().getTopic()
                 , routingKey
                 , dto
         );
