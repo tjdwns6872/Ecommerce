@@ -50,8 +50,8 @@ public class ProductsRestController {
     @PostMapping("/insert")
     public ResponseEntity<AjaxResult<Integer>> productInsert(HttpServletRequest request
                                                             , @RequestBody ProductInsertDto insertDto) {
-        // String token = jwtUtil.resolveToken(request);
-        // insertDto.setUserToken(token);
+        String token = jwtUtil.resolveToken(request);
+        insertDto.setUserToken(token);
         Integer result = productsProducer.sendMessage(insertDto, ProductsRoutingKey.INSERT);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())

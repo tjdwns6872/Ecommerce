@@ -45,6 +45,7 @@ public class ProductsServiceImpl implements ProductsService{
         Integer productId = 0;
         try {
             dto.setUserId(jwtService.tokenToUserId(dto.getUserToken()));
+            log.info("\nProductDTO =>", dto.toString());
             ProductsEntity entity = new ProductsConverter().toEntity(dto);
             log.info("ProductsEntity=>{}", entity.toString());
             productId = productsRepository.save(entity).getEcProductsId();
@@ -54,9 +55,12 @@ public class ProductsServiceImpl implements ProductsService{
         return productId;
     } 
 
+    @Transactional
+    @Override
     public Integer dataDelete(ProductDeleteDto data) {
         Integer productId = 0;
         try {
+            data.setUserId(jwtService.tokenToUserId(data.getUserToken()));
             ProductsEntity entity = productsRepository.findByEcProductsId(data.getProductId());
             entity.setEcProductsStatus(StatusEnum.INACTIVE.getType());
             productId = productsRepository.save(entity).getEcProductsId();
@@ -74,6 +78,7 @@ public class ProductsServiceImpl implements ProductsService{
             dto.setUserId(jwtService.tokenToUserId(dto.getUserToken()));
             entity = productsRepository.findByEcProductsId(dto.getProductsId());
             entity.setEcProductsName(dto.getName());
+            log.info("ProductsEntity=>{}", entity.toString());
         } catch (Exception e) {
             throw new ProductsException("업데이트 실패");
         }

@@ -4,7 +4,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import com.simple.ecommerce.config.RabbitMQProperties;
-import com.simple.ecommerce.config.RabbitMqConfig;
 import com.simple.ecommerce.util.products.ProductsRoutingKey;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +28,9 @@ public class ProductsProducer {
                 break;
             case UPDATE:
                 routingKey = rabbitMQProperties.getRoutingKeys().getProductUpdate();
+                break;
+            case DELETE:
+                routingKey = rabbitMQProperties.getRoutingKeys().getProductDelete();
                 break;
             default:
                 throw new RuntimeException("No Consumer Type");
