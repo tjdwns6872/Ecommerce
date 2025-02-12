@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
 @EnableRabbit
+@Slf4j
 public class RabbitMqConfig {
 
     private final RabbitMQProperties rabbitMQProperties;
@@ -36,23 +39,43 @@ public class RabbitMqConfig {
     @Value("${spring.rabbitmq.password}")
     private String password;
     
-    @Value("${spring.rabbitmq.exchange.topic}")
-    public static String EXCHANGE_TOPIC;
-
-
     @Bean
-    public Queue testing(){
+    public Queue productInsert(){
+        log.info("\nQueue Create ==> {}", rabbitMQProperties.getQueues().getProductInsert());
         return new Queue(rabbitMQProperties.getQueues().getProductInsert(), true);
     }
     @Bean
-    public Binding testBinding(Queue testing, TopicExchange appTopicExchange){
-        return BindingBuilder.bind(testing).to(appTopicExchange).with(rabbitMQProperties.getRoutingKeys().getProductInsert());
+    public Binding productInsertBinding(Queue productInsert, TopicExchange appTopicExchange){
+        log.info("\nproductInsert Binding ==> {}, {}", rabbitMQProperties.getRoutingKeys().getProductInsert(), appTopicExchange);
+        return BindingBuilder.bind(productInsert).to(appTopicExchange).with(rabbitMQProperties.getRoutingKeys().getProductInsert());
     }
-
     @Bean 
     public TopicExchange appTopicExchange(){
-        return new TopicExchange(EXCHANGE_TOPIC);
+        log.info("\nTopExchange Create ==> {}", rabbitMQProperties.getExchange().getTopic());
+        return new TopicExchange(rabbitMQProperties.getExchange().getTopic());
     }
+    @Bean
+    public Queue productUpdate(){
+        log.info("\nQueue Create ==> {}", rabbitMQProperties.getQueues().getProductUpdate());
+        return new Queue(rabbitMQProperties.getQueues().getProductUpdate(), true);
+    }
+    @Bean
+    public Binding productUpdateBinding(Queue productUpdate, TopicExchange appTopicExchange){
+        log.info("\nproductUpdate Binding ==> {}, {}", rabbitMQProperties.getRoutingKeys().getProductUpdate(), appTopicExchange);
+        return BindingBuilder.bind(productUpdate).to(appTopicExchange).with(rabbitMQProperties.getRoutingKeys().getProductUpdate());
+    }
+
+    @Bean
+    public Queue productDelete(){
+        log.info("\nQueue Create ==> {}", rabbitMQProperties.getQueues().getProductUpdate());
+        return new Queue(rabbitMQProperties.getQueues().getProductUpdate(), true);
+    }
+    @Bean
+    public Binding productDeleteBinding(Queue productDelete, TopicExchange appTopicExchange){
+        log.info("\nproductDelete Binding ==> {}, {}", rabbitMQProperties.getRoutingKeys().getProductDelete(), appTopicExchange);
+        return BindingBuilder.bind(productDelete).to(appTopicExchange).with(rabbitMQProperties.getRoutingKeys().getProductDelete());
+    }
+
 
     @Bean
     public ConnectionFactory connectionFactory() {

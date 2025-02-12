@@ -50,8 +50,8 @@ public class ProductsRestController {
     @PostMapping("/insert")
     public ResponseEntity<AjaxResult<Integer>> productInsert(HttpServletRequest request
                                                             , @RequestBody ProductInsertDto insertDto) {
-        String token = jwtUtil.resolveToken(request);
-        insertDto.setUserToken(token);
+        // String token = jwtUtil.resolveToken(request);
+        // insertDto.setUserToken(token);
         Integer result = productsProducer.sendMessage(insertDto, ProductsRoutingKey.INSERT);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
@@ -69,7 +69,7 @@ public class ProductsRestController {
         Integer result = productsProducer.sendMessage(updateDto, ProductsRoutingKey.UPDATE);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
-            .message("상품 등록 완료")
+            .message("상품 수정 완료")
             .data(result)
             .build();
         return ResponseEntity.status(response.getStatus()).body(response);
@@ -79,7 +79,7 @@ public class ProductsRestController {
     public ResponseEntity<AjaxResult<Integer>> productDelete(HttpServletRequest request
                                                             , @PathVariable Integer id){
         ProductDeleteDto dto = ProductDeleteDto.builder().productId(id).userToken(jwtUtil.resolveToken(request)).build();
-        Integer result = productsService.dataDelete(dto);
+        Integer result = productsProducer.sendMessage(dto, ProductsRoutingKey.UPDATE);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 삭제")
