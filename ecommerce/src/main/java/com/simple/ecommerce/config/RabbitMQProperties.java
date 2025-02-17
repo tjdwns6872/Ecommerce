@@ -30,7 +30,9 @@ public class RabbitMQProperties {
 
     @Data
     public static class Exchange {
-        private String topic;
+        private String productInsert;
+        private String productUpdate;
+        private String productDelete;
     }
     
 }

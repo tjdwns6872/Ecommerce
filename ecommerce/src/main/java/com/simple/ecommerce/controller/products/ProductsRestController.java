@@ -79,7 +79,7 @@ public class ProductsRestController {
     public ResponseEntity<AjaxResult<Integer>> productDelete(HttpServletRequest request
                                                             , @PathVariable Integer id){
         ProductDeleteDto dto = ProductDeleteDto.builder().productId(id).userToken(jwtUtil.resolveToken(request)).build();
-        Integer result = productsProducer.sendMessage(dto, ProductsRoutingKey.UPDATE);
+        Integer result = productsProducer.sendMessage(dto, ProductsRoutingKey.DELETE);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 삭제")

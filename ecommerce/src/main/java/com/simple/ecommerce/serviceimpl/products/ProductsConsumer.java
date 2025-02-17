@@ -26,11 +26,7 @@ public class ProductsConsumer{
     @SendTo
     public Integer ProductsInsert(ProductInsertDto dto) {
         Integer productId = 0;
-        try {
-            productId = productsService.dataInsert(dto);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        productId = productsService.dataInsert(dto);
         return productId;
     }
 
@@ -38,11 +34,7 @@ public class ProductsConsumer{
     @SendTo
     public Integer ProductsUpdate(ProductInsertDto dto) {
         Integer productId = 0;
-        try {
-            productId = productsService.dataUpdate(dto);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        productId = productsService.dataUpdate(dto);
         return productId;
     }
 
@@ -50,11 +42,7 @@ public class ProductsConsumer{
     @SendTo
     public Integer ProductsDelete(ProductDeleteDto dto) {
         Integer productId = 0;
-        try {
-            productId = productsService.dataDelete(dto);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        productId = productsService.dataDelete(dto);
         return productId;
     }
 
