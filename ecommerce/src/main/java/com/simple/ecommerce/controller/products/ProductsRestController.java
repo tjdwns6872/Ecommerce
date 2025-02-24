@@ -14,7 +14,7 @@ import com.simple.ecommerce.serviceimpl.products.ProductsProducer;
 import com.simple.ecommerce.util.AjaxResult;
 import com.simple.ecommerce.util.JwtUtil;
 import com.simple.ecommerce.util.PagingUtil;
-import com.simple.ecommerce.util.products.ProductsRoutingKey;
+import com.simple.ecommerce.util.RoutingKey;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -52,7 +52,7 @@ public class ProductsRestController {
                                                             , @RequestBody ProductInsertDto insertDto) {
         String token = jwtUtil.resolveToken(request);
         insertDto.setUserToken(token);
-        Integer result = productsProducer.sendMessage(insertDto, ProductsRoutingKey.INSERT);
+        Integer result = productsProducer.sendMessage(insertDto, RoutingKey.INSERT);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 등록 완료")
@@ -66,7 +66,7 @@ public class ProductsRestController {
                                                             , @RequestBody ProductInsertDto updateDto) {
         String token = jwtUtil.resolveToken(request);
         updateDto.setUserToken(token);
-        Integer result = productsProducer.sendMessage(updateDto, ProductsRoutingKey.UPDATE);
+        Integer result = productsProducer.sendMessage(updateDto, RoutingKey.UPDATE);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 수정 완료")
@@ -79,7 +79,7 @@ public class ProductsRestController {
     public ResponseEntity<AjaxResult<Integer>> productDelete(HttpServletRequest request
                                                             , @PathVariable Integer id){
         ProductDeleteDto dto = ProductDeleteDto.builder().productId(id).userToken(jwtUtil.resolveToken(request)).build();
-        Integer result = productsProducer.sendMessage(dto, ProductsRoutingKey.DELETE);
+        Integer result = productsProducer.sendMessage(dto, RoutingKey.DELETE);
         AjaxResult<Integer> response = AjaxResult.<Integer>builder()
             .status(HttpStatus.OK.value())
             .message("상품 삭제")

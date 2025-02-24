@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.simple.ecommerce.config.RabbitMQProperties;
 import com.simple.ecommerce.exception.products.ProductsException;
-import com.simple.ecommerce.util.products.ProductsRoutingKey;
+import com.simple.ecommerce.util.RoutingKey;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +21,7 @@ public class ProductsProducer {
         this.rabbitMQProperties = rabbitMQProperties;
     }
 
-    public Integer sendMessage(Object dto, ProductsRoutingKey type){
+    public Integer sendMessage(Object dto, RoutingKey type){
         String routingKey = null;
         String topic = null;
         switch (type) {
