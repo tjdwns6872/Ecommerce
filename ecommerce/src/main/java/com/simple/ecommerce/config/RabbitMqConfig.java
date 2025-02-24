@@ -41,50 +41,54 @@ public class RabbitMqConfig {
     
     @Bean
     public Queue productInsert(){
-        log.info("\nQueue Create ==> {}", rabbitMQProperties.getQueues().getProductInsert());
         return new Queue(rabbitMQProperties.getQueues().getProductInsert(), true);
     }
     @Bean
     public Binding productInsertBinding(Queue productInsert, TopicExchange productInsertExchange){
-        log.info("\nproductInsert Binding ==> {}, {}", rabbitMQProperties.getRoutingKeys().getProductInsert(), productInsertExchange);
         return BindingBuilder.bind(productInsert).to(productInsertExchange).with(rabbitMQProperties.getRoutingKeys().getProductInsert());
     }
     @Bean 
     public TopicExchange productInsertExchange(){
-        log.info("\nTopExchange Create ==> {}", rabbitMQProperties.getExchange().getProductInsert());
         return new TopicExchange(rabbitMQProperties.getExchange().getProductInsert());
     }
 
     @Bean
     public Queue productUpdate(){
-        log.info("\nQueue Create ==> {}", rabbitMQProperties.getQueues().getProductUpdate());
         return new Queue(rabbitMQProperties.getQueues().getProductUpdate(), true);
     }
     @Bean
     public Binding productUpdateBinding(Queue productUpdate, TopicExchange productUpdateExchange){
-        log.info("\nproductUpdate Binding ==> {}, {}", rabbitMQProperties.getRoutingKeys().getProductUpdate(), productUpdateExchange);
         return BindingBuilder.bind(productUpdate).to(productUpdateExchange).with(rabbitMQProperties.getRoutingKeys().getProductUpdate());
     }
     @Bean 
     public TopicExchange productUpdateExchange(){
-        log.info("\nTopExchange Create ==> {}", rabbitMQProperties.getExchange().getProductUpdate());
         return new TopicExchange(rabbitMQProperties.getExchange().getProductUpdate());
     }
 
     @Bean
     public Queue productDelete(){
-        log.info("\nQueue Create ==> {}", rabbitMQProperties.getQueues().getProductDelete());
         return new Queue(rabbitMQProperties.getQueues().getProductDelete(), true);
     }
     @Bean
     public Binding productDeleteBinding(Queue productDelete, TopicExchange productDeleteExchange){
-        log.info("\nproductDelete Binding ==> {}, {}", rabbitMQProperties.getRoutingKeys().getProductDelete(), productDeleteExchange);
         return BindingBuilder.bind(productDelete).to(productDeleteExchange).with(rabbitMQProperties.getRoutingKeys().getProductDelete());
     }
     @Bean 
     public TopicExchange productDeleteExchange(){
-        log.info("\nTopExchange Create ==> {}", rabbitMQProperties.getExchange().getProductDelete());
         return new TopicExchange(rabbitMQProperties.getExchange().getProductDelete());
+    }
+
+    @Bean
+    public Queue reviewInsert(){
+        return new Queue(rabbitMQProperties.getQueues().getReviewInsert(), true);
+    }
+    @Bean
+    public Binding reviewInsertBinding(Queue reviewInsert, TopicExchange reviewInsertExchange){
+        return BindingBuilder.bind(reviewInsert).to(reviewInsertExchange).with(rabbitMQProperties.getRoutingKeys().getReviewInsert());
+    }
+    @Bean 
+    public TopicExchange reviewInsertExchange(){
+        return new TopicExchange(rabbitMQProperties.getExchange().getReviewInsert());
     }
 
 

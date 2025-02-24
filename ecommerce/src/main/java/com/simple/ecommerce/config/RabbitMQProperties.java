@@ -19,6 +19,8 @@ public class RabbitMQProperties {
         private String productInsert;
         private String productUpdate;
         private String productDelete;
+
+        private String reviewInsert;
     }
 
     @Data
@@ -26,6 +28,8 @@ public class RabbitMQProperties {
         private String productInsert;
         private String productUpdate;
         private String productDelete;
+
+        private String reviewInsert;
     }
 
     @Data
@@ -33,6 +37,8 @@ public class RabbitMQProperties {
         private String productInsert;
         private String productUpdate;
         private String productDelete;
+
+        private String reviewInsert;
     }
     
 }
