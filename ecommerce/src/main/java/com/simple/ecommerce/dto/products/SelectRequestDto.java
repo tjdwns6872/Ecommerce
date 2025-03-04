@@ -2,7 +2,9 @@ package com.simple.ecommerce.dto.products;
 
 import java.sql.Date;
 
-import com.simple.ecommerce.util.StringUtils;
+import org.springframework.data.domain.Pageable;
+
+import com.simple.ecommerce.util.PagingUtil;
 import com.simple.ecommerce.util.products.StatusEnum;
 
 import lombok.Getter;
@@ -30,32 +32,28 @@ public class SelectRequestDto {
     private String sort;
     private String sortWay;
 
+    private Pageable pageable;
+
     public SelectRequestDto(String name, Integer categoryId
                         , Integer userId, Date startDate
                         , Date endDate, Integer page
                         , Integer size, String sort, String sortWay
                         , Integer categoryStatus, Integer productStatus){
+        
+        PagingUtil util = new PagingUtil();
+        util.PagingInfo(page, size, sort, sortWay);
+
         this.name = name;
         this.categoryId = categoryId;
         this.userId = userId;
         this.startDate = startDate;
         this.endDate = endDate;
-
-        if(page == null || page.equals(0)){
-            this.page = 0;
-        }else{
-            this.page = page-1;
-        }
-        if(size == null || size == 0){
-            this.size = 10;
-        }else{
-            this.size = size;
-        }
-        if(StringUtils.isStringEmpty(sortWay)){
-            this.sortWay = "ASC";
-        }else{
-            this.sortWay = sortWay;
-        }if(categoryStatus == null){
+        this.page = util.getPage();
+        this.size = util.getSize();
+        this.sortWay = util.getSortWay();
+        this.sort = util.getSort();
+        
+        if(categoryStatus == null){
             categoryStatus = 0;
         }
         this.cStatus = StatusEnum.getEnum(categoryStatus);
@@ -63,6 +61,7 @@ public class SelectRequestDto {
             productStatus = 0;
         }
         this.pStatus = StatusEnum.getEnum(productStatus);
-        this.sort = sort;
+
+        this.pageable = util.getPaging();
     }
 }
